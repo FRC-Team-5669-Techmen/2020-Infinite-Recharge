@@ -21,7 +21,7 @@ public class TurretSubsystem extends SubsystemBase {
   private static double limelightX = 0.0;
   private static double limelightY = 0.0;
   private static double limgelightArea = 0.0;
-  private static boolean limelightTargetValid = false;
+  private static boolean limelightTargetVisible = false;
 
   public TurretSubsystem() {
 
@@ -39,7 +39,7 @@ public class TurretSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("LimelightX", limelightX);
     SmartDashboard.putNumber("LimelightY", limelightY);
     SmartDashboard.putNumber("LimelightArea", limgelightArea);
-    SmartDashboard.putBoolean("LimelightTargetValid", limelightTargetValid);
+    SmartDashboard.putBoolean("LimelightTargetValid", limelightTargetVisible);
 
   }
 
@@ -48,7 +48,8 @@ public class TurretSubsystem extends SubsystemBase {
     limelightX = table.getEntry("tx").getDouble(0.0);
     limelightY = table.getEntry("ty").getDouble(0.0);
     limgelightArea = table.getEntry("ta").getDouble(0.0);
-    limelightTargetValid = table.getEntry("tv").getBoolean(false);
+
+    limelightTargetVisible = table.getEntry("tv").getDouble(0.0) < 1.00 ? false : true;
 
   }
 }
