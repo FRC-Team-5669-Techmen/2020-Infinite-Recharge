@@ -46,13 +46,13 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+    displayCurrentColor();
   }
 
   /**
    * Gets current color sensor color and outputs it to SmartDashboard
    */
-  public void getCurrentColor(){
+  public void displayCurrentColor(){
     Color detectedColor = m_colorSensor.getColor(); 
 
     String colorString;
