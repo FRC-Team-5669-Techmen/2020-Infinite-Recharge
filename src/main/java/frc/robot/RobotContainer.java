@@ -61,7 +61,7 @@ public class RobotContainer {
     Shuffleboard.getTab("Autonomous").add(m_chooser);
 
     //Needed in order to not return a null command.
-    m_chooser.setDefaultOption("Test", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
+    m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
   }
 
   /**
