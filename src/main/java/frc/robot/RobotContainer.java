@@ -32,7 +32,9 @@ public class RobotContainer {
   private final TurretSubsystem m_turretSubsystem = new TurretSubsystem();
 
   // A simple auto routine that drives forward a specified distance, and then stops.
-  private final Command m_TestControlPanelManipulator = new RunCommand(m_controlPanelSubsystem::getCurrentColor, m_controlPanelSubsystem);
+
+  //no longer needed. Better to have in perodic
+  //private final Command m_TestControlPanelManipulator = new RunCommand(m_controlPanelSubsystem::displayCurrentColor, m_controlPanelSubsystem);
 
 
   // A chooser for autonomous commands
@@ -50,7 +52,10 @@ public class RobotContainer {
     configureButtonBindings();
     
     // Add commands to the autonomous command chooser
+
+    /*   Uneeded
     m_chooser.addOption("Test Color", m_TestControlPanelManipulator);
+    */
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
