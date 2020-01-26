@@ -37,7 +37,7 @@ public class RobotContainer {
   //private final Command m_TestControlPanelManipulator = new RunCommand(m_controlPanelSubsystem::displayCurrentColor, m_controlPanelSubsystem);
 
 
-  // A chooser for autonomous commands
+  // A chooser for autonomous commands. We will use this for testing individual subsystem too.
   SendableChooser<Command> m_chooser = new SendableChooser<>();
     
 
@@ -59,6 +59,9 @@ public class RobotContainer {
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
+
+    //Needed in order to not return a null command.
+    m_chooser.setDefaultOption("Test", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
   }
 
   /**
