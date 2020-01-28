@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -14,6 +16,10 @@ public class IntakeSubsystem extends SubsystemBase {
    * Creates a new IntakeSubsystem.
    */
   public IntakeSubsystem() {
+    // private final TalonFX intakeWheels = new TalonFX(0);  //not sure if should use WPI_TalonFX or TalonFX
+    
+
+    //Pneumatics: not sure double or single 
 
   }
 
