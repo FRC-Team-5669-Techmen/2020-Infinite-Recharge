@@ -7,11 +7,17 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.TurretSubsystemConstants;
 
 public class TurretSubsystem extends SubsystemBase {
   /**
@@ -22,6 +28,9 @@ public class TurretSubsystem extends SubsystemBase {
   private static double limelightY = 0.0;
   private static double limgelightArea = 0.0;
   private static boolean limelightTargetVisible = false;
+
+  private final CANSparkMax shooterMotor =  
+    new CANSparkMax(TurretSubsystemConstants.SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
 
   public TurretSubsystem() {
 
