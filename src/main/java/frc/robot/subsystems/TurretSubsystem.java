@@ -56,9 +56,13 @@ public class TurretSubsystem extends SubsystemBase {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     limelightX = table.getEntry("tx").getDouble(0.0);
     limelightY = table.getEntry("ty").getDouble(0.0);
-    limgelightArea = table.getEntry("ta").getDouble(0.0);
+    limgelightArea = table.getEntry("ta").getDouble(0.0);//hi
 
     limelightTargetVisible = table.getEntry("tv").getDouble(0.0) < 1.00 ? false : true;
-
   }
+
+  private void setShooterMotorSpeed(double speed) {  //ball
+    shooterMotor.set(0.25);
+  }
+
 }

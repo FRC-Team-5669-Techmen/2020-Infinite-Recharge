@@ -34,6 +34,7 @@ public final class Constants {
 
     public static final class TurretSubsystemConstants {
         public static final int SHOOTER_MOTOR_CAN_ID = 0;
+        public static final double DEFAULT_SHOOTER_SPEED = 0;
         
     }
 }
