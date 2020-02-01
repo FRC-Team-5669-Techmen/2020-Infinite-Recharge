@@ -23,7 +23,11 @@ public class IntakeSubsystem extends SubsystemBase {
   
   private final WPI_TalonFX intakeWheelMotor = new WPI_TalonFX(0);  //not sure if should use WPI_TalonFX or TalonFX
 
+  /*Need to make sure it is a double solenoid. If not, change to single solenoid
   private final DoubleSolenoid intakeDeployerPistons = new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);
+  */
+
+  //going to need to add magazineMotor once you figure out motor contoller they will use
   
   //Pneumatics: not sure double or single 
   //likely double? If double, would do this
@@ -35,5 +39,20 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }  
+
+  //Find implementations for these methods!
+
+  public void deployIntake(){
   }
+
+  public void retractIntake(){}
+
+  public void turnOnIntakeWheelMotors(){}
+
+  public void turnOffIntakeWheelMotors(){}
+
+  public void turnOnMagazineCarouselMotor(){}
+
+  public void turnOffMagazineCarouselMotor(){}
 }
