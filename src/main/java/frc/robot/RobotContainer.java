@@ -39,7 +39,7 @@ public class RobotContainer {
   // A simple auto routine that drives forward a specified distance, and then stops.
 
   //no longer needed. Better to have in perodic
-  private final Command testShooter = new ShootPowerCell(fuelTurret);
+  //private final Command testShooter = new ShootPowerCell(fuelTurret); //rredendant
 
 
   // A chooser for autonomous commands. We will use this for testing individual subsystem too.
@@ -58,7 +58,7 @@ public class RobotContainer {
     
     // Add commands to the autonomous command chooser
 
-    m_chooser.addOption("Test Turret", testShooter);
+    //m_chooser.addOption("Test Turret", testShooter);
     
 
     // Put the chooser on the dashboard
