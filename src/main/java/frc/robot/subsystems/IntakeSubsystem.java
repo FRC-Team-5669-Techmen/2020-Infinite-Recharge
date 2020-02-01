@@ -9,16 +9,24 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeSubsystemConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /**
    * Creates a new IntakeSubsystem.
    */
+
+  private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL;
+  private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL;
   
-  private final WPI_TalonFX intakeWheels = new WPI_TalonFX(0);  //not sure if should use WPI_TalonFX or TalonFX
+  private final WPI_TalonFX intakeWheelMotor = new WPI_TalonFX(0);  //not sure if should use WPI_TalonFX or TalonFX
+
+  private final DoubleSolenoid intakeDeployerPistons = new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);
   
   //Pneumatics: not sure double or single 
+  //likely double? If double, would do this
 
   public IntakeSubsystem() {
 

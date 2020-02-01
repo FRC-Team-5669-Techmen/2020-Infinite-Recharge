@@ -18,6 +18,8 @@ package frc.robot;
 public final class Constants {
     public static final class IntakeSubsystemConstants {
         public static final int INTAKE_MOTOR_PORT = 0;
+        public static final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = 0;
+        public static final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = 1;
     }
 
     public static final class ControlPanelRotatorSubsystemConstansts {
