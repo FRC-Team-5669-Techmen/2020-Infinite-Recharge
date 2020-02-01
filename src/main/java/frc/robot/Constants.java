@@ -35,6 +35,7 @@ public final class Constants {
     public static final class TurretSubsystemConstants {
         public static final int SHOOTER_MOTOR_CAN_ID = 1;
         public static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = 2;
+        public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 3;
         public static final double SHOOTER_MAX_SPEED = 0.7;
     }
 
