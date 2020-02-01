@@ -22,7 +22,7 @@ import static frc.robot.Constants.TurretSubsystemConstants;
 public class TurretSubsystem extends SubsystemBase {
   /**
    * Creates a new TurretSubsystem.
-   */
+   **/
 
   private static double limelightX = 0.0;
   private static double limelightY = 0.0;
@@ -37,15 +37,18 @@ public class TurretSubsystem extends SubsystemBase {
   private final CANSparkMax shooterMotor =  
     new CANSparkMax(SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
   
-  /*  
+ 
   private final CANSparkMax followerShooterMotor =  
     new CANSparkMax(FOLLOWER_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
-  */
 
   //private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
 
   public TurretSubsystem() {
-    //followerShooterMotor.follow(shooterMotor, true);
+    shooterMotor.restoreFactoryDefaults(); //not to sure about how this works, but it is used a lot.
+    followerShooterMotor.restoreFactoryDefaults();
+
+    followerShooterMotor.follow(shooterMotor, true);
+
     shooterMotor.set(0.0);
     //turretRotatorMotor.set(0.0);
   }
@@ -81,9 +84,21 @@ public class TurretSubsystem extends SubsystemBase {
       shooterMotor.set(speed);
   }
 
-  public void seekTarget(){ //make command
-    
+  public double getLimeLightX(){ //make command
+    return limelightX;
+  }
 
+  public double getLimeLightY(){
+    return limelightY;
+  }
+
+  public boolean targetInView(){
+    return limelightTargetVisible;
+  }
+
+  public boolean targetLocked(){
+    //needs implementation
+      return false;
   }
 
 

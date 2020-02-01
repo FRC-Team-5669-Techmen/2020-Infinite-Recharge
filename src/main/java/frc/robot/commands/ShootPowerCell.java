@@ -33,7 +33,7 @@ public class ShootPowerCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fuelTurret.setShooterMotorSpeed(0.6);
+    fuelTurret.setShooterMotorSpeed(0.3);
   }
 
   // Called once the command ends or is interrupted.
