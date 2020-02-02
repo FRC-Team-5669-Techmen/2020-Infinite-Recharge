@@ -9,6 +9,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
@@ -33,7 +34,7 @@ public class ShootPowerCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fuelTurret.setShooterMotorSpeed(0.3);
+    fuelTurret.setShooterMotorSpeed(SmartDashboard.getNumber("Shooter Speed", 0.0));
   }
 
   // Called once the command ends or is interrupted.

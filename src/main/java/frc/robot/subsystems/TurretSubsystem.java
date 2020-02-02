@@ -44,8 +44,10 @@ public class TurretSubsystem extends SubsystemBase {
   //private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
 
   public TurretSubsystem() {
+    
     shooterMotor.restoreFactoryDefaults(); //not to sure about how this works, but it is used a lot.
     followerShooterMotor.restoreFactoryDefaults();
+    
 
     followerShooterMotor.follow(shooterMotor, true);
 
@@ -56,8 +58,8 @@ public class TurretSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    updateLimelightValues();
-    displayLimelightTelemetry();
+    //updateLimelightValues();
+    //displayLimelightTelemetry();
     
   }
 
