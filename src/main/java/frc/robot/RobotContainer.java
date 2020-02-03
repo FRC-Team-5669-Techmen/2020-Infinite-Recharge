@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ShootPowerCell;
+import frc.robot.commands.MoveControlPaneBasedOnColor;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  Joystick bStick = new Joystick(0);
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
@@ -88,6 +90,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // An ExampleCommand will run in autonomous
-      return m_chooser.getSelected();
+      return null;
   }
 }
