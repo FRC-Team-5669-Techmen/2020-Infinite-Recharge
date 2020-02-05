@@ -30,14 +30,16 @@ public class LiftSubsystem extends SubsystemBase {
   int carriageRightButton = 5;
   int carriageLeftButton = 6;
 
-  private static pulleyPosition = false; // True = up, False = down
-  private static liftPosition = false; // True = up, False = down
+  private static boolean pulleyPosition = false; // True = up, False = down
+  private static boolean liftPosition = false; // True = up, False = down
 
   /**
    * Creates a new LiftSubsystem.
    */
   public LiftSubsystem() {
-
+    pulleyMotor.set(0.0);
+    liftMotor.set(0.0);
+    carriageMotor.set(0.0);
   }
 
   @Override
@@ -46,7 +48,7 @@ public class LiftSubsystem extends SubsystemBase {
     if(bStick.getRawButton(pulleyUpButton)) {
       // This will pull the robot up
       if(pulleyPosition == false) {
-        pulleyMotor.set(ControlMode.PercentOutput, 1); // 1 == 100% ??
+        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
         pulleyPosition = !pulleyPosition;
       } else {
         // Pulley is already up!
@@ -55,7 +57,7 @@ public class LiftSubsystem extends SubsystemBase {
     if(bStick.getRawButton(pulleyDownButton)) {
       // This will bring the robot back down
       if(pulleyPosition == true) {
-        pulleyMotor.set(ControlMode.PercentOutput, 1); // 1 == 100% ??  
+        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
         pulleyPosition = !pulleyPosition;
       } else {
         // Pulley is already down!
@@ -65,7 +67,7 @@ public class LiftSubsystem extends SubsystemBase {
     if(bStick.getRawButton(liftUpButton)) {
       // This will extend the lift up
       if(liftPosition == false) {
-        pulleyMotor.set(ControlMode.PercentOutput, 1); // 1 == 100% ??
+        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
         liftPosition = !liftPosition;
       } else {
         // Lift is already up!
@@ -74,7 +76,7 @@ public class LiftSubsystem extends SubsystemBase {
     if(bStick.getRawButton(liftDownButton)) {
       // This will bring the lift down 
       if(liftPosition == true) {
-        pulleyMotor.set(ControlMode.PercentOutput, 1); // 1 == 100% ??
+        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
         liftPosition = !liftPosition;
       } else {
         // Lift is already down!
@@ -83,11 +85,11 @@ public class LiftSubsystem extends SubsystemBase {
 
     if(bStick.getRawButton(carriageRightButton)) {
       // This will shift the robot to the right
-      pulleyMotor.set(ControlMode.PercentOutput, 1); // 1 == 100% ??
+      pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
     }
     if(bStick.getRawButton(carriageLeftButton)) {
       // This will shift the robot to the left
-      pulleyMotor.set(ControlMode.PercentOutput, 1); // 1 == 100% ??
+      pulleyMotor.set(ControlMode.PercentOutput, 0.2); // 1 = 100% 
     }
   }
 }
