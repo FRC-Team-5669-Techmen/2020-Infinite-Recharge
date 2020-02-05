@@ -90,9 +90,9 @@ public class RobotContainer {
     double turretRoatoatialSpeed = Math.abs(SmartDashboard.getNumber("Turret Rotator Speed", 0.0)); //not sure if positive is clockwise
     double turretShooterSpeed = Math.abs(SmartDashboard.getNumber("Shooter Speed", 0.0)); //positive is clockwise. 
 
-    new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret, turretShooterSpeed)); //shoot while pressed.
-    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE, turretRoatoatialSpeed));
-    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE, turretRoatoatialSpeed));
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, turretShooterSpeed)); //shoot while pressed.
+    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE, turretRoatoatialSpeed));
+    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE, turretRoatoatialSpeed));
   }
 
 
