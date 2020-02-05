@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -64,7 +65,10 @@ public class RobotContainer {
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
+
+    //For debugging purposes, allow tester to set speed
     SmartDashboard.putNumber("Shooter Speed", 0.0);
+    SmartDashboard.putNumber("Turret Rotator Speed", 0.0);
 
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
@@ -78,6 +82,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
+    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, false));
+    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, true));
   }
 
 
