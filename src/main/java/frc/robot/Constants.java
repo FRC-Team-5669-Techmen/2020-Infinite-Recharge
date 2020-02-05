@@ -37,6 +37,7 @@ public final class Constants {
         public static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = 2;
         public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 3;
         public static final double SHOOTER_MAX_SPEED = 1.0;
+        public static final double ROTATOR_MAX_SPEED = 1.0;
     }
 
     public static final class ContollerConstants {
