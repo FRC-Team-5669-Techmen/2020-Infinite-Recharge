@@ -29,6 +29,7 @@ public class TurretSubsystem extends SubsystemBase {
   private static double limgelightArea = 0.0;
   private static boolean limelightTargetVisible = false;
   private static final double SHOOTER_MAX_SPEED = TurretSubsystemConstants.SHOOTER_MAX_SPEED;
+  private static final double ROTATOR_MAX_SPEED = TurretSubsystemConstants.ROTATOR_MAX_SPEED;
   
   private static final int SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.SHOOTER_MOTOR_CAN_ID;
   private static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.FOLLOWER_SHOOTER_MOTOR_CAN_ID;
@@ -41,7 +42,7 @@ public class TurretSubsystem extends SubsystemBase {
   private final CANSparkMax followerShooterMotor =  
     new CANSparkMax(FOLLOWER_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
 
-  //private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
+  private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
 
   public TurretSubsystem() {
     
@@ -52,7 +53,7 @@ public class TurretSubsystem extends SubsystemBase {
     followerShooterMotor.follow(shooterMotor, true);
 
     shooterMotor.set(0.0);
-    //turretRotatorMotor.set(0.0);
+    turretRotatorMotor.set(0.0);
   }
 
   @Override
@@ -84,6 +85,11 @@ public class TurretSubsystem extends SubsystemBase {
   public void setShooterMotorSpeed(double speed) {  //ball
     if (speed >= -SHOOTER_MAX_SPEED || speed <= SHOOTER_MAX_SPEED)
       shooterMotor.set(speed);
+  }
+
+  public void setTurretRotatorMotorSpeed(double speed) {  //ball
+    if (speed >= -ROTATOR_MAX_SPEED || speed <= ROTATOR_MAX_SPEED)
+      turretRotatorMotor.set(speed);
   }
 
   public double getLimeLightX(){ //make command

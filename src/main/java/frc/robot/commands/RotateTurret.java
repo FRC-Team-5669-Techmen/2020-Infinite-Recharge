@@ -9,22 +9,30 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class ShootPowerCell extends CommandBase {
+public class RotateTurret extends CommandBase {
   /**
    * Creates a new ShootPowerCell.
    */
 
+  public enum Direction{
+    CLOCKWISE, COUNTERCLOCKWISE;
+  }
+
    private final TurretSubsystem fuelTurret;
+   private final Direction direction;
    private final double speed;
    
-  public ShootPowerCell(TurretSubsystem fuelTurret, double speed) {
+  /**
+   * If set to true, rotates left. If set to false rotates right
+   */
+  public RotateTurret(TurretSubsystem fuelTurret, Direction direction, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
+    this.direction = direction;
     this.speed = speed;
   }
 
@@ -36,13 +44,18 @@ public class ShootPowerCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fuelTurret.setShooterMotorSpeed(speed);
+    //Check if -speed is clockwise or counterclockwise.
+    if(direction == Direction.CLOCKWISE)
+      fuelTurret.setTurretRotatorMotorSpeed(-speed);
+
+    else
+      fuelTurret.setTurretRotatorMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.setShooterMotorSpeed(0.0);
+    fuelTurret.setTurretRotatorMotorSpeed(0.0);
   }
 
   // Returns true when the command should end.
