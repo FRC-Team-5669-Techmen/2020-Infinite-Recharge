@@ -17,6 +17,7 @@ import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
+import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -70,6 +71,10 @@ public class RobotContainer {
     SmartDashboard.putNumber("Shooter Speed", 0.0);
     SmartDashboard.putNumber("Turret Rotator Speed", 0.0);
 
+    //Show which commands are running
+    SmartDashboard.putData(fuelTurret);
+    SmartDashboard.putData(m_controlPanelSubsystem);
+
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
   }
@@ -81,9 +86,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
-    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, false));
-    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, true));
+    //Use Math.Abs since we want positive values only from dashboard.
+    double turretRoatoatialSpeed = Math.abs(SmartDashboard.getNumber("Turret Rotator Speed", 0.0)); //not sure if positive is clockwise
+    double turretShooterSpeed = Math.abs(SmartDashboard.getNumber("Shooter Speed", 0.0)); //positive is clockwise. 
+
+    new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret, turretShooterSpeed)); //shoot while pressed.
+    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE, turretRoatoatialSpeed));
+    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE, turretRoatoatialSpeed));
   }
 
 

@@ -19,11 +19,13 @@ public class ShootPowerCell extends CommandBase {
    */
 
    private final TurretSubsystem fuelTurret;
+   private final double speed;
    
-  public ShootPowerCell(TurretSubsystem fuelTurret) {
+  public ShootPowerCell(TurretSubsystem fuelTurret, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +36,7 @@ public class ShootPowerCell extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fuelTurret.setShooterMotorSpeed(SmartDashboard.getNumber("Shooter Speed", 0.0));
+    fuelTurret.setShooterMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
