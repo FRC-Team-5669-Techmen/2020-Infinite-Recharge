@@ -17,7 +17,8 @@ package frc.robot;
  */
 public final class Constants {
     public static final class IntakeSubsystemConstants {
-        public static final int INTAKE_MOTOR_PORT = 0;
+        public static final int INTAKE_MOTOR_CAN_ID = 0;
+        public static final double MAX_INTAKE_MOTOR_SPEED = 1.0;
     }
 
     public static final class ControlPanelRotatorSubsystemConstansts {
