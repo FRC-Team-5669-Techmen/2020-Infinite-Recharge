@@ -25,7 +25,16 @@ public final class Constants {
     }
 
     public static final class LiftSubsystemConstants {
+        public static final int LIFT_MOTOR_CAN_ID = 0;
+        public static final int PULLEY_MOTOR_CAN_ID = 1;
+        public static final int CARRIAGE_MOTOR_CAN_ID = 2; 
 
+        public static final int PULLEY_UP_BUTTON = 1;
+        public static final int PULLEY_DOWN_BUTTON = 2;
+        public static final int LIFT_UP_BUTTON = 3;
+        public static final int LIFT_DOWN_BUTTON = 4;
+        public static final int CARRIAGE_RIGHT_BUTTON = 5;
+        public static final int CARRIAGE_LEFT_BUTTON = 6;
     }
 
     public static final class TankDrivetrainSubsystemConstants {

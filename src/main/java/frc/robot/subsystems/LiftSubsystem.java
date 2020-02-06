@@ -12,23 +12,25 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LiftSubsystemConstants;
 
 public class LiftSubsystem extends SubsystemBase {
+
   // Joystick Intlialization
   Joystick bStick = new Joystick(0);
 
   // Motor Intialization
-  WPI_TalonSRX pulleyMotor = new WPI_TalonSRX(0);
-  WPI_TalonSRX liftMotor = new WPI_TalonSRX(0);
-  WPI_TalonSRX carriageMotor = new WPI_TalonSRX(0);
+  WPI_TalonSRX pulleyMotor = new WPI_TalonSRX(LiftSubsystemConstants.PULLEY_MOTOR_CAN_ID);
+  WPI_TalonSRX liftMotor = new WPI_TalonSRX(LiftSubsystemConstants.LIFT_MOTOR_CAN_ID);
+  WPI_TalonSRX carriageMotor = new WPI_TalonSRX(LiftSubsystemConstants.CARRIAGE_MOTOR_CAN_ID);
 
   // Button Ports
-  int pulleyUpButton = 1;
-  int pulleyDownButton = 2;
-  int liftUpButton = 3;
-  int liftDownButton = 4;
-  int carriageRightButton = 5;
-  int carriageLeftButton = 6;
+  int pulleyUpButton = LiftSubsystemConstants.PULLEY_UP_BUTTON;
+  int pulleyDownButton = LiftSubsystemConstants.PULLEY_DOWN_BUTTON;
+  int liftUpButton = LiftSubsystemConstants.LIFT_UP_BUTTON;
+  int liftDownButton = LiftSubsystemConstants.LIFT_DOWN_BUTTON;
+  int carriageRightButton = LiftSubsystemConstants.CARRIAGE_RIGHT_BUTTON;
+  int carriageLeftButton = LiftSubsystemConstants.CARRIAGE_LEFT_BUTTON;
 
   private static boolean pulleyPosition = false; // True = up, False = down
   private static boolean liftPosition = false; // True = up, False = down
@@ -37,9 +39,9 @@ public class LiftSubsystem extends SubsystemBase {
    * Creates a new LiftSubsystem.
    */
   public LiftSubsystem() {
-    pulleyMotor.set(0.0);
-    liftMotor.set(0.0);
-    carriageMotor.set(0.0);
+    pulleyMotor.set(0);
+    liftMotor.set(0);
+    carriageMotor.set(0);
   }
 
   @Override
@@ -70,7 +72,7 @@ public class LiftSubsystem extends SubsystemBase {
         pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
         liftPosition = !liftPosition;
       } else {
-        // Lift is already up!
+        // Lift is already up!\
       }
     }
     if(bStick.getRawButton(liftDownButton)) {
