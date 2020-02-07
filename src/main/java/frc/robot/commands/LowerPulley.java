@@ -9,11 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class LiftCommand extends CommandBase {
+public class LowerPulley extends CommandBase {
   /**
-   * Creates a new LiftCommand.
+   * Creates a new LowerPulley.
    */
-  public LiftCommand() {
+  public LowerPulley() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

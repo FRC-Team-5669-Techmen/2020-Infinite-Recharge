@@ -46,52 +46,56 @@ public class LiftSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    if(bStick.getRawButton(pulleyUpButton)) {
-      // This will pull the robot up
-      if(pulleyPosition == false) {
-        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
-        pulleyPosition = !pulleyPosition;
-      } else {
-        // Pulley is already up!
-      }
-    }
-    if(bStick.getRawButton(pulleyDownButton)) {
-      // This will bring the robot back down
-      if(pulleyPosition == true) {
-        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
-        pulleyPosition = !pulleyPosition;
-      } else {
-        // Pulley is already down!
-      }
-    }
+    
+  }
 
-    if(bStick.getRawButton(liftUpButton)) {
-      // This will extend the lift up
-      if(liftPosition == false) {
-        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
-        liftPosition = !liftPosition;
-      } else {
-        // Lift is already up!\
-      }
+  public void raiseLift() {
+    // Raises the lift
+    if(liftPosition == false) {
+      liftMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
+      liftPosition = !liftPosition;
+    } else {
+      // Lift is already up!\
     }
-    if(bStick.getRawButton(liftDownButton)) {
-      // This will bring the lift down 
-      if(liftPosition == true) {
-        pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
-        liftPosition = !liftPosition;
-      } else {
-        // Lift is already down!
-      }
-    }
+  }
 
-    if(bStick.getRawButton(carriageRightButton)) {
-      // This will shift the robot to the right
+  public void lowerLift() {
+    // Lowers the lift
+    if(liftPosition == true) {
+      liftMotor.set(ControlMode.PercentOutput, -0.5); // 1 = 100% 
+      liftPosition = !liftPosition;
+    } else {
+      // Lift is already down!
+    }
+  }
+  
+  public void raisePulley() {
+    // Raises the pulley
+    if(pulleyPosition == false) {
       pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
+      pulleyPosition = !pulleyPosition;
+    } else {
+      // Pulley is already up!
     }
-    if(bStick.getRawButton(carriageLeftButton)) {
-      // This will shift the robot to the left
-      pulleyMotor.set(ControlMode.PercentOutput, 0.2); // 1 = 100% 
+  }
+
+  public void lowerPulley() {
+    // Lowers the pulley
+    if(pulleyPosition == true) {
+      pulleyMotor.set(ControlMode.PercentOutput, -0.5); // 1 = 100% 
+      pulleyPosition = !pulleyPosition;
+    } else {
+      // Pulley is already down!
     }
+  }
+
+  public void moveCarriageRight() {
+    // Moves the carriage to the right
+    carriageMotor.set(ControlMode.PercentOutput, 0.5);
+  }
+
+  public void moveCarriageLeft() {
+    // Moves the carriage to the left
+    carriageMotor.set(ControlMode.PercentOutput, -0.5);
   }
 }

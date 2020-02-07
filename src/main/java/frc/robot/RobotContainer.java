@@ -17,8 +17,10 @@ import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.MoveControlPaneBasedOnColor;
+import frc.robot.commands.RaiseLift;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -37,6 +39,7 @@ public class RobotContainer {
   Joystick bStick = new Joystick(0);
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
+  private final LiftSubsystem liftSubsystem = new LiftSubsystem();
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
 
   // A simple auto routine that drives forward a specified distance, and then stops.
@@ -80,6 +83,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
+    new JoystickButton(buttonBox, 1).whileActiveOnce(new RaiseLift(liftSubsystem)); 
   }
 
 
