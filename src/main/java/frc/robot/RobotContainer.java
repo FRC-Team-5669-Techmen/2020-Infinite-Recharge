@@ -15,9 +15,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.LowerLift;
+import frc.robot.commands.LowerPulley;
+import frc.robot.commands.MoveCarriageLeft;
+import frc.robot.commands.MoveCarriageRight;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.MoveControlPaneBasedOnColor;
 import frc.robot.commands.RaiseLift;
+import frc.robot.commands.RaisePulley;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
@@ -83,7 +88,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
-    new JoystickButton(buttonBox, 1).whileActiveOnce(new RaiseLift(liftSubsystem)); 
+
+    new JoystickButton(buttonBox, 1).whileActiveOnce(new RaiseLift(liftSubsystem));
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new LowerLift(liftSubsystem));
+
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new RaisePulley(liftSubsystem));
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new LowerPulley(liftSubsystem));
+
+    new JoystickButton(buttonBox, 2).whileActiveContinuous(new MoveCarriageRight(liftSubsystem));
+    new JoystickButton(buttonBox, 2).whileActiveContinuous(new MoveCarriageLeft(liftSubsystem));
+
   }
 
 

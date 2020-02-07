@@ -91,11 +91,11 @@ public class LiftSubsystem extends SubsystemBase {
 
   public void moveCarriageRight() {
     // Moves the carriage to the right
-    carriageMotor.set(ControlMode.PercentOutput, 0.5);
+    carriageMotor.set(ControlMode.PercentOutput, 0.2);
   }
 
   public void moveCarriageLeft() {
     // Moves the carriage to the left
-    carriageMotor.set(ControlMode.PercentOutput, -0.5);
+    carriageMotor.set(ControlMode.PercentOutput, -0.2);
   }
 }

@@ -8,13 +8,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.LiftSubsystem;
 
 public class MoveCarriageRight extends CommandBase {
+  private final LiftSubsystem lift;
   /**
    * Creates a new MoveCarriageRight.
    */
-  public MoveCarriageRight() {
+  public MoveCarriageRight(LiftSubsystem lift) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.lift = lift;
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
