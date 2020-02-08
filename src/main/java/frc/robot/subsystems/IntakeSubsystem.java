@@ -41,11 +41,23 @@ public class IntakeSubsystem extends SubsystemBase {
     if(speed <= -MAX|| speed >= MAX)
       intakeWheels.set(speed);
   }
+
   public void deployIntake(){
     doubleSoleniod.set(Value.kForward);
   }
+
   public void retrackIntake(){
     doubleSoleniod.set(Value.kReverse);
   }
+
+ public void turnOffPistons(){
+    doubleSoleniod.set(Value.kOff);
+  } 
+
+  public void loadMagazine(){
+
+  }
+
+
 }
 
