@@ -26,19 +26,20 @@ public class IntakeOn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    intake.deployIntake();
+    intake.setMotorOn(0.30);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setMotorOn(0.30);
-    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.setMotorOn(0.0);
+    intake.deployIntake();
 
   }
 
