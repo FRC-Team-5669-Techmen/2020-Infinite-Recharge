@@ -20,8 +20,8 @@ public final class Constants {
         public static final int INTAKE_MOTOR_PORT = 0;
     }
 
-    public static final class ControlPanelRotatorSubsystemConstansts {
-
+    public static final class ControlPanelRotatorSubsystemConstants {
+        
     }
 
     public static final class LiftSubsystemConstants {

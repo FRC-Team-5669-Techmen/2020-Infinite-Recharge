@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ShootPowerCell;
-import frc.robot.commands.MoveControlPaneBasedOnColor;
+import frc.robot.commands.MoveControlPanelBasedOnColor;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -80,6 +80,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
+    new JoystickButton(buttonBox, 1).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
+    //new JoystickButton(buttonBox, 1).whileActiveOnce(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem)); //shoot while pressed.
   }
 
 
