@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ContollerConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ManualMecanumDrive;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.MoveControlPaneBasedOnColor;
@@ -22,6 +23,7 @@ import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -41,6 +43,7 @@ public class RobotContainer {
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
+  private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
   
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
 
@@ -99,10 +102,17 @@ public class RobotContainer {
     double turretRoatoatialSpeed = Math.abs(SmartDashboard.getNumber("Turret Rotator Speed", 0.0)); //not sure if positive is clockwise
     double turretShooterSpeed = Math.abs(SmartDashboard.getNumber("Shooter Speed", 0.0)); //positive is clockwise. 
 
+    double joystickX = new Joystick(1).getRawAxis(0); // 0 = horizontal            1 = vertical               2 = twist
+    double joystickY = new Joystick(1).getRawAxis(1); // 0 = horizontal            1 = vertical               2 = twist
+    double joystickZ = new Joystick(1).getRawAxis(2); // 0 = horizontal            1 = vertical               2 = twist
+
     new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, turretShooterSpeed)); //shoot while pressed.
     new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE, turretRoatoatialSpeed));
     new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE, turretRoatoatialSpeed));
 
+    if(joystickY != 0.0) {
+      new ManualMecanumDrive(mecanumDriveSubsystem, joystickX, joystickY, joystickZ);
+    }
   }
 
 
