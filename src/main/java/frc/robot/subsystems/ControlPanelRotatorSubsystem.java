@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -18,7 +17,6 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -30,15 +28,12 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
   private final CANSparkMax colorManipulatorMotor =  
-    new CANSparkMax(4, MotorType.kBrushless);
+    new CANSparkMax(4, MotorType.kBrushed);
 
   private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
-  private boolean buttonEnabled = false;
-  private boolean colorFound;
-
   Joystick bStick = new Joystick(0);
 
   /**
@@ -76,8 +71,7 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
   public void moveControlPanelRotator() {
     //motor code goes here
     SmartDashboard.putString("Color manipulator rotating?", "True");
-    SmartDashboard.putNumber("manipulator speed", .2);
-    double manipulatorSpeed = SmartDashboard.getNumber("manipulator speed",.2);
+    double manipulatorSpeed = .7;
     colorManipulatorMotor.set(manipulatorSpeed);
 
   }

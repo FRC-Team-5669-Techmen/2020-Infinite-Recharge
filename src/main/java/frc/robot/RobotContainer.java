@@ -19,7 +19,7 @@ import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.MoveControlPanelBasedOnColor;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.TurretSubsystem;
+//import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -36,7 +36,7 @@ public class RobotContainer {
 
   Joystick bStick = new Joystick(0);
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
-  private final TurretSubsystem fuelTurret = new TurretSubsystem();
+  //private final TurretSubsystem fuelTurret = new TurretSubsystem();
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
 
   // A simple auto routine that drives forward a specified distance, and then stops.
@@ -79,7 +79,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
+    //new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
     new JoystickButton(buttonBox, 1).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
     //new JoystickButton(buttonBox, 1).whileActiveOnce(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem)); //shoot while pressed.
   }
