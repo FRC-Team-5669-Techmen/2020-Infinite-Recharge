@@ -38,6 +38,9 @@ public final class Constants {
         public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 3;
         public static final double SHOOTER_MAX_SPEED = 1.0;
         public static final double ROTATOR_MAX_SPEED = 1.0;
+        public static final String SHOOTER_SPEED_KEY_STRING = "Shooter Speed";
+        public static final String ROTATOR_SPEED_KEY_STRING = "Turret Rotator Speed";
+
     }
 
     public static final class ContollerConstants {

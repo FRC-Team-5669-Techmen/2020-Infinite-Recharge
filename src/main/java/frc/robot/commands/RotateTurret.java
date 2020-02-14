@@ -9,6 +9,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
@@ -34,6 +35,15 @@ public class RotateTurret extends CommandBase {
     addRequirements(this.fuelTurret);
     this.direction = direction;
     this.speed = speed;
+  }
+
+  public RotateTurret(TurretSubsystem fuelTurret, Direction direction) {
+    // Use addRequirements() here to declare subsystem dependencies.
+       //Use Math.Abs since we want positive values only from dashboard.
+    this.fuelTurret = fuelTurret;
+    addRequirements(this.fuelTurret);
+    this.direction = direction;
+    this.speed = Math.abs(SmartDashboard.getNumber("Turret Rotator Speed", 0.0)); //not sure if positive is clockwise
   }
 
   // Called when the command is initially scheduled.

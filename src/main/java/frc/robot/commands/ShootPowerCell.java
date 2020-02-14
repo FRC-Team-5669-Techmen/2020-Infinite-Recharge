@@ -9,8 +9,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class ShootPowerCell extends CommandBase {
@@ -19,24 +21,43 @@ public class ShootPowerCell extends CommandBase {
    */
 
    private final TurretSubsystem fuelTurret;
-   private final double speed;
+   private DoubleSupplier speed; //not making final.
    
-  public ShootPowerCell(TurretSubsystem fuelTurret, double speed) {
+    /*
+  Use a set speed
+  */
+  public ShootPowerCell(TurretSubsystem fuelTurret, DoubleSupplier speed) {
+     /*
+  Use to set speed
+  */
     // Use addRequirements() here to declare subsystem dependencies.
+       //Use Math.Abs since we want positive values only from dashboard.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
     this.speed = speed;
   }
 
+  /*
+  Uses SmartDashboard numbers
+  */
+  public ShootPowerCell(TurretSubsystem fuelTurret) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.fuelTurret = fuelTurret;
+    addRequirements(this.fuelTurret);
+  }
+
+
+
   // Called when the command is initially scheduled.
+  //TODO IMplement this stragetfy for rotate turret
   @Override
   public void initialize() {
+    fuelTurret.setShooterMotorSpeed(this.speed.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fuelTurret.setShooterMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

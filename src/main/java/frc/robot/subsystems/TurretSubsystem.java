@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMax;
@@ -15,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.TurretSubsystemConstants;
@@ -35,24 +37,18 @@ public class TurretSubsystem extends SubsystemBase {
   private static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.FOLLOWER_SHOOTER_MOTOR_CAN_ID;
   private static final int TURRET_ROTATOR_CAN_ID = TurretSubsystemConstants.TURRET_ROTATOR_MOTOR_CAN_ID;
 
-  private final CANSparkMax shooterMotor =  
-    new CANSparkMax(SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
-  
- 
-  private final CANSparkMax followerShooterMotor =  
-    new CANSparkMax(FOLLOWER_SHOOTER_MOTOR_CAN_ID, MotorType.kBrushless);
+  private final WPI_TalonFX shooterMotor = new WPI_TalonFX(SHOOTER_MOTOR_CAN_ID);
+  private final WPI_TalonFX followerShooterMotor = new WPI_TalonFX(FOLLOWER_SHOOTER_MOTOR_CAN_ID);
 
   private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
 
   public TurretSubsystem() {
+    //For debugging purposes, allow tester to set speed
     
-    shooterMotor.restoreFactoryDefaults(); //not to sure about how this works, but it is used a lot.
-    followerShooterMotor.restoreFactoryDefaults();
-    
-
-    followerShooterMotor.follow(shooterMotor, true);
+    followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
 
     shooterMotor.set(0.0);
+
     turretRotatorMotor.set(0.0);
   }
 
