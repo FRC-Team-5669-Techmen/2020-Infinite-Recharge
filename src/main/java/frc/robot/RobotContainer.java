@@ -59,6 +59,10 @@ public class RobotContainer {
     configureButtonBindings();
     
     // Add commands to the autonomous command chooser
+    SmartDashboard.putData("Shoot Power Cells", new ShootPowerCell(fuelTurret));
+    SmartDashboard.putData("Rotate Turret Left", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    SmartDashboard.putData("Roate Turret Right", new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+
 
     //m_chooser.addOption("Test Turret", testShooter);
     fuelTurret.setName("Fuel Turret");

@@ -35,6 +35,7 @@ public class ShootPowerCell extends CommandBase {
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
     this.speed = speed;
+    setName("Shoot Power Cells");
   }
 
   /*
@@ -45,6 +46,7 @@ public class ShootPowerCell extends CommandBase {
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
     speed = () -> {return TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED;};
+    setName("Shoot Power Cells");
   }
 
 

@@ -44,17 +44,21 @@ public class TurretSubsystem extends SubsystemBase {
 
   public TurretSubsystem() {
     //For debugging purposes, allow tester to set speed
-    
-    //followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
-
     super();
+    
+
+    //followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
+    //followerShooterMotor.set(Motion, demand0, demand1Type, demand1);
+
+    
+
 
     shooterMotor.set(0.0);
 
     turretRotatorMotor.set(0.0);
 
     //add them to live window
-    setName("Turret Rotator Subsysyem");
+    setName("Turret Rotator Subsysyem");//default name
     addChild("Shooter Motor", shooterMotor);
     addChild("Follower Shooter Motor", followerShooterMotor);
     addChild("Turret Rotator Motor", turretRotatorMotor);
