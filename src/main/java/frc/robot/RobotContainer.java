@@ -37,7 +37,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   Joystick bStick = new Joystick(0);
-  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
+  //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
 
@@ -51,9 +51,6 @@ public class RobotContainer {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
     
 
-
-
-
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -64,6 +61,7 @@ public class RobotContainer {
     // Add commands to the autonomous command chooser
 
     //m_chooser.addOption("Test Turret", testShooter);
+    fuelTurret.setName("Fuel Turret");
     
 
     // Put the chooser on the dashboard
@@ -71,7 +69,7 @@ public class RobotContainer {
 
     //Show which commands are running
     SmartDashboard.putData(fuelTurret);
-    SmartDashboard.putData(m_controlPanelSubsystem);
+    //SmartDashboard.putData(m_controlPanelSubsystem);
 
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser

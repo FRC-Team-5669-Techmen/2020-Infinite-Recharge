@@ -9,8 +9,11 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class RotateTurret extends CommandBase {
@@ -24,12 +27,12 @@ public class RotateTurret extends CommandBase {
 
    private final TurretSubsystem fuelTurret;
    private final Direction direction;
-   private final double speed;
+   private final DoubleSupplier speed;
    
   /**
    * If set to true, rotates left. If set to false rotates right
    */
-  public RotateTurret(TurretSubsystem fuelTurret, Direction direction, double speed) {
+  public RotateTurret(TurretSubsystem fuelTurret, Direction direction, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
@@ -43,23 +46,23 @@ public class RotateTurret extends CommandBase {
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
     this.direction = direction;
-    this.speed = Math.abs(SmartDashboard.getNumber("Turret Rotator Speed", 0.0)); //not sure if positive is clockwise
+    speed = () -> {return TurretSubsystemConstants.ROTATOR_DEFAULT_SPEED;};
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Check if -speed is clockwise or counterclockwise.
+    if(direction == Direction.CLOCKWISE)
+      fuelTurret.setTurretRotatorMotorSpeed(-speed.getAsDouble());
+
+    else
+      fuelTurret.setTurretRotatorMotorSpeed(speed.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Check if -speed is clockwise or counterclockwise.
-    if(direction == Direction.CLOCKWISE)
-      fuelTurret.setTurretRotatorMotorSpeed(-speed);
-
-    else
-      fuelTurret.setTurretRotatorMotorSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

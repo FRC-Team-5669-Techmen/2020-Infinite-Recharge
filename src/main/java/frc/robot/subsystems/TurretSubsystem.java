@@ -45,18 +45,26 @@ public class TurretSubsystem extends SubsystemBase {
   public TurretSubsystem() {
     //For debugging purposes, allow tester to set speed
     
-    followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
+    //followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
+
+    super();
 
     shooterMotor.set(0.0);
 
     turretRotatorMotor.set(0.0);
+
+    //add them to live window
+    setName("Turret Rotator Subsysyem");
+    addChild("Shooter Motor", shooterMotor);
+    addChild("Follower Shooter Motor", followerShooterMotor);
+    addChild("Turret Rotator Motor", turretRotatorMotor);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //updateLimelightValues();
-    //displayLimelightTelemetry();
+    updateLimelightValues();
+    displayLimelightTelemetry();
     
   }
 

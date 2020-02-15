@@ -21,7 +21,7 @@ public class ShootPowerCell extends CommandBase {
    */
 
    private final TurretSubsystem fuelTurret;
-   private DoubleSupplier speed; //not making final.
+   private final DoubleSupplier speed; //not making final.
    
     /*
   Use a set speed
@@ -44,12 +44,13 @@ public class ShootPowerCell extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
+    speed = () -> {return TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED;};
   }
 
 
 
   // Called when the command is initially scheduled.
-  //TODO IMplement this stragetfy for rotate turret
+  //TODO Implement this stragetfy for rotate turret
   @Override
   public void initialize() {
     fuelTurret.setShooterMotorSpeed(this.speed.getAsDouble());
