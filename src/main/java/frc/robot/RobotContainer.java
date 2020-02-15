@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ContollerConstants;
+import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
@@ -58,8 +59,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
-    // Add commands to the autonomous command chooser
-    SmartDashboard.putData("Shoot Power Cells", new ShootPowerCell(fuelTurret));
+    // Add commands to SmartDashboard
+    SmartDashboard.putData("Shoot Power Cells", new ShootPowerCell(fuelTurret, () -> {return 1.00;} ));
     SmartDashboard.putData("Rotate Turret Left", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
     SmartDashboard.putData("Roate Turret Right", new RotateTurret(fuelTurret, Direction.CLOCKWISE));
 
@@ -86,7 +87,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
     new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
   }

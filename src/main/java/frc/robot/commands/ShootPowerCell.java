@@ -34,6 +34,7 @@ public class ShootPowerCell extends CommandBase {
        //Use Math.Abs since we want positive values only from dashboard.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
+    
     this.speed = speed;
     setName("Shoot Power Cells");
   }

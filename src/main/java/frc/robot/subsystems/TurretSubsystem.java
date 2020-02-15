@@ -7,7 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMax;
@@ -42,6 +45,9 @@ public class TurretSubsystem extends SubsystemBase {
 
   private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
 
+  private final TalonFXInvertType shooterMotorInvert = TalonFXInvertType.CounterClockwise; //might be overkill, but just here for readability
+  private final TalonFXInvertType followerShooterMotorInvert = TalonFXInvertType.Clockwise;
+
   public TurretSubsystem() {
     //For debugging purposes, allow tester to set speed
     super();
@@ -49,13 +55,10 @@ public class TurretSubsystem extends SubsystemBase {
 
     //followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
     //followerShooterMotor.set(Motion, demand0, demand1Type, demand1);
+    configShooterMotors();
 
-    
-
-
-    shooterMotor.set(0.0);
-
-    turretRotatorMotor.set(0.0);
+    setShooterMotorSpeed(0.0);
+    setTurretRotatorMotorSpeed(0.0);
 
     //add them to live window
     setName("Turret Rotator Subsysyem");//default name
@@ -69,6 +72,10 @@ public class TurretSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     updateLimelightValues();
     displayLimelightTelemetry();
+
+    //followerShooterMotor.follow(shooterMotor);
+    //followerShooterMotor.
+    
     
   }
 
@@ -92,7 +99,7 @@ public class TurretSubsystem extends SubsystemBase {
 
   public void setShooterMotorSpeed(double speed) {  //ball
     if (speed >= -SHOOTER_MAX_SPEED || speed <= SHOOTER_MAX_SPEED)
-      shooterMotor.set(speed);
+      shooterMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setTurretRotatorMotorSpeed(double speed) {  //ball
@@ -115,6 +122,12 @@ public class TurretSubsystem extends SubsystemBase {
   public boolean targetLocked(){
     //needs implementation
       return false;
+  }
+
+  private void configShooterMotors(){
+    followerShooterMotor.follow(shooterMotor); //kind of dumb the Phoenix requires the follow call every time. Possible to set flag, Phoenix?  
+    shooterMotor.setInverted(shooterMotorInvert);
+    followerShooterMotor.setInverted(followerShooterMotorInvert);
   }
 
 
