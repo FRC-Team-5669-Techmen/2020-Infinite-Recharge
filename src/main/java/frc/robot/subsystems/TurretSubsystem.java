@@ -19,6 +19,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,8 +46,12 @@ public class TurretSubsystem extends SubsystemBase {
 
   private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
 
+  private final Servo hoodAdjusterServo = new Servo(0);
+  private final Servo hoodAdjusterFollowerServo = new Servo (1);
+
   private final TalonFXInvertType shooterMotorInvert = TalonFXInvertType.CounterClockwise; //might be overkill, but just here for readability
   private final TalonFXInvertType followerShooterMotorInvert = TalonFXInvertType.Clockwise;
+  
 
   public TurretSubsystem() {
     //For debugging purposes, allow tester to set speed
@@ -128,6 +133,17 @@ public class TurretSubsystem extends SubsystemBase {
     followerShooterMotor.follow(shooterMotor); //kind of dumb the Phoenix requires the follow call every time. Possible to set flag, Phoenix?  
     shooterMotor.setInverted(shooterMotorInvert);
     followerShooterMotor.setInverted(followerShooterMotorInvert);
+  }
+
+  public void adjustAngle(double angle){
+    //this might evolve into its own command. Angle will also depend on speed
+  }
+
+  public void adjustTurretHood(double levelOfExtension){
+   // hoodAdjusterFollowerServo.set
+    
+    
+
   }
 
 
