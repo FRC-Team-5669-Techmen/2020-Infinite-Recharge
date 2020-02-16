@@ -17,10 +17,11 @@ package frc.robot;
  */
 public final class Constants {
     public static final class IntakeSubsystemConstants {
-        public static final int INTAKE_MOTOR_PORT = 0;
-        public static final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = 0;
-        public static final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = 1;
-    }
+        public static final int INTAKE_MOTOR_CAN_ID = 0;
+        public static final double MAX_INTAKE_MOTOR_SPEED = 0.5;
+        public static final int SOLENIOD_FORWARD_CHANNEL = 0;
+        public static final int SOLENIOD_REVERSE_CHANNEL = 1;
+      }
 
     public static final class ControlPanelRotatorSubsystemConstansts {
 
@@ -35,6 +36,15 @@ public final class Constants {
     }
 
     public static final class TurretSubsystemConstants {
-        
+        public static final int SHOOTER_MOTOR_CAN_ID = 1;
+        public static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = 2;
+        public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 3;
+        public static final double SHOOTER_MAX_SPEED = 1.0;
+        public static final double ROTATOR_MAX_SPEED = 1.0;
+    }
+
+    public static final class ContollerConstants {
+        public static final int BUTTON_BOX_CONTROLLER_PORT = 0;
+
     }
 }

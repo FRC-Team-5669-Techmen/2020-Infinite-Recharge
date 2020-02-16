@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeSubsystemConstants;
 
@@ -21,19 +22,17 @@ public class IntakeSubsystem extends SubsystemBase {
   private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL;
   private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL;
   
-  private final WPI_TalonFX intakeWheelMotor = new WPI_TalonFX(0);  //not sure if should use WPI_TalonFX or TalonFX
-
-  /*Need to make sure it is a double solenoid. If not, change to single solenoid
-  private final DoubleSolenoid intakeDeployerPistons = new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);
-  */
-
-  //going to need to add magazineMotor once you figure out motor contoller they will use
+  private final WPI_TalonFX intakeWheels = new WPI_TalonFX(0);
+  private final DoubleSolenoid doubleSoleniod = 
+  new DoubleSolenoid(IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL, IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL);
+  private final double MAX = IntakeSubsystemConstants.MAX_INTAKE_MOTOR_SPEED;
   
-  //Pneumatics: not sure double or single 
-  //likely double? If double, would do this
+  //Pneumatics: 2x double
 
   public IntakeSubsystem() {
+    intakeWheels.set(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
 
+    
   }
 
   @Override
@@ -46,13 +45,27 @@ public class IntakeSubsystem extends SubsystemBase {
   public void deployIntake(){
   }
 
-  public void retractIntake(){}
+  public void setMotorOn(double speed){
+    if(speed <= -MAX|| speed >= MAX)
+      intakeWheels.set(speed);
+  }
 
-  public void turnOnIntakeWheelMotors(){}
+  public void deployIntake(){
+    doubleSoleniod.set(Value.kForward);
+  }
 
-  public void turnOffIntakeWheelMotors(){}
+  public void retrackIntake(){
+    doubleSoleniod.set(Value.kReverse);
+  }
 
-  public void turnOnMagazineCarouselMotor(){}
+ public void turnOffPistons(){
+    doubleSoleniod.set(Value.kOff);
+  } 
 
-  public void turnOffMagazineCarouselMotor(){}
+  public void loadMagazine(){
+
+  }
+
+
 }
+
