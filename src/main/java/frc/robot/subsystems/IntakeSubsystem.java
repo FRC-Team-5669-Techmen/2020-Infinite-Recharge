@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -18,8 +19,11 @@ public class IntakeSubsystem extends SubsystemBase {
   /**
    * Creates a new IntakeSubsystem.
    */
+
+  private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL;
+  private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL;
   
-  private final WPI_TalonFX intakeWheels = new WPI_TalonFX(0);
+  private final WPI_VictorSPX intakeWheels = new WPI_VictorSPX(0);
   private final DoubleSolenoid doubleSoleniod = 
   new DoubleSolenoid(IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL, IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL);
   private final double MAX = IntakeSubsystemConstants.MAX_INTAKE_MOTOR_SPEED;
@@ -35,7 +39,9 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
+  }  
+
+  //Find implementations for these methods!
 
   public void setMotorOn(double speed){
     if(speed <= -MAX|| speed >= MAX)
