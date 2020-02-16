@@ -22,6 +22,7 @@ import frc.robot.commands.MoveControlPaneBasedOnColor;
 import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -38,15 +39,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   Joystick bStick = new Joystick(0);
-  //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
+
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
+  
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
-
-  // A simple auto routine that drives forward a specified distance, and then stops.
-
-  //no longer needed. Better to have in perodic
-  //private final Command testShooter = new ShootPowerCell(fuelTurret); //rredendant
-
 
   // A chooser for autonomous commands. We will use this for testing individual subsystem too.
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -68,13 +66,11 @@ public class RobotContainer {
     //m_chooser.addOption("Test Turret", testShooter);
     fuelTurret.setName("Fuel Turret");
     
-
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
 
     //Show which commands are running
     SmartDashboard.putData(fuelTurret);
-    //SmartDashboard.putData(m_controlPanelSubsystem);
 
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
