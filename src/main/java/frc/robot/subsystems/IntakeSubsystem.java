@@ -24,6 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
   
   private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(0);
 
+  //Pneuamtics not yet installed, commenting out untill installed
   private final DoubleSolenoid doubleSoleniod = 
   new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);
   private final double MAX = IntakeSubsystemConstants.MAX_INTAKE_MOTOR_SPEED;
@@ -46,20 +47,22 @@ public class IntakeSubsystem extends SubsystemBase {
   //Find implementations for these methods!
 
   public void setIntakeMotorOn(double speed){
+    /*
     if(speed <= -MAX|| speed >= MAX)
       intakeWheelMotor.set(speed);
+    */
   }
 
   public void deployIntake(){
-    doubleSoleniod.set(Value.kForward);
+   // doubleSoleniod.set(Value.kForward);
   }
 
   public void retrackIntake(){
-    doubleSoleniod.set(Value.kReverse);
+    //doubleSoleniod.set(Value.kReverse);
   }
 
  public void turnOffPistons(){
-    doubleSoleniod.set(Value.kOff);
+    //doubleSoleniod.set(Value.kOff);
   } 
 
   public void loadMagazine(){
