@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -20,18 +19,21 @@ public class IntakeSubsystem extends SubsystemBase {
    * Creates a new IntakeSubsystem.
    */
 
-  private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL;
-  private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL;
+  private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL;
+  private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL;
   
-  private final WPI_VictorSPX intakeWheels = new WPI_VictorSPX(0);
+  private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(0);
+
   private final DoubleSolenoid doubleSoleniod = 
-  new DoubleSolenoid(IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL, IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL);
+  new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);
   private final double MAX = IntakeSubsystemConstants.MAX_INTAKE_MOTOR_SPEED;
   
   //Pneumatics: 2x double
 
   public IntakeSubsystem() {
-    intakeWheels.set(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
+    intakeWheelMotor.set(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
+    setName("Intake Subsystem");
+    addChild("Intake Motor", intakeWheelMotor);
 
     
   }
@@ -43,9 +45,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
   //Find implementations for these methods!
 
-  public void setMotorOn(double speed){
+  public void setIntakeMotorOn(double speed){
     if(speed <= -MAX|| speed >= MAX)
-      intakeWheels.set(speed);
+      intakeWheelMotor.set(speed);
   }
 
   public void deployIntake(){
