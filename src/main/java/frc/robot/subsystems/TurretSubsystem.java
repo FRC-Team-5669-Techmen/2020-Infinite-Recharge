@@ -30,10 +30,7 @@ public class TurretSubsystem extends SubsystemBase {
    * Creates a new TurretSubsystem.
    **/
 
-  private static double limelightX = 0.0;
-  private static double limelightY = 0.0;
-  private static double limgelightArea = 0.0;
-  private static boolean limelightTargetVisible = false;
+ 
   private static final double SHOOTER_MAX_SPEED = TurretSubsystemConstants.SHOOTER_MAX_SPEED;
   private static final double ROTATOR_MAX_SPEED = TurretSubsystemConstants.ROTATOR_MAX_SPEED;
   
@@ -48,6 +45,8 @@ public class TurretSubsystem extends SubsystemBase {
 
   private final Servo hoodAdjusterServo = new Servo(0);
   private final Servo hoodAdjusterFollowerServo = new Servo (1);
+
+  //also need limit swtiches for the turret. Those will be digital inputs
 
   private final TalonFXInvertType shooterMotorInvert = TalonFXInvertType.CounterClockwise; //might be overkill, but just here for readability
   private final TalonFXInvertType followerShooterMotorInvert = TalonFXInvertType.Clockwise;
@@ -75,8 +74,7 @@ public class TurretSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    updateLimelightValues();
-    displayLimelightTelemetry();
+   
 
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
@@ -84,23 +82,7 @@ public class TurretSubsystem extends SubsystemBase {
     
   }
 
-  private void displayLimelightTelemetry(){ //internal; no need to expose this method outside
-    //Test code for the Limelight from: http://docs.limelightvision.io/en/latest/getting_started.html#basic-programming 
-    SmartDashboard.putNumber("LimelightX", limelightX);
-    SmartDashboard.putNumber("LimelightY", limelightY);
-    SmartDashboard.putNumber("LimelightArea", limgelightArea);
-    SmartDashboard.putBoolean("LimelightTargetValid", limelightTargetVisible);
-
-  }
-
-  private void updateLimelightValues(){
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    limelightX = table.getEntry("tx").getDouble(0.0);
-    limelightY = table.getEntry("ty").getDouble(0.0);
-    limgelightArea = table.getEntry("ta").getDouble(0.0);//hi
-
-    limelightTargetVisible = table.getEntry("tv").getDouble(0.0) < 1.00 ? false : true;
-  }
+  
 
   public void setShooterMotorSpeed(double speed) {  //ball
     if (speed >= -SHOOTER_MAX_SPEED || speed <= SHOOTER_MAX_SPEED)
@@ -112,23 +94,7 @@ public class TurretSubsystem extends SubsystemBase {
       turretRotatorMotor.set(speed);
   }
 
-  public double getLimeLightX(){ //make command
-    return limelightX;
-  }
-
-  public double getLimeLightY(){
-    return limelightY;
-  }
-
-  public boolean targetInView(){
-    return limelightTargetVisible;
-  }
-
-  public boolean targetLocked(){
-    //needs implementation
-      return false;
-  }
-
+ 
   private void configShooterMotors(){
     followerShooterMotor.follow(shooterMotor); //kind of dumb the Phoenix requires the follow call every time. Possible to set flag, Phoenix?  
     shooterMotor.setInverted(shooterMotorInvert);
@@ -141,10 +107,17 @@ public class TurretSubsystem extends SubsystemBase {
 
   public void adjustTurretHood(double levelOfExtension){
    // hoodAdjusterFollowerServo.set
-    
-    
-
   }
+
+  public boolean atLeftLimit(){
+    return false; //needs implementation with limite switches
+  }
+
+  public boolean atRightLimit(){
+    return false; //needs implemtaiotn with limit swtiches
+  }
+
+
 
 
 }
