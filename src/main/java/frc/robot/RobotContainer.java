@@ -18,15 +18,19 @@ import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
+import frc.robot.commands.RotateMagazine.MagazineDirection;
 import frc.robot.commands.MoveControlPaneBasedOnColor;
+import frc.robot.commands.RotateMagazine;
 import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -40,9 +44,11 @@ public class RobotContainer {
 
   Joystick bStick = new Joystick(0);
 
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
+
+  private final MagazineSubsystem magazine = new MagazineSubsystem();
   
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
 
@@ -83,9 +89,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
-    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
-    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    //new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
+    //new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    //new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
+    new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));
+    //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
+    //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
   }
 
 
