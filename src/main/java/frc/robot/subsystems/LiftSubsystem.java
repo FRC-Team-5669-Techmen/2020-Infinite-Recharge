@@ -52,7 +52,7 @@ public class LiftSubsystem extends SubsystemBase {
   public void raiseLift() {
     // Raises the lift
     if(liftPosition == false) {
-      liftMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
+      liftMotor.set(ControlMode.PercentOutput, 0.1); // 1 = 100% 
       liftPosition = !liftPosition;
     } else {
       // Lift is already up!\
@@ -62,7 +62,7 @@ public class LiftSubsystem extends SubsystemBase {
   public void lowerLift() {
     // Lowers the lift
     if(liftPosition == true) {
-      liftMotor.set(ControlMode.PercentOutput, -0.5); // 1 = 100% 
+      liftMotor.set(ControlMode.PercentOutput, -0.1); // 1 = 100% 
       liftPosition = !liftPosition;
     } else {
       // Lift is already down!
@@ -72,7 +72,7 @@ public class LiftSubsystem extends SubsystemBase {
   public void raisePulley() {
     // Raises the pulley
     if(pulleyPosition == false) {
-      pulleyMotor.set(ControlMode.PercentOutput, 0.5); // 1 = 100% 
+      pulleyMotor.set(ControlMode.PercentOutput, 0.1); // 1 = 100% 
       pulleyPosition = !pulleyPosition;
     } else {
       // Pulley is already up!
@@ -82,7 +82,7 @@ public class LiftSubsystem extends SubsystemBase {
   public void lowerPulley() {
     // Lowers the pulley
     if(pulleyPosition == true) {
-      pulleyMotor.set(ControlMode.PercentOutput, -0.5); // 1 = 100% 
+      pulleyMotor.set(ControlMode.PercentOutput, -0.1); // 1 = 100% 
       pulleyPosition = !pulleyPosition;
     } else {
       // Pulley is already down!
@@ -91,11 +91,11 @@ public class LiftSubsystem extends SubsystemBase {
 
   public void moveCarriageRight() {
     // Moves the carriage to the right
-    carriageMotor.set(ControlMode.PercentOutput, 0.2);
+    carriageMotor.set(ControlMode.PercentOutput, 0.1);
   }
 
   public void moveCarriageLeft() {
     // Moves the carriage to the left
-    carriageMotor.set(ControlMode.PercentOutput, -0.2);
+    carriageMotor.set(ControlMode.PercentOutput, -0.1);
   }
 }
