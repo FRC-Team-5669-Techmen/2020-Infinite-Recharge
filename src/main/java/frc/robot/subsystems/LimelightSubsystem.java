@@ -28,7 +28,9 @@ public class LimelightSubsystem extends SubsystemBase {
    * It is currently unde development. Only functionaly core to our usage is made.
    */
   public LimelightSubsystem() {
-    fieldTarget = FieldTarget.POWER_PORT;
+
+    setCameraMode(CameraMode.VISION_PROCESSOR);
+    setFieldVisionTarget(FieldTarget.POWER_PORT);
     //limelighTableInstance.getEntry("pipeline")
 
   }
@@ -88,6 +90,11 @@ public class LimelightSubsystem extends SubsystemBase {
     limelighTable.getEntry("pipeline").setDouble(this.fieldTarget.PIPELINE);
   }
 
+  public void setCameraMode(CameraMode camMode){
+    this.cameraMode = camMode;
+    limelighTable.getEntry("camMode").setDouble(this.cameraMode.CAMMODE);
+  }
+
   public FieldTarget getFieldVisionTarget(){
     return this.fieldTarget;
   }
@@ -98,15 +105,14 @@ public class LimelightSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", limelightY);
     SmartDashboard.putNumber("LimelightArea", limgelightArea);
     SmartDashboard.putBoolean("LimelightTargetValid", limelightTargetVisible);
-    SmartDashboard.putString("Current Target", fieldTarget.toString());
-
+    SmartDashboard.putString("Current Target", fieldTarget.toString().replace('_', ' ').toLowerCase());
+    SmartDashboard.putString("Camera Mode", cameraMode.toString()); //want to see if toString() makes a difference
   }
 
   private void updateLimelightValues(){
     limelightX = limelighTable.getEntry("tx").getDouble(0.0);
     limelightY = limelighTable.getEntry("ty").getDouble(0.0);
     limgelightArea = limelighTable.getEntry("ta").getDouble(0.0);//hi
-
     limelightTargetVisible = limelighTable.getEntry("tv").getDouble(0.0) < 1.00 ? false : true;
   }
 

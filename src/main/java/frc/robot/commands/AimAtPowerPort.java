@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,7 +22,7 @@ public class AimAtPowerPort extends PIDCommand {
   /**
    * Creates a new LockOnToPowerPort.
    */
-  public AimAtPowerPort(IntakeSubsystem intake) {
+  public AimAtPowerPort(IntakeSubsystem intake, LimelightSubsystem limelight){
     super(
         // The controller that the command will use
         new PIDController(0, 0, 0),
