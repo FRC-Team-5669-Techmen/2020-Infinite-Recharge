@@ -15,16 +15,17 @@ import frc.robot.subsystems.MecanumDriveSubsystem;
 public class ManualMecanumDrive extends CommandBase {
   private MecanumDriveSubsystem m_drive;
 
-  private final double x, y, z;
+  private final DoubleSupplier x, y, z;
   
   public ManualMecanumDrive(DoubleSupplier x, DoubleSupplier y, DoubleSupplier z, MecanumDriveSubsystem drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
     addRequirements(m_drive);
 
-    this.x = x.getAsDouble();
-    this.y = y.getAsDouble();
-    this.z = z.getAsDouble();
+    this.x = x;
+    this.y = y;
+    this.z = z;
+
   }
 
   // Called when the command is initially scheduled.
@@ -35,7 +36,7 @@ public class ManualMecanumDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.drive(x, y, z);
+    m_drive.drive(x.getAsDouble(), y.getAsDouble(), z.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

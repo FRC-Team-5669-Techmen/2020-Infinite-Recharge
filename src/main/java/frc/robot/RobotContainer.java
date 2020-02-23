@@ -92,7 +92,10 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
 
     // Asign default commands
-    mecanumDriveSubsystem.setDefaultCommand(new ManualMecanumDrive(() -> m_joystick.getRawAxis(0), () -> m_joystick.getRawAxis(1), () -> m_joystick.getRawAxis(2), mecanumDriveSubsystem));
+    mecanumDriveSubsystem.setDefaultCommand(
+      new ManualMecanumDrive(() -> m_joystick.getRawAxis(0), 
+      () -> m_joystick.getRawAxis(1), 
+      () -> m_joystick.getRawAxis(2), mecanumDriveSubsystem));
     
   }
  
