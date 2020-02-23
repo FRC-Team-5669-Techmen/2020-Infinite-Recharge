@@ -35,6 +35,15 @@ public class LiftSubsystem extends SubsystemBase {
   private static boolean pulleyPosition = false; // True = up, False = down
   private static boolean liftPosition = false; // True = up, False = down
 
+  private final double kF = 0.0;
+  private final double kP = 0.0;
+  private final double kI = 0.0;
+  private final double kD = 0.0;
+  private final int velocity = 0;
+  private final int acceleration = 0;
+  private final int countsPerUnit = 0;
+
+
   /**
    * Creates a new LiftSubsystem.
    */
@@ -42,11 +51,23 @@ public class LiftSubsystem extends SubsystemBase {
     pulleyMotor.set(0);
     liftMotor.set(0);
     carriageMotor.set(0);
+
+    // LiftMotor Motion Magic Configs
+    liftMotor.configMotionCruiseVelocity(velocity);
+    liftMotor.configMotionAcceleration(acceleration);
+    liftMotor.config_kF(0, kF);
+    liftMotor.config_kP(0, kP);
+    liftMotor.config_kI(0, kI);
+    liftMotor.config_kD(0, kD);
   }
 
   @Override
   public void periodic() {
     
+  }
+
+  public void setPosition(WPI_TalonSRX motor, double units) {
+    motor.set(ControlMode.MotionMagic, units * countsPerUnit);
   }
 
   public void raiseLift() {
