@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LimelightSubsystemConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
 
@@ -31,14 +32,15 @@ public class LimelightSubsystem extends SubsystemBase {
 
     setCameraMode(CameraMode.VISION_PROCESSOR);
     setFieldVisionTarget(FieldTarget.POWER_PORT);
+
     //limelighTableInstance.getEntry("pipeline")
 
   }
 
   
   public enum FieldTarget{
-    POWER_PORT (0),
-    LOADING_BAY (1);
+    POWER_PORT (LimelightSubsystemConstants.POWERPORT_VISION_PIPELINE),
+    LOADING_BAY (LimelightSubsystemConstants.LOADING_BAY_VISION_PIPELINE);
 
     private final int PIPELINE;
     

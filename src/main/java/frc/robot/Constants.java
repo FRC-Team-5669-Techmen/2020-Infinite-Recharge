@@ -45,7 +45,11 @@ public final class Constants {
         public static final double ROTATOR_DEFAULT_SPEED = 0.3;
         public static final String SHOOTER_SPEED_KEY_STRING = "Shooter Speed";
         public static final String ROTATOR_SPEED_KEY_STRING = "Turret Rotator Speed";
+    }
 
+    public static final class LimelightSubsystemConstants {
+        public static final int POWERPORT_VISION_PIPELINE = 0;
+        public static final int LOADING_BAY_VISION_PIPELINE = 1;
     }
 
     public static final class ContollerConstants {
