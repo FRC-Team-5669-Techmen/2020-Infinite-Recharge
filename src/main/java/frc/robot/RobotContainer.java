@@ -46,6 +46,8 @@ public class RobotContainer {
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
   
   private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
+ 
+  private final Joystick m_joystick = new Joystick(0);
 
  
 
@@ -88,7 +90,13 @@ public class RobotContainer {
 
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
+
+    // Asign default commands
+    mecanumDriveSubsystem.setDefaultCommand(new ManualMecanumDrive(() -> m_joystick.getRawAxis(0), () -> m_joystick.getRawAxis(1), () -> m_joystick.getRawAxis(2), mecanumDriveSubsystem));
   }
+
+
+  m_drivetrain.setDefaultCommand(new TankDrive(() -> m_joystick.getY(Hand.kLeft), () -> m_joystick.getY(Hand.kRight), m_drivetrain));
 
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -102,17 +110,9 @@ public class RobotContainer {
     double turretRoatoatialSpeed = Math.abs(SmartDashboard.getNumber("Turret Rotator Speed", 0.0)); //not sure if positive is clockwise
     double turretShooterSpeed = Math.abs(SmartDashboard.getNumber("Shooter Speed", 0.0)); //positive is clockwise. 
 
-    double joystickX = new Joystick(1).getRawAxis(0); // 0 = horizontal            1 = vertical               2 = twist
-    double joystickY = new Joystick(1).getRawAxis(1); // 0 = horizontal            1 = vertical               2 = twist
-    double joystickZ = new Joystick(1).getRawAxis(2); // 0 = horizontal            1 = vertical               2 = twist
-
     new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, turretShooterSpeed)); //shoot while pressed.
     new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE, turretRoatoatialSpeed));
     new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE, turretRoatoatialSpeed));
-
-    if(joystickY != 0.0) {
-      new ManualMecanumDrive(mecanumDriveSubsystem, joystickX, joystickY, joystickZ);
-    }
   }
 
 

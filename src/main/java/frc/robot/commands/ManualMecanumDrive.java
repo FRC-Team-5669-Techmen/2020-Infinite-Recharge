@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 
@@ -15,14 +17,14 @@ public class ManualMecanumDrive extends CommandBase {
 
   private final double x, y, z;
   
-  public ManualMecanumDrive(MecanumDriveSubsystem drive, double x, double y, double z) {
+  public ManualMecanumDrive(DoubleSupplier x, DoubleSupplier y, DoubleSupplier z, MecanumDriveSubsystem drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
     addRequirements(m_drive);
 
-    this.x = x;
-    this.y = y;
-    this.z = z;
+    this.x = x.getAsDouble();
+    this.y = y.getAsDouble();
+    this.z = z.getAsDouble();
   }
 
   // Called when the command is initially scheduled.
@@ -39,6 +41,7 @@ public class ManualMecanumDrive extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_drive.drive(0, 0, 0);
   }
 
   // Returns true when the command should end.
