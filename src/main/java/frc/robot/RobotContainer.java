@@ -93,10 +93,8 @@ public class RobotContainer {
 
     // Asign default commands
     mecanumDriveSubsystem.setDefaultCommand(new ManualMecanumDrive(() -> m_joystick.getRawAxis(0), () -> m_joystick.getRawAxis(1), () -> m_joystick.getRawAxis(2), mecanumDriveSubsystem));
+    
   }
-
-
-  m_drivetrain.setDefaultCommand(new TankDrive(() -> m_joystick.getY(Hand.kLeft), () -> m_joystick.getY(Hand.kRight), m_drivetrain));
 
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
