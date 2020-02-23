@@ -18,6 +18,7 @@ public class ManualMecanumDrive extends CommandBase {
   public ManualMecanumDrive(MecanumDriveSubsystem drive, double x, double y, double z) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
+    addRequirements(m_drive);
 
     this.x = x;
     this.y = y;
