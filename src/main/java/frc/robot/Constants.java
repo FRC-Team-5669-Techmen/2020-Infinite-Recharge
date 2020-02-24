@@ -56,4 +56,11 @@ public final class Constants {
         public static final int BUTTON_BOX_CONTROLLER_PORT = 0;
 
     }
+
+    public static final class MecanumDriveConstants {
+        public static final int FRONT_LEFT_MOTOR = 0;
+        public static final int REAR_LEFT_MOTOR = 1;
+        public static final int FRONT_RIGHT_MOTOR = 2;
+        public static final int REAR_RIGHT_MOTOR = 3;
+    }
 }
