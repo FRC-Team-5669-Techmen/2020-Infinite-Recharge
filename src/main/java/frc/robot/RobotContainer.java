@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.ContollerConstants;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ManualMecanumDrive;
@@ -44,14 +44,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+ // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
-  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
-  private final MagazineSubsystem magazine = new MagazineSubsystem();
+  //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
+ // private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
   
-  private final Joystick buttonBox = new Joystick(ContollerConstants.BUTTON_BOX_CONTROLLER_PORT);
-  private final Joystick m_joystick = new Joystick(0);
+  private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
+  private final Joystick m_joystick = new Joystick(ControllerConstants.JOYSTICK_CONTROLLER_PORT);
 
   // A chooser for autonomous commands. We will use this for testing individual subsystem too.
   SendableChooser<Command> m_chooser = new SendableChooser<>();

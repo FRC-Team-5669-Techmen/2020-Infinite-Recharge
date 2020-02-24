@@ -25,8 +25,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(0);
 
   //Pneuamtics not yet installed, commenting out untill installed
-  private final DoubleSolenoid doubleSoleniod = 
-  new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);
+  /*private final DoubleSolenoid doubleSoleniod = 
+  new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);*/
   private final double MAX = IntakeSubsystemConstants.MAX_INTAKE_MOTOR_SPEED;
   
   //Pneumatics: 2x double

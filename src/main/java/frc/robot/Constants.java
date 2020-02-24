@@ -52,7 +52,7 @@ public final class Constants {
         public static final int LOADING_BAY_VISION_PIPELINE = 1;
     }
 
-    public static final class ContollerConstants {
+    public static final class ControllerConstants {
         public static final int BUTTON_BOX_CONTROLLER_PORT = 0;
         public static final int JOYSTICK_CONTROLLER_PORT = 1;
 
