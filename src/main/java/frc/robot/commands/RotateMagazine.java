@@ -8,40 +8,48 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.MagazineSubsystem;
 
-public class IntakeOn extends CommandBase {
+public class RotateMagazine extends CommandBase {
   /**
-   * Creates a new IntakeOn.
+   * Creates a new RotateMagazine.
    */
-  private final IntakeSubsystem intake;
 
-  public IntakeOn(IntakeSubsystem intake) {
-    this.intake = intake;
-    addRequirements(intake);
+  private final MagazineSubsystem magazine;
+  private final MagazineDirection direction;
 
+  public enum MagazineDirection{
+    CLOCKWISE, COUNTERCLOCKWISE;
+  }
+
+  public RotateMagazine(MagazineSubsystem magazine, MagazineDirection direction) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.magazine = magazine;
+    addRequirements(this.magazine);
+
+    this.direction = direction;
+
+    setName("Rotate Magazine");
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.deployIntake();
-    intake.setIntakeMotorOn(0.30);
+    if(direction == MagazineDirection.CLOCKWISE)
+      magazine.turnOnRotatorClockwise();
+    else
+      magazine.turnOnRotatorCounterClockwise();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.loadMagazine();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setIntakeMotorOn(0.0);
-    intake.deployIntake();
-
+    magazine.turnOffRotator();
   }
 
   // Returns true when the command should end.
