@@ -19,15 +19,16 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   private final WPI_TalonSRX m_frontRightMotor = new WPI_TalonSRX(MecanumDriveConstants.FRONT_RIGHT_MOTOR);
   private final WPI_TalonSRX m_rearRightMotor = new WPI_TalonSRX(MecanumDriveConstants.REAR_RIGHT_MOTOR);
 
-  MecanumDrive m_drive;
+  MecanumDrive m_drive = new MecanumDrive(m_frontLeftMotor, m_rearLeftMotor,
+   m_frontRightMotor, m_rearRightMotor);
 
   public MecanumDriveSubsystem() {
     super();
-    
+    driveInit();
   }
 
   protected void driveInit() {
-    m_drive = new MecanumDrive(m_frontLeftMotor, m_rearLeftMotor, m_frontRightMotor, m_rearRightMotor);
+    
   }
 
   public void drive(double xSpeed, double ySpeed, double zRotation) {
