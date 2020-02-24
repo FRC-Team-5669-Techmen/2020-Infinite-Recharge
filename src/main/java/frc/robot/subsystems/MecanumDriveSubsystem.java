@@ -24,6 +24,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   public MecanumDriveSubsystem() {
     super();
+    setName("Mecanum Drive Subsystem");
+    addChild("Mecanum Drive", m_drive);
     driveInit();
   }
 
@@ -31,7 +33,38 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     
   }
 
-  public void drive(double xSpeed, double ySpeed, double zRotation) {
+ /**
+   * Drive method for Mecanum platform.
+   *
+   * <p>Angles are measured clockwise from the positive X axis. The robot's 
+   * speed is independent from its angle or rotation rate.
+   *
+   * @param ySpeed    The robot's speed along the Y axis [-1.0..1.0]. Right is 
+   *                  positive.
+   * @param xSpeed    The robot's speed along the X axis [-1.0..1.0]. Forward is
+   *                  positive.
+   * @param zRotation The robot's rotation rate around the Z axis [-1.0..1.0]. 
+   *                  Clockwise is positive.
+   */
+  public void driveCartesian(double xSpeed, double ySpeed, double zRotation) {
     m_drive.driveCartesian(ySpeed, xSpeed, zRotation);
+  }
+
+  /**
+   * Drive method for Mecanum platform.
+   *
+   * <p>Angles are measured counter-clockwise from straight ahead. The speed at
+   * which the robot drives (translation) is independent from its angle or 
+   * rotation rate.
+   *
+   * @param magnitude The robot's speed at a given angle [-1.0..1.0]. Forward is
+   *                  positive.
+   * @param angle     The angle around the Z axis at which the robot drives in 
+   *                  degrees [-180..180].
+   * @param zRotation The robot's rotation rate around the Z axis [-1.0..1.0]. 
+   *                  Clockwise is positive.
+   */
+  public void drivePolar(double magnitude, double angle, double zRotation) {
+    m_drive.drivePolar(magnitude, angle, zRotation);
   }
 }

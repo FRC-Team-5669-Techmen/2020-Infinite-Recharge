@@ -36,13 +36,13 @@ public class ManualMecanumDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.drive(x.getAsDouble(), y.getAsDouble(), z.getAsDouble());
+    m_drive.driveCartesian(x.getAsDouble(), y.getAsDouble(), z.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.drive(0, 0, 0);
+    m_drive.driveCartesian(0, 0, 0);
   }
 
   // Returns true when the command should end.
