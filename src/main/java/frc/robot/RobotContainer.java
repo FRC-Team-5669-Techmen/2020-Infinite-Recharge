@@ -69,7 +69,6 @@ public class RobotContainer {
     //SmartDashboard.putData("Rotate Turret Left", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
     //SmartDashboard.putData("Roate Turret Right", new RotateTurret(fuelTurret, Direction.CLOCKWISE));
 
-
     //m_chooser.addOption("Test Turret", testShooter);
     fuelTurret.setName("Fuel Turret");
     
@@ -84,9 +83,11 @@ public class RobotContainer {
 
     // Asign default commands
     mecanumDriveSubsystem.setDefaultCommand(
-      new ManualMecanumDrive(() -> m_joystick.getRawAxis(0), 
-      () -> m_joystick.getRawAxis(1), 
-      () -> m_joystick.getRawAxis(2), mecanumDriveSubsystem));
+      //y drives robot right
+      //x drives is front
+      new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1), 
+      () -> m_joystick.getRawAxis(0), 
+      () -> m_joystick.getRawAxis(4), mecanumDriveSubsystem));
     
   }
  
