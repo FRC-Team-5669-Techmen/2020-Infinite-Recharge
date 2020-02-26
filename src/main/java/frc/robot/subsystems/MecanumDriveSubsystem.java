@@ -9,7 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MecanumDriveConstants;
 
@@ -31,5 +33,12 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   public void drive(double xSpeed, double ySpeed, double zRotation) {
     m_drive.driveCartesian(ySpeed, xSpeed, zRotation);
+  }
+
+  @Override
+  public void periodic() {
+    // TODO Auto-generated method stub
+    super.periodic();
+    SmartDashboard.putNumber("Encoder Ticks", m_frontLeftMotor.getSelectedSensorPosition());
   }
 }
