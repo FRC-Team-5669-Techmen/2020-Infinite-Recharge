@@ -17,12 +17,16 @@ package frc.robot;
  */
 public final class Constants {
     public static final class IntakeSubsystemConstants {
-        public static final int INTAKE_MOTOR_CAN_ID = 0;
+        public static final int INTAKE_MOTOR_CAN_ID = 4;
         public static final double MAX_INTAKE_MOTOR_SPEED = 0.5;
         public static final int SOLENIOD_FORWARD_CHANNEL = 0;
         public static final int SOLENIOD_REVERSE_CHANNEL = 1;
-      }
+    }
 
+    public static final class MagazineSubsystemConstants {
+        public static final int MAGAZINE_ROTATOR_CAN_ID = 3;
+    }
+    
     public static final class ControlPanelRotatorSubsystemConstansts {
 
     }
@@ -39,6 +43,7 @@ public final class Constants {
         public static final int SHOOTER_MOTOR_CAN_ID = 5;
         public static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = 6;
         public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 7;
+        public static final int TURRET_FEEDER_MOTOR_CAN_ID = 1;
         public static final double SHOOTER_MAX_SPEED = 1.0;
         public static final double SHOOTER_DEFAULT_SPEED = 0.4;
         public static final double ROTATOR_MAX_SPEED = 1.0;

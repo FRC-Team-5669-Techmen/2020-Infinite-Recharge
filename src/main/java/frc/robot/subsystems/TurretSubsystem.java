@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -42,6 +43,9 @@ public class TurretSubsystem extends SubsystemBase {
   private final WPI_TalonFX followerShooterMotor = new WPI_TalonFX(FOLLOWER_SHOOTER_MOTOR_CAN_ID);
 
   private final WPI_TalonFX turretRotatorMotor = new WPI_TalonFX(TURRET_ROTATOR_CAN_ID);
+
+  private final WPI_VictorSPX turretFeederMotor = 
+    new WPI_VictorSPX(TurretSubsystemConstants.TURRET_FEEDER_MOTOR_CAN_ID);
 
   private final Servo hoodAdjusterServo = new Servo(0);
   private final Servo hoodAdjusterFollowerServo = new Servo (1);
@@ -92,6 +96,14 @@ public class TurretSubsystem extends SubsystemBase {
   public void setTurretRotatorMotorSpeed(double speed) {  //ball
     if (speed >= -ROTATOR_MAX_SPEED || speed <= ROTATOR_MAX_SPEED)
       turretRotatorMotor.set(speed);
+  }
+
+  public void turnOnMagazineFeederMotor(){
+    turretFeederMotor.set(-0.75);
+  }
+
+  public void turnOffMagazineFeederMotor(){
+    turretFeederMotor.set(0.0);
   }
 
  

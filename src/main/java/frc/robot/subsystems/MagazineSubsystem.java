@@ -10,13 +10,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.MagazineSubsystemConstants;
 
 public class MagazineSubsystem extends SubsystemBase {
   /**
    * Creates a new Magazine.
    */
 
-  private final WPI_VictorSPX magazineRotatorMotor = new WPI_VictorSPX(0);
+  private final WPI_VictorSPX magazineRotatorMotor = new WPI_VictorSPX(MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
   
   
   public MagazineSubsystem() {

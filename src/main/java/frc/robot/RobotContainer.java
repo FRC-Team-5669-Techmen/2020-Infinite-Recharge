@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.FeedPowerCellToTurret;
+import frc.robot.commands.Intake;
 import frc.robot.commands.ManualMecanumDrive;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
@@ -44,10 +46,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
- // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
- // private final MagazineSubsystem magazine = new MagazineSubsystem();
+  private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
   
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
@@ -99,14 +101,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 0.70;} )); //shoot while pressed.
-    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
-    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
-    SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));
-    SmartDashboard.putData("Turen Turret CounterClockwise", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
-    SmartDashboard.putData("Shoot Power Cell", new ShootPowerCell(fuelTurret, () -> {return 0.70;} ));
-    //new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
-    //new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));
+    new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
+    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
+    new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
+    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 0.70;} )); //shoot while pressed.
+   
+    //SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    //SmartDashboard.putData("Turen Turret CounterClockwise", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    //SmartDashboard.putData("Shoot Power Cell", new ShootPowerCell(fuelTurret, () -> {return 0.70;} ));
+    
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
 

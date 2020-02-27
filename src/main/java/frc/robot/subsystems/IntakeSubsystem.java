@@ -32,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
   //Pneumatics: 2x double
 
   public IntakeSubsystem() {
-    intakeWheelMotor.set(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
+    intakeWheelMotor.set(0.0);
     setName("Intake Subsystem");
     addChild("Intake Motor", intakeWheelMotor);
 
@@ -46,18 +46,19 @@ public class IntakeSubsystem extends SubsystemBase {
 
   //Find implementations for these methods!
 
-  public void setIntakeMotorOn(double speed){
-    /*
-    if(speed <= -MAX|| speed >= MAX)
-      intakeWheelMotor.set(speed);
-    */
+  public void setIntakeMotorOn(){
+    intakeWheelMotor.set(-1.0);
+  }
+
+  public void setIntakeMotorOff(){
+    intakeWheelMotor.set(0.0);
   }
 
   public void deployIntake(){
    // doubleSoleniod.set(Value.kForward);
   }
 
-  public void retrackIntake(){
+  public void retractIntake(){
     //doubleSoleniod.set(Value.kReverse);
   }
 
