@@ -99,9 +99,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    //new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
-    //new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
-    //new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 0.70;} )); //shoot while pressed.
+    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    SmartDashboard.putData("Turen Turret CounterClockwise", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+    SmartDashboard.putData("Shoot Power Cell", new ShootPowerCell(fuelTurret, () -> {return 0.70;} ));
     //new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
     //new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually

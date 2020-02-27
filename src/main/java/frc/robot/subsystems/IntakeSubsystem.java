@@ -22,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL;
   private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL;
   
-  private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(0);
+  private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
 
   //Pneuamtics not yet installed, commenting out untill installed
   /*private final DoubleSolenoid doubleSoleniod = 
