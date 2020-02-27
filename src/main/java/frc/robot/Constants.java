@@ -36,9 +36,9 @@ public final class Constants {
     }
 
     public static final class TurretSubsystemConstants {
-        public static final int SHOOTER_MOTOR_CAN_ID = 1;
-        public static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = 2;
-        public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 3;
+        public static final int SHOOTER_MOTOR_CAN_ID = 5;
+        public static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = 6;
+        public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 7;
         public static final double SHOOTER_MAX_SPEED = 1.0;
         public static final double SHOOTER_DEFAULT_SPEED = 0.4;
         public static final double ROTATOR_MAX_SPEED = 1.0;
@@ -52,15 +52,16 @@ public final class Constants {
         public static final int LOADING_BAY_VISION_PIPELINE = 1;
     }
 
-    public static final class ContollerConstants {
+    public static final class ControllerConstants {
         public static final int BUTTON_BOX_CONTROLLER_PORT = 0;
+        public static final int JOYSTICK_CONTROLLER_PORT = 1;
 
     }
 
     public static final class MecanumDriveConstants {
-        public static final int FRONT_LEFT_MOTOR = 0;
-        public static final int REAR_LEFT_MOTOR = 1;
+        public static final int FRONT_LEFT_MOTOR = 1;
+        public static final int REAR_LEFT_MOTOR = 3;
         public static final int FRONT_RIGHT_MOTOR = 2;
-        public static final int REAR_RIGHT_MOTOR = 3;
+        public static final int REAR_RIGHT_MOTOR = 4;
     }
 }
