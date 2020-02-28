@@ -10,25 +10,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class FeedPowerCellToTurret extends CommandBase {
+public class StopShooter extends CommandBase {
   /**
-   * Creates a new FeedPowerCellToTurret.
+   * Creates a new StopShooterWheel.
    */
 
   private final TurretSubsystem fuelTurret;
   
-  public FeedPowerCellToTurret(TurretSubsystem fuelTurret) {
+  public StopShooter(TurretSubsystem fuelTurret) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
-    addRequirements(this.fuelTurret);
-    setName("Feed Power Cell to Turret");
+    addRequirements(fuelTurret);
+    setName("StopShooterWheel");
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    fuelTurret.turnOnMagazineFeederMotor();
-    
+    fuelTurret.setShooterMotorSpeed(0.0);
+    fuelTurret.turnOffMagazineFeederMotor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +39,6 @@ public class FeedPowerCellToTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.turnOffMagazineFeederMotor();
   }
 
   // Returns true when the command should end.

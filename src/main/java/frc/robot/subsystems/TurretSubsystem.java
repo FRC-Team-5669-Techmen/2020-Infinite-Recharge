@@ -8,9 +8,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
@@ -24,12 +26,16 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import static frc.robot.Constants.TurretSubsystemConstants;
 
 public class TurretSubsystem extends SubsystemBase {
   /**
    * Creates a new TurretSubsystem.
    **/
+
+  //https://phoenix-documentation.readthedocs.io/en/latest/ch13_MC.html#follower
 
  
   private static final double SHOOTER_MAX_SPEED = TurretSubsystemConstants.SHOOTER_MAX_SPEED;
@@ -52,10 +58,28 @@ public class TurretSubsystem extends SubsystemBase {
 
   //also need limit swtiches for the turret. Those will be digital inputs
 
-  private final TalonFXInvertType shooterMotorInvert = TalonFXInvertType.CounterClockwise; //might be overkill, but just here for readability
-  private final TalonFXInvertType followerShooterMotorInvert = TalonFXInvertType.Clockwise;
-  
+  private final TalonFXInvertType shooterMotorInvert = TalonFXInvertType.Clockwise; //might be overkill, but just here for readability
+  private final TalonFXInvertType followerShooterMotorInvert = TalonFXInvertType.OpposeMaster;
 
+  private double appliedMotorOutput = 0;
+	private int selSenPos = 0; /* position units */
+  private int selSenVel = 0; /* position units per 100ms */
+
+  private double followerappliedMotorOutput = 0;
+	private int follwerselSenPos = 0; /* position units */
+  private int follwerselSenVel = followerShooterMotor.getSelectedSensorVelocity(0); /* position units per 100ms */
+  
+  /* scaling depending on what user wants */
+  private double pos_Rotations = 0;
+  private double vel_RotPerSec = 0; /* scale per100ms to perSecond */
+  private double vel_RotPerMin = 0;
+  
+  private double follower_pos_Rotations = 0;
+  private double follower_vel_RotPerSec = 0; /* scale per100ms to perSecond */
+  private double follower_vel_RotPerMin = 0;
+
+  private boolean shooterAtOperatingRPM = false;
+  
   public TurretSubsystem() {
     //For debugging purposes, allow tester to set speed
     super();
@@ -77,14 +101,26 @@ public class TurretSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
    
+   
+   updateValues();
 
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
-    
-    
-  }
+    SmartDashboard.putNumber("Motor-out: %.2f | ", appliedMotorOutput);
+    SmartDashboard.putNumber("Pos-units: %d | ", selSenPos);
+    SmartDashboard.putNumber("Vel-unitsPer100ms: %d | ", selSenVel);
+    SmartDashboard.putNumber("Pos-Rotations:%.3f | ", pos_Rotations);
+    SmartDashboard.putNumber("Vel-RPS:%.1f | ", vel_RotPerSec);
+    SmartDashboard.putNumber("Vel-RPM:%.1f | ", vel_RotPerMin);
+
+    SmartDashboard.putNumber("Follwoer Motor-out: %.2f | ", followerappliedMotorOutput);
+    SmartDashboard.putNumber("Follower Pos-units: %d | ", follwerselSenPos);
+    SmartDashboard.putNumber("Follwoer Vel-unitsPer100ms: %d | ", follower_vel_RotPerMin);
+    SmartDashboard.putNumber("Follower Pos-Rotations:%.3f | ", follower_pos_Rotations);
+    SmartDashboard.putNumber("Follower Vel-RPS:%.1f | ", follower_vel_RotPerSec);
+    SmartDashboard.putNumber("Follwoer Vel-RPM:%.1f | ", follower_vel_RotPerMin);
+}
 
   
 
@@ -99,7 +135,7 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public void turnOnMagazineFeederMotor(){
-    turretFeederMotor.set(-0.75);
+    turretFeederMotor.set(-TurretSubsystemConstants.TURRET_FEEDER_MOTOR_DEFAULT_SPEED);
   }
 
   public void turnOffMagazineFeederMotor(){
@@ -108,6 +144,14 @@ public class TurretSubsystem extends SubsystemBase {
 
  
   private void configShooterMotors(){
+    shooterMotor.configFactoryDefault();
+    followerShooterMotor.configFactoryDefault();
+
+    TalonFXConfiguration encoderConfigs = new TalonFXConfiguration();
+    encoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+    shooterMotor.configAllSettings(encoderConfigs);
+    followerShooterMotor.configAllSettings(encoderConfigs);
+
     followerShooterMotor.follow(shooterMotor); //kind of dumb the Phoenix requires the follow call every time. Possible to set flag, Phoenix?  
     shooterMotor.setInverted(shooterMotorInvert);
     followerShooterMotor.setInverted(followerShooterMotorInvert);
@@ -128,6 +172,40 @@ public class TurretSubsystem extends SubsystemBase {
   public boolean atRightLimit(){
     return false; //needs implemtaiotn with limit swtiches
   }
+
+  public double getShooterFollowerRPM(){
+    return vel_RotPerMin;
+  }
+
+  public boolean atOperatingRPM(){
+    return vel_RotPerMin >= TurretSubsystemConstants.SHOOTER_OPERATING_RPM;
+
+  }
+
+  //TODO add other getter methods
+
+  private void updateValues(){
+     // This method will be called once per scheduler run
+    		/* get the selected sensor for PID0 */
+		appliedMotorOutput = shooterMotor.getMotorOutputPercent();
+		selSenPos = shooterMotor.getSelectedSensorPosition(0); /* position units */
+    selSenVel = shooterMotor.getSelectedSensorVelocity(0); /* position units per 100ms */
+    
+    followerappliedMotorOutput = followerShooterMotor.getMotorOutputPercent();
+		follwerselSenPos = followerShooterMotor.getSelectedSensorPosition(0); /* position units */
+	  follwerselSenVel = followerShooterMotor.getSelectedSensorVelocity(0); /* position units per 100ms */
+
+		/* scaling depending on what user wants */
+		pos_Rotations = (double) selSenPos / Constants.kFalconFXUnitsPerRevolution;
+		vel_RotPerSec = (double) selSenVel / Constants.kFalconFXUnitsPerRevolution * 10; /* scale per100ms to perSecond */
+    vel_RotPerMin = vel_RotPerSec * 60.0;
+    
+    follower_pos_Rotations = (double) follwerselSenPos / Constants.kFalconFXUnitsPerRevolution;
+		follower_vel_RotPerSec = (double) follwerselSenVel / Constants.kFalconFXUnitsPerRevolution * 10; /* scale per100ms to perSecond */
+		follower_vel_RotPerMin = vel_RotPerSec * 60.0;
+
+  }
+
 
 
 

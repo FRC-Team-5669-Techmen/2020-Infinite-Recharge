@@ -16,6 +16,8 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final int kFalconFXUnitsPerRevolution = 2048; /* this is constant for Talon FX */
+
     public static final class IntakeSubsystemConstants {
         public static final int INTAKE_MOTOR_CAN_ID = 4;
         public static final double MAX_INTAKE_MOTOR_SPEED = 0.5;
@@ -45,11 +47,13 @@ public final class Constants {
         public static final int TURRET_ROTATOR_MOTOR_CAN_ID = 7;
         public static final int TURRET_FEEDER_MOTOR_CAN_ID = 1;
         public static final double SHOOTER_MAX_SPEED = 1.0;
-        public static final double SHOOTER_DEFAULT_SPEED = 0.4;
+        public static final double SHOOTER_DEFAULT_SPEED = 1.0;
         public static final double ROTATOR_MAX_SPEED = 1.0;
         public static final double ROTATOR_DEFAULT_SPEED = 0.3;
+        public static final double TURRET_FEEDER_MOTOR_DEFAULT_SPEED = 1.0;
         public static final String SHOOTER_SPEED_KEY_STRING = "Shooter Speed";
         public static final String ROTATOR_SPEED_KEY_STRING = "Turret Rotator Speed";
+        public static final double SHOOTER_OPERATING_RPM = 5700;
     }
 
     public static final class LimelightSubsystemConstants {

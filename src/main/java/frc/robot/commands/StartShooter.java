@@ -8,27 +8,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class FeedPowerCellToTurret extends CommandBase {
+public class StartShooter extends CommandBase {
   /**
-   * Creates a new FeedPowerCellToTurret.
+   * Creates a new PowerOnShooter.
+   * In future, maybe add parameter for target RPM?) Need to see API for PID method or Phoenix API method
    */
 
   private final TurretSubsystem fuelTurret;
-  
-  public FeedPowerCellToTurret(TurretSubsystem fuelTurret) {
+
+  public StartShooter(TurretSubsystem fuelTurret) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
-    addRequirements(this.fuelTurret);
-    setName("Feed Power Cell to Turret");
+    addRequirements(fuelTurret);
+    setName("Rev Up Shooter Wheel");
   }
+
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    fuelTurret.turnOnMagazineFeederMotor();
-    
+    fuelTurret.setTurretRotatorMotorSpeed(TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,12 +41,15 @@ public class FeedPowerCellToTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.turnOffMagazineFeederMotor();
+    if (interrupted)
+      fuelTurret.setShooterMotorSpeed(0.0);
+    else
+      fuelTurret.turnOnMagazineFeederMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return fuelTurret.atOperatingRPM();
   }
 }

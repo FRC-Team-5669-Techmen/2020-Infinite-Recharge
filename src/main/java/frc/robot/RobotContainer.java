@@ -21,6 +21,8 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.ManualMecanumDrive;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
+import frc.robot.commands.StartShooter;
+import frc.robot.commands.StopShooter;
 import frc.robot.commands.RotateMagazine.MagazineDirection;
 import frc.robot.commands.MoveControlPaneBasedOnColor;
 import frc.robot.commands.RotateMagazine;
@@ -107,7 +109,8 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
     new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
-    new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 0.70;} )); //shoot while pressed.
+   // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
+    new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
    
     //SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     //SmartDashboard.putData("Turen Turret CounterClockwise", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
