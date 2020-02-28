@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -16,10 +19,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MecanumDriveConstants;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
-  private final WPI_TalonSRX m_frontLeftMotor = new WPI_TalonSRX(MecanumDriveConstants.FRONT_LEFT_MOTOR);
-  private final WPI_TalonSRX m_rearLeftMotor = new WPI_TalonSRX(MecanumDriveConstants.REAR_LEFT_MOTOR);
-  private final WPI_TalonSRX m_frontRightMotor = new WPI_TalonSRX(MecanumDriveConstants.FRONT_RIGHT_MOTOR);
-  private final WPI_TalonSRX m_rearRightMotor = new WPI_TalonSRX(MecanumDriveConstants.REAR_RIGHT_MOTOR);
+  private final WPI_TalonFX m_frontLeftMotor = new WPI_TalonFX(MecanumDriveConstants.FRONT_LEFT_MOTOR);
+  private final WPI_TalonFX m_rearLeftMotor = new WPI_TalonFX(MecanumDriveConstants.REAR_LEFT_MOTOR);
+  private final WPI_TalonFX m_frontRightMotor = new WPI_TalonFX(MecanumDriveConstants.FRONT_RIGHT_MOTOR);
+  private final WPI_TalonFX m_rearRightMotor = new WPI_TalonFX(MecanumDriveConstants.REAR_RIGHT_MOTOR);
+
+  private final TalonFXInvertType leftSideInvert = TalonFXInvertType.CounterClockwise; //might be overkill, but just here for readability
+  private final TalonFXInvertType rightSideInvert = TalonFXInvertType.Clockwise;
 
   MecanumDrive m_drive = new MecanumDrive(m_frontLeftMotor, m_rearLeftMotor,
    m_frontRightMotor, m_rearRightMotor);
@@ -44,6 +50,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     m_rearRightMotor.configFactoryDefault();
     m_rearLeftMotor.setInverted(true);
     */
+
   }
 
  /**
