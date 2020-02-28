@@ -29,10 +29,21 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     setName("Mecanum Drive Subsystem");
     addChild("Mecanum Drive", m_drive);
     driveInit();
+
   }
 
   protected void driveInit() {
-    
+    //TODO Test thid
+    /*https://phoenix-documentation.readthedocs.io/en/latest/ch15_WPIDrive.html#c-java-drive-train-classes
+    m_frontLeftMotor.configFactoryDefault();
+    m_frontLeftMotor.setInverted(false);
+    m_rearLeftMotor.configFactoryDefault();
+    m_rearLeftMotor.setInverted(false);
+    m_frontRightMotor.configFactoryDefault();
+    m_rearLeftMotor.setInverted(true);
+    m_rearRightMotor.configFactoryDefault();
+    m_rearLeftMotor.setInverted(true);
+    */
   }
 
  /**
