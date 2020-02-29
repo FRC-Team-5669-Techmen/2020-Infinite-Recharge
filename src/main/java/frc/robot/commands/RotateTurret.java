@@ -15,48 +15,50 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class ShootPowerCell extends CommandBase {
+public class RotateTurret extends CommandBase {
   /**
    * Creates a new ShootPowerCell.
    */
 
+  public enum Direction{
+    CLOCKWISE, COUNTERCLOCKWISE;
+  }
+
    private final TurretSubsystem fuelTurret;
-   private final DoubleSupplier speed; //not making final.
+   private final Direction direction;
+   private final DoubleSupplier speed;
    
-    /*
-  Use a set speed
-  */
-  public ShootPowerCell(TurretSubsystem fuelTurret, DoubleSupplier speed) {
-     /*
-  Use to set speed
-  */
+  /**
+   * If set to true, rotates left. If set to false rotates right
+   */
+  public RotateTurret(TurretSubsystem fuelTurret, Direction direction, DoubleSupplier speed) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.fuelTurret = fuelTurret;
+    addRequirements(this.fuelTurret);
+    this.direction = direction;
+    this.speed = speed;
+    setName("Rotate " + this.direction.toString().toLowerCase());
+  }
+
+  public RotateTurret(TurretSubsystem fuelTurret, Direction direction) {
     // Use addRequirements() here to declare subsystem dependencies.
        //Use Math.Abs since we want positive values only from dashboard.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
-    
-    this.speed = speed;
-    setName("Shoot Power Cells");
+    this.direction = direction;
+    speed = () -> {return TurretSubsystemConstants.ROTATOR_DEFAULT_SPEED;};
+    setName("Rotate " + this.direction.toString().toLowerCase().replace('_', ' '));
   }
-
-  /*
-  Uses SmartDashboard numbers
-  */
-  public ShootPowerCell(TurretSubsystem fuelTurret) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.fuelTurret = fuelTurret;
-    addRequirements(this.fuelTurret);
-    speed = () -> {return TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED;};
-    setName("Shoot Power Cells");
-  }
-
-
 
   // Called when the command is initially scheduled.
-  //TODO Implement this stragetfy for rotate turret
   @Override
   public void initialize() {
-    fuelTurret.setShooterMotorSpeed(this.speed.getAsDouble());
+    //Check if -speed is clockwise or counterclockwise.
+    if(direction == Direction.CLOCKWISE)
+      fuelTurret.setTurretRotatorMotorSpeed(-speed.getAsDouble());
+
+    else
+      fuelTurret.setTurretRotatorMotorSpeed(speed.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -67,7 +69,7 @@ public class ShootPowerCell extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.setShooterMotorSpeed(0.0);
+    fuelTurret.setTurretRotatorMotorSpeed(0.0);
   }
 
   // Returns true when the command should end.

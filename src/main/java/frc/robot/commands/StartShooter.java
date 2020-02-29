@@ -5,58 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-///SHould consider if PID necessary.
-
 package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class ShootPowerCell extends CommandBase {
+public class StartShooter extends CommandBase {
   /**
-   * Creates a new ShootPowerCell.
+   * Creates a new PowerOnShooter.
+   * In future, maybe add parameter for target RPM?) Need to see API for PID method or Phoenix API method
    */
 
-   private final TurretSubsystem fuelTurret;
-   private final DoubleSupplier speed; //not making final.
-   
-    /*
-  Use a set speed
-  */
-  public ShootPowerCell(TurretSubsystem fuelTurret, DoubleSupplier speed) {
-     /*
-  Use to set speed
-  */
-    // Use addRequirements() here to declare subsystem dependencies.
-       //Use Math.Abs since we want positive values only from dashboard.
-    this.fuelTurret = fuelTurret;
-    addRequirements(this.fuelTurret);
-    
-    this.speed = speed;
-    setName("Shoot Power Cells");
-  }
+  private final TurretSubsystem fuelTurret;
 
-  /*
-  Uses SmartDashboard numbers
-  */
-  public ShootPowerCell(TurretSubsystem fuelTurret) {
+  public StartShooter(TurretSubsystem fuelTurret) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
-    addRequirements(this.fuelTurret);
-    speed = () -> {return TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED;};
-    setName("Shoot Power Cells");
+    addRequirements(fuelTurret);
+    setName("Rev Up Shooter Wheel");
   }
-
 
 
   // Called when the command is initially scheduled.
-  //TODO Implement this stragetfy for rotate turret
   @Override
   public void initialize() {
-    fuelTurret.setShooterMotorSpeed(this.speed.getAsDouble());
+    fuelTurret.setShooterMotorSpeed(TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -67,12 +41,15 @@ public class ShootPowerCell extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.setShooterMotorSpeed(0.0);
+    if (interrupted)
+      fuelTurret.setShooterMotorSpeed(0.0);
+    else
+      fuelTurret.turnOnMagazineFeederMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return fuelTurret.atOperatingRPM();
   }
 }
