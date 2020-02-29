@@ -29,8 +29,7 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
-  private final CANSparkMax colorManipulatorMotor =  
-    new CANSparkMax(4, MotorType.kBrushed);
+  private final CANSparkMax colorManipulatorMotor = new CANSparkMax(4, MotorType.kBrushed);
 
   private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
@@ -69,26 +68,34 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
   public void deployControlPanelRotator() {
     solenoid.set(true);
   }
+
   public void retractControlPanelRotator() {
     solenoid.set(false);
   }
-  
+
+  /**
+   * moves the control panel rotator motor
+   */
   public void moveControlPanelRotator() {
-    //motor code goes here
+    // motor code goes here
     SmartDashboard.putString("Color manipulator rotating?", "True");
     double manipulatorSpeed = .7;
     colorManipulatorMotor.set(manipulatorSpeed);
 
   }
 
-  
-
-  public void startControlPanelRotator(){
+  /**
+   * starts the control panel rotator, starts searching for color
+   */
+  public void startControlPanelRotator() {
     deployControlPanelRotator();
     moveControlPanelRotator();
     System.out.println("button pressed, checking for right color");
   }
 
+  /**
+   * stops the control panel rotator
+   */
   public void stopControlPanelRotator() {
     retractControlPanelRotator();
     String colToGet = SmartDashboard.getString("Color to Get", "120");
@@ -98,14 +105,18 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
 
   }
 
-  public boolean checkColor(){
+  /**
+   * checks if the current color detected equals the color wanted;
+   * 
+   * @return true or false
+   */
+  public boolean checkColor() {
     Color detectedColor = m_colorSensor.getColor();
 
     String currentColor;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     String colorToCheck = colorToGet();
-    
 
     // Match the color detected
     if (match.color == kBlueTarget) {
@@ -125,17 +136,18 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", currentColor);
-    if(currentColor.compareTo(colorToCheck) == 0){
+    if (currentColor.compareTo(colorToCheck) == 0) {
       return true;
-    }else{
+    } else {
       return false;
     }
 
   }
+
   /**
    * Checks what color is wanted from the smartdashboard
    */
-  public String colorToGet(){
+  public String colorToGet() {
 
     return SmartDashboard.getString("Color to Get", "120");
   }
