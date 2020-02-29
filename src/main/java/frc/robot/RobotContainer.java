@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
+import frc.robot.commands.DeployLift;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedPowerCellToTurret;
 import frc.robot.commands.Intake;
@@ -25,11 +26,13 @@ import frc.robot.commands.StartShooter;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.RotateMagazine.MagazineDirection;
 import frc.robot.commands.MoveControlPaneBasedOnColor;
+import frc.robot.commands.RetrackLift;
 import frc.robot.commands.RotateMagazine;
 import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -53,6 +56,7 @@ public class RobotContainer {
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+  private final LiftSubsystem lift = new LiftSubsystem();
   
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
   private final Joystick m_joystick = new Joystick(ControllerConstants.JOYSTICK_CONTROLLER_PORT);
@@ -119,6 +123,8 @@ public class RobotContainer {
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
 
+    new JoystickButton(buttonBox, 8).whileActiveOnce(new DeployLift(lift));
+    new JoystickButton(buttonBox, 9).whileActiveOnce(new RetrackLift(lift));
   }
 
 
