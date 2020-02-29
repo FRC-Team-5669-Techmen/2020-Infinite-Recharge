@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 
-public class MoveControlPaneBasedOnColor extends CommandBase {
+public class MoveControlPanelBasedOnColor extends CommandBase {
   
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem;
   /**
    * Creates a new MoveControlPaneBasedOnColor.
    */
-  public MoveControlPaneBasedOnColor(ControlPanelRotatorSubsystem subsystem) {
+  public MoveControlPanelBasedOnColor(ControlPanelRotatorSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_controlPanelSubsystem = subsystem;
     addRequirements(m_controlPanelSubsystem);
@@ -26,22 +26,24 @@ public class MoveControlPaneBasedOnColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_controlPanelSubsystem.displayCurrentColor();
+    m_controlPanelSubsystem.startControlPanelRotator();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_controlPanelSubsystem.moveControlPanelRotator();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_controlPanelSubsystem.stopControlPanelRotator();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_controlPanelSubsystem.checkColor();
   }
 }

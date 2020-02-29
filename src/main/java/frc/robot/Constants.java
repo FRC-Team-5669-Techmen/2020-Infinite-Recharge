@@ -29,8 +29,8 @@ public final class Constants {
         public static final int MAGAZINE_ROTATOR_CAN_ID = 3;
     }
     
-    public static final class ControlPanelRotatorSubsystemConstansts {
-
+    public static final class ControlPanelRotatorSubsystemConstants {
+        public static final int CONTROL_PANEL_SOLENOID_ID = 1;
     }
 
     public static final class LiftSubsystemConstants {
