@@ -54,8 +54,8 @@ public class RobotContainer {
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
   private final MagazineSubsystem magazine = new MagazineSubsystem();
-  private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem
-  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();();
+  private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
   private final Joystick m_joystick = new Joystick(ControllerConstants.JOYSTICK_CONTROLLER_PORT);
