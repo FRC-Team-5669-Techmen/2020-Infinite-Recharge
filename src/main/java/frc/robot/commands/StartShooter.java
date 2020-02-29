@@ -30,7 +30,7 @@ public class StartShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    fuelTurret.setTurretRotatorMotorSpeed(TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED);
+    fuelTurret.setShooterMotorSpeed(TurretSubsystemConstants.SHOOTER_DEFAULT_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
