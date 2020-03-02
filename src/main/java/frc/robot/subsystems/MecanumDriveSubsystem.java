@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -69,6 +70,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
    */
   public void drivePolar(double magnitude, double angle, double zRotation) {
     m_drive.drivePolar(magnitude, angle, zRotation);
+  }
+
+  public void brake() {
+    m_frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    m_rearLeftMotor.setNeutralMode(NeutralMode.Brake);
+    m_frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    m_rearRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override

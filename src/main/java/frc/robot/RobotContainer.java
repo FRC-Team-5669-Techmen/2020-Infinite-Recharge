@@ -17,6 +17,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ManualMecanumDrive;
+import frc.robot.commands.MecanumDriveBrake;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.RotateMagazine.MagazineDirection;
@@ -107,6 +108,7 @@ public class RobotContainer {
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
 
+    new JoystickButton(m_joystick, 1).whileHeld(new MecanumDriveBrake(mecanumDriveSubsystem));
   }
 
 
