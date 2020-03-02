@@ -10,6 +10,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
@@ -53,8 +55,9 @@ public class TurretSubsystem extends SubsystemBase {
   private final WPI_VictorSPX turretFeederMotor = 
     new WPI_VictorSPX(TurretSubsystemConstants.TURRET_FEEDER_MOTOR_CAN_ID);
 
+//servos are running in continous mode.
   private final Servo hoodAdjusterServo = new Servo(0);
-  private final Servo hoodAdjusterFollowerServo = new Servo (1);
+  private final Servo hoodAdjusterFollowerServo = new Servo(1);
 
   //also need limit swtiches for the turret. Those will be digital inputs
 
@@ -147,6 +150,9 @@ public class TurretSubsystem extends SubsystemBase {
     shooterMotor.configFactoryDefault();
     followerShooterMotor.configFactoryDefault();
 
+    //
+    turretRotatorMotor.configFactoryDefault();
+
     TalonFXConfiguration encoderConfigs = new TalonFXConfiguration();
     encoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
     shooterMotor.configAllSettings(encoderConfigs);
@@ -155,6 +161,9 @@ public class TurretSubsystem extends SubsystemBase {
     followerShooterMotor.follow(shooterMotor); //kind of dumb the Phoenix requires the follow call every time. Possible to set flag, Phoenix?  
     shooterMotor.setInverted(shooterMotorInvert);
     followerShooterMotor.setInverted(followerShooterMotorInvert);
+
+    /////
+    turretRotatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
   }
 
   public void adjustAngle(double angle){
@@ -180,6 +189,14 @@ public class TurretSubsystem extends SubsystemBase {
   public boolean atOperatingRPM(){
     return vel_RotPerMin >= TurretSubsystemConstants.SHOOTER_OPERATING_RPM;
 
+  }
+
+  public void setServoSpeed(double speed){
+    /*
+      should be a speed between 0 and 1
+    */
+    hoodAdjusterServo.set(speed);
+    hoodAdjusterFollowerServo.set(1.0-speed);
   }
 
   //TODO add other getter methods

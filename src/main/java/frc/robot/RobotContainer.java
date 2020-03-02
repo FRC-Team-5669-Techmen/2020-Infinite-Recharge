@@ -30,6 +30,7 @@ import frc.robot.commands.MoveControlPanelBasedOnColor;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -37,6 +38,7 @@ import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -55,6 +57,8 @@ public class RobotContainer {
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+  private final LimelightSubsystem limelight = new LimelightSubsystem();
+
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
@@ -97,12 +101,15 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
 
     // Asign default commands
+     /*
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
+     
       new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1), 
       () -> m_joystick.getRawAxis(0), 
       () -> m_joystick.getRawAxis(4), mecanumDriveSubsystem));
+      */
     
   }
  
@@ -115,14 +122,21 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 
-    new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
-    new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
-    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
+    //new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
+    //new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
+    //new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
     //new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
     new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
    // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
-    new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
+   // new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
+    new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(0.40), 
+    fuelTurret).andThen(new WaitCommand(1))).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
+    new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(0.60), 
+    fuelTurret).andThen(new WaitCommand(1))).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
+
+
+  //  new JoystickButton(buttonBox, 9).whenPressed(new StartEndCommand(onInit, onEnd, requirements))
    
    // new JoystickButton(buttonBox, 8).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
     //SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));

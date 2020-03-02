@@ -70,11 +70,11 @@ public class LimelightSubsystem extends SubsystemBase {
     displayLimelightTelemetry();
   }
 
-  public double getLimeLightX(){ //make command
+  public double getXTargetOffset(){ //make command
     return limelightX;
   }
 
-  public double getLimeLightY(){
+  public double getYTargetOffset(){
     return limelightY;
   }
 

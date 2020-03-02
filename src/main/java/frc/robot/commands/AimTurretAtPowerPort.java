@@ -29,14 +29,16 @@ public class AimTurretAtPowerPort extends PIDCommand {
   public AimTurretAtPowerPort(TurretSubsystem turret, LimelightSubsystem limelight){
     super(
         // The controller that the command will use
+        //https://docs.wpilib.org/en/latest/docs/software/commandbased/pid-subsystems-commands.html#full-pidcommand-example
         new PIDController(0, 0, 0),
         // This should return the measurement
-        () -> 0,
+        limelight::getXTargetOffset, //note limelight limits for x -9.8 to 29.8 degrees
         // This should return the setpoint (can also be a constant)
-        () -> 0,
+        () -> 0.0,
         // This uses the output
         output -> {
           // Use the output here
+          turret.setTurretRotatorMotorSpeed(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -44,7 +46,7 @@ public class AimTurretAtPowerPort extends PIDCommand {
     this.m_limelight = limelight;
     addRequirements(m_turret, m_limelight);
 
-
+    //getController().setTolerance(positionTolerance);
   }
 
   @Override
