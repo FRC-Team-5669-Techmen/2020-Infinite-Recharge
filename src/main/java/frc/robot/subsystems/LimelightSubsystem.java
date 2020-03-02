@@ -83,7 +83,7 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public boolean targetLocked(){
-    //needs implementation
+    //needs implementation; when X and Y are 0. Should be an X and Y
       return false;
   }
 

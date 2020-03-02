@@ -55,6 +55,16 @@ public class AimRobotDrivetrainAtPowerPort extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return getController().atSetpoint() || !m_limelight.targetInView(); //if the target gets blocked by say, another robot, stop the command
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    // TODO Auto-generated method stub
+    if (!m_limelight.targetInView())
+      interrupted = true;
+    
+    super.end(interrupted);
+    m_mecanumDriveSubsystem.driveCartesian(0, 0, 0);
   }
 }
