@@ -30,7 +30,8 @@ public final class Constants {
     }
     
     public static final class ControlPanelRotatorSubsystemConstants {
-        public static final int CONTROL_PANEL_SOLENOID_ID = 1;
+        public static final int CONTROL_PANEL_SOLENOID_ID = 0;
+        public static final int CONTROL_PANEL_MANIPULATOR_ID = 2;
     }
 
     public static final class LiftSubsystemConstants {
