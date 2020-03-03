@@ -91,9 +91,11 @@ public class TurretSubsystem extends SubsystemBase {
     //followerShooterMotor.follow(shooterMotor, FollowerType.PercentOutput); //TODO: Consider auxillary output?
     //followerShooterMotor.set(Motion, demand0, demand1Type, demand1);
     configShooterMotors();
+    configRotatorMotor();
 
     setShooterMotorSpeed(0.0);
     setTurretRotatorMotorSpeed(0.0);
+    //turretRotatorMotor.softl
 
     //add them to live window
     setName("Turret Subsyste");
@@ -111,6 +113,7 @@ public class TurretSubsystem extends SubsystemBase {
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
     SmartDashboard.putNumber("Turret Rotator Speed", turretRotatorMotor.get());
+    SmartDashboard.putNumber("Turret Rotator Encoder Counts", turretRotatorMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("Motor-out: %.2f | ", appliedMotorOutput);
     SmartDashboard.putNumber("Pos-units: %d | ", selSenPos);
     SmartDashboard.putNumber("Vel-unitsPer100ms: %d | ", selSenVel);
@@ -152,8 +155,7 @@ public class TurretSubsystem extends SubsystemBase {
     followerShooterMotor.configFactoryDefault();
 
     //
-    turretRotatorMotor.configFactoryDefault();
-
+   
     TalonFXConfiguration encoderConfigs = new TalonFXConfiguration();
     encoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
     shooterMotor.configAllSettings(encoderConfigs);
@@ -165,6 +167,22 @@ public class TurretSubsystem extends SubsystemBase {
 
     /////
     turretRotatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+  }
+
+  public void configRotatorMotor(){
+    turretRotatorMotor.configFactoryDefault();
+
+    TalonFXConfiguration encoderConfigs = new TalonFXConfiguration();
+    encoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+    //encoderConfigs.forwardSoftLimitThreshold = 4;
+    encoderConfigs.reverseSoftLimitThreshold = -97000;
+    encoderConfigs.reverseSoftLimitEnable = true;
+    encoderConfigs.forwardSoftLimitThreshold = -4000;
+    encoderConfigs.forwardSoftLimitEnable = true;
+    turretRotatorMotor.configAllSettings(encoderConfigs);
+    turretRotatorMotor.configClearPositionOnLimitF(true, 500);
+
+
   }
 
   public void adjustAngle(double angle){
