@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
+import frc.robot.commands.AimTurretAtPowerPort;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedPowerCellToTurret;
 import frc.robot.commands.Intake;
@@ -96,20 +97,24 @@ public class RobotContainer {
 
     //Show which commands are running
     SmartDashboard.putData(fuelTurret);
+    SmartDashboard.putData(limelight);
 
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
 
     // Asign default commands
-     /*
+
+    double deadband = 0.05;
+     
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
+      
      
-      new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1), 
-      () -> m_joystick.getRawAxis(0), 
-      () -> m_joystick.getRawAxis(4), mecanumDriveSubsystem));
-      */
+      new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1)*0.65, 
+      () -> m_joystick.getRawAxis(0)*0.65, 
+      () -> m_joystick.getRawAxis(4)*0.65, mecanumDriveSubsystem));
+    
     
   }
  
@@ -130,10 +135,14 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
    // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
    // new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
+   /*
     new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(1.00), 
     fuelTurret)).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
     new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(0.00), 
     fuelTurret)).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
+    */
+    new JoystickButton(buttonBox, 8).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight));
+  
 
 
   //  new JoystickButton(buttonBox, 9).whenPressed(new StartEndCommand(onInit, onEnd, requirements))

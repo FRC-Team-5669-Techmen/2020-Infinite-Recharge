@@ -30,7 +30,7 @@ public class AimTurretAtPowerPort extends PIDCommand {
     super(
         // The controller that the command will use
         //https://docs.wpilib.org/en/latest/docs/software/commandbased/pid-subsystems-commands.html#full-pidcommand-example
-        new PIDController(0, 0, 0),  //Need to find these: 
+        new PIDController(0.0190, 0, 0),  //Need to find these: 
         // This should return the measurement
         limelight::getXTargetAngleOffset, //note limelight limits for x -29.8 to 29.8 degrees
         // This should return the setpoint (can also be a constant)
@@ -38,7 +38,7 @@ public class AimTurretAtPowerPort extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          turret.setTurretRotatorMotorSpeed(output);
+            turret.setTurretRotatorMotorSpeed(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -47,10 +47,7 @@ public class AimTurretAtPowerPort extends PIDCommand {
     addRequirements(m_turret, m_limelight);
      //https://docs.wpilib.org/en/latest/docs/software/commandbased/pid-subsystems-commands.html#full-pidcommand-example
     getController().enableContinuousInput(-180, 180); // It is an angle controller.
-
-    //much smaller; this tolerance if fine tuning
-   /* getController()
-        .setTolerance(DriveConstants.kTurnToleranceDeg, DriveConstants.kTurnRateToleranceDegPerS);*/ //set this soon
+    getController().setTolerance(1.0);
 
     //getController().setTolerance(positionTolerance);
   }

@@ -32,6 +32,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
     setCameraMode(CameraMode.VISION_PROCESSOR);
     setFieldVisionTarget(FieldTarget.POWER_PORT);
+    setName("Limeelight Subsystem");//default name
 
     //limelighTableInstance.getEntry("pipeline")
 

@@ -41,7 +41,7 @@ public class TurretSubsystem extends SubsystemBase {
 
  
   private static final double SHOOTER_MAX_SPEED = TurretSubsystemConstants.SHOOTER_MAX_SPEED;
-  private static final double ROTATOR_MAX_SPEED = TurretSubsystemConstants.ROTATOR_MAX_SPEED;
+  private static final double ROTATOR_MAX_SPEED = TurretSubsystemConstants.TURRET_ROTATOR_MAX_SPEED;
   
   private static final int SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.SHOOTER_MOTOR_CAN_ID;
   private static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.FOLLOWER_SHOOTER_MOTOR_CAN_ID;
@@ -96,7 +96,7 @@ public class TurretSubsystem extends SubsystemBase {
     setTurretRotatorMotorSpeed(0.0);
 
     //add them to live window
-    setName("Turret Rotator Subsysyem");//default name
+    setName("Turret Subsyste");
     addChild("Shooter Motor", shooterMotor);
     addChild("Follower Shooter Motor", followerShooterMotor);
     addChild("Turret Rotator Motor", turretRotatorMotor);
@@ -110,6 +110,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
+    SmartDashboard.putNumber("Turret Rotator Speed", turretRotatorMotor.get());
     SmartDashboard.putNumber("Motor-out: %.2f | ", appliedMotorOutput);
     SmartDashboard.putNumber("Pos-units: %d | ", selSenPos);
     SmartDashboard.putNumber("Vel-unitsPer100ms: %d | ", selSenVel);
@@ -128,12 +129,12 @@ public class TurretSubsystem extends SubsystemBase {
   
 
   public void setShooterMotorSpeed(double speed) {  //ball
-    if (speed >= -SHOOTER_MAX_SPEED || speed <= SHOOTER_MAX_SPEED)
+    if (speed >= -SHOOTER_MAX_SPEED && speed <= SHOOTER_MAX_SPEED)
       shooterMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setTurretRotatorMotorSpeed(double speed) {  //ball
-    if (speed >= -ROTATOR_MAX_SPEED || speed <= ROTATOR_MAX_SPEED)
+    if (speed >= -ROTATOR_MAX_SPEED && speed <= ROTATOR_MAX_SPEED)
       turretRotatorMotor.set(speed);
   }
 

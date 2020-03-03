@@ -48,9 +48,10 @@ public final class Constants {
         public static final int TURRET_FEEDER_MOTOR_CAN_ID = 1;
         public static final double SHOOTER_MAX_SPEED = 1.0;
         public static final double SHOOTER_DEFAULT_SPEED = 1.0;
-        public static final double ROTATOR_MAX_SPEED = 1.0;
-        public static final double TURRET_ROTATOR_DEFAULT_SPEED = 0.3;
-        public static final double TURRET_ROTATOR_MAX_SPEED = 0.3;
+        public static final double TURRET_ROTATOR_DEFAULT_SPEED = 0.15; //0.22
+        public static final double TURRET_ROTATOR_MAX_SPEED = 0.09;//0.22;
+        public static final double kP = -0.1f;
+        public static final double min_command = 0.05;
         public static final double TURRET_FEEDER_MOTOR_DEFAULT_SPEED = 1.0;
         public static final String SHOOTER_SPEED_KEY_STRING = "Shooter Speed";
         public static final String ROTATOR_SPEED_KEY_STRING = "Turret Rotator Speed";
@@ -58,7 +59,7 @@ public final class Constants {
     }
 
     public static final class LimelightSubsystemConstants {
-        public static final int POWERPORT_VISION_PIPELINE = 0;
+        public static final int POWERPORT_VISION_PIPELINE = 3;
         public static final int LOADING_BAY_VISION_PIPELINE = 1;
     }
 
