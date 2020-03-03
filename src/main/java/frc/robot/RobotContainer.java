@@ -130,10 +130,10 @@ public class RobotContainer {
     new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
    // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
    // new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
-    new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(0.40), 
-    fuelTurret).andThen(new WaitCommand(1))).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
-    new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(0.60), 
-    fuelTurret).andThen(new WaitCommand(1))).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
+    new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(1.00), 
+    fuelTurret)).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
+    new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(() -> fuelTurret.setServoSpeed(0.00), 
+    fuelTurret)).whenReleased(new InstantCommand(() -> fuelTurret.setServoSpeed(0.5), fuelTurret));
 
 
   //  new JoystickButton(buttonBox, 9).whenPressed(new StartEndCommand(onInit, onEnd, requirements))
