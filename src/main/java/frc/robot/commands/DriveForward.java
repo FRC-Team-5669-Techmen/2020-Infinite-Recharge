@@ -21,6 +21,17 @@ public class DriveForward extends CommandBase {
    private final double duration;
    private final double speed;
 
+   /**
+   * Drive Forward.
+   *
+   * <p>Angles are measured clockwise from the positive X axis. The robot's 
+   * speed is independent from its angle or rotation rate.
+   *
+   * @param duration  How long to run the command
+   * @param speed     The robot's speed
+   * @param mecnumDrive A MecnnumDriveSubsystem
+   */
+
   public DriveForward (double duration, double speed, MecanumDriveSubsystem mecanumDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_drive = mecanumDrive;
@@ -54,6 +65,6 @@ public class DriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - startTime < duration;
+    return Timer.getFPGATimestamp() - startTime > duration;
   }
 }

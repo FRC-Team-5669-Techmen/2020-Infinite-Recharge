@@ -34,6 +34,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   private void driveInit() {
     m_drive.setDeadband(0.05);
+    m_drive.setMaxOutput(1.00);
   }
 
  /**
