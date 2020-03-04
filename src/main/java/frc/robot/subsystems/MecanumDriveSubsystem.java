@@ -32,8 +32,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     driveInit();
   }
 
-  protected void driveInit() {
-    
+  private void driveInit() {
+    m_drive.setDeadband(0.05);
   }
 
  /**
