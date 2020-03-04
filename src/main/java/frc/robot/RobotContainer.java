@@ -88,6 +88,8 @@ public class RobotContainer {
     //SmartDashboard.putData("Shoot Power Cells", new ShootPowerCell(fuelTurret, () -> {return 1.00;} ));
     //SmartDashboard.putData("Rotate Turret Left", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
     //SmartDashboard.putData("Roate Turret Right", new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    SmartDashboard.putData("Rotate Magazine Clockwise", new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
+    SmartDashboard.putData("Rotate Magazine CounterClockwise", new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));
 
     //m_chooser.addOption("Test Turret", testShooter);
     fuelTurret.setName("Fuel Turret");
@@ -128,9 +130,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 
-    //new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
-    //new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
-    //new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
+    new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
+    new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
+    new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
     //new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
     new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));

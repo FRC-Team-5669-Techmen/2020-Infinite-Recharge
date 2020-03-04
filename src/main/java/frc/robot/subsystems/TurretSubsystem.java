@@ -102,6 +102,7 @@ public class TurretSubsystem extends SubsystemBase {
     addChild("Shooter Motor", shooterMotor);
     addChild("Follower Shooter Motor", followerShooterMotor);
     addChild("Turret Rotator Motor", turretRotatorMotor);
+    addChild("Turret Feeder Motor", turretFeederMotor);
   }
 
   @Override
