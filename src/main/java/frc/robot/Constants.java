@@ -48,8 +48,8 @@ public final class Constants {
         public static final int TURRET_FEEDER_MOTOR_CAN_ID = 1;
         public static final double SHOOTER_MAX_SPEED = 1.0;
         public static final double SHOOTER_DEFAULT_SPEED = 1.0;
-        public static final double TURRET_ROTATOR_DEFAULT_SPEED = 0.30; //0.22
-        public static final double TURRET_ROTATOR_MAX_SPEED = 0.40;//0.22;
+        public static final double TURRET_ROTATOR_DEFAULT_SPEED = 0.20; //0.22
+        public static final double TURRET_ROTATOR_MAX_SPEED = 0.20;//0.22;
         public static final double kP = -0.1f;
         public static final double min_command = 0.05;
         public static final double TURRET_FEEDER_MOTOR_DEFAULT_SPEED = 1.0;
@@ -74,5 +74,13 @@ public final class Constants {
         public static final int REAR_LEFT_MOTOR = 3;
         public static final int FRONT_RIGHT_MOTOR = 2;
         public static final int REAR_RIGHT_MOTOR = 4;
+    }
+
+    public static final class AimtTurretAtPowerPortConstants {
+        public static final double kP = 0.0350;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double TARGET_ANGLE = 0.0;
+        public static final double TOLERANCE = 1.0; //degrees
     }
 }

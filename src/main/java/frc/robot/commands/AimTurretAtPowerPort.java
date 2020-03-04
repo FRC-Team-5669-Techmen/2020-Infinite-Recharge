@@ -9,6 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants.AimtTurretAtPowerPortConstants;
+import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -30,11 +32,13 @@ public class AimTurretAtPowerPort extends PIDCommand {
     super(
         // The controller that the command will use
         //https://docs.wpilib.org/en/latest/docs/software/commandbased/pid-subsystems-commands.html#full-pidcommand-example
-        new PIDController(0.0190, 0, 0),  //Need to find these: 
+        new PIDController(AimtTurretAtPowerPortConstants.kP, 
+                          AimtTurretAtPowerPortConstants.kI, 
+                          AimtTurretAtPowerPortConstants.kD),  //Need to find these: 
         // This should return the measurement
         limelight::getXTargetAngleOffset, //note limelight limits for x -29.8 to 29.8 degrees
         // This should return the setpoint (can also be a constant)
-        () -> 0.0,
+        () -> AimtTurretAtPowerPortConstants.TARGET_ANGLE,
         // This uses the output
         output -> {
           // Use the output here
@@ -47,7 +51,7 @@ public class AimTurretAtPowerPort extends PIDCommand {
     addRequirements(m_turret, m_limelight);
      //https://docs.wpilib.org/en/latest/docs/software/commandbased/pid-subsystems-commands.html#full-pidcommand-example
     getController().enableContinuousInput(-180, 180); // It is an angle controller.
-    getController().setTolerance(1.0);
+    getController().setTolerance(AimtTurretAtPowerPortConstants.TOLERANCE);
 
     //getController().setTolerance(positionTolerance);
   }

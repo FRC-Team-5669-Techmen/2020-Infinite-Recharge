@@ -134,11 +134,19 @@ public class TurretSubsystem extends SubsystemBase {
   public void setShooterMotorSpeed(double speed) {  //ball
     if (speed >= -SHOOTER_MAX_SPEED && speed <= SHOOTER_MAX_SPEED)
       shooterMotor.set(ControlMode.PercentOutput, speed);
+    else if (speed < -SHOOTER_MAX_SPEED)
+      shooterMotor.set(ControlMode.PercentOutput, -SHOOTER_MAX_SPEED);
+    else if (speed > SHOOTER_MAX_SPEED )
+      shooterMotor.set(ControlMode.PercentOutput, SHOOTER_MAX_SPEED);
   }
 
   public void setTurretRotatorMotorSpeed(double speed) {  //ball
     if (speed >= -ROTATOR_MAX_SPEED && speed <= ROTATOR_MAX_SPEED)
       turretRotatorMotor.set(speed);
+    else if (speed < -ROTATOR_MAX_SPEED)
+      turretRotatorMotor.set( -ROTATOR_MAX_SPEED);
+    else if (speed > ROTATOR_MAX_SPEED )
+      turretRotatorMotor.set( ROTATOR_MAX_SPEED);
   }
 
   public void turnOnMagazineFeederMotor(){
@@ -175,12 +183,18 @@ public class TurretSubsystem extends SubsystemBase {
     TalonFXConfiguration encoderConfigs = new TalonFXConfiguration();
     encoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
     //encoderConfigs.forwardSoftLimitThreshold = 4;
-    encoderConfigs.reverseSoftLimitThreshold = -97000;
+    encoderConfigs.reverseSoftLimitThreshold = -86000;
     encoderConfigs.reverseSoftLimitEnable = true;
-    encoderConfigs.forwardSoftLimitThreshold = -4000;
+    encoderConfigs.forwardSoftLimitThreshold = -7000;
     encoderConfigs.forwardSoftLimitEnable = true;
     turretRotatorMotor.configAllSettings(encoderConfigs);
     turretRotatorMotor.configClearPositionOnLimitF(true, 500);
+
+    /*
+    Figure this out in OC Not working out RN. ALso should set the orientation clockwise and counterclowise
+    turretRotatorMotor.configPeakOutputForward(-0.20, 500);
+    turretRotatorMotor.configPeakOutputReverse(0.20, 500); //the 500 is an arbituary guess
+    */
 
 
   }

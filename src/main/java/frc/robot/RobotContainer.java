@@ -106,6 +106,7 @@ public class RobotContainer {
 
     double deadband = 0.05;
      
+    /*
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
@@ -115,7 +116,7 @@ public class RobotContainer {
       () -> m_joystick.getRawAxis(0)*0.65, 
       () -> m_joystick.getRawAxis(4)*0.65, mecanumDriveSubsystem));
     
-    
+    */
   }
  
   /**
