@@ -124,7 +124,7 @@ public class RobotContainer {
    // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
     new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
    
-    new JoystickButton(buttonBox, 8).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
+    new JoystickButton(buttonBox, 9).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
     //SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     //SmartDashboard.putData("Turen Turret CounterClockwise", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
     //SmartDashboard.putData("Shoot Power Cell", new ShootPowerCell(fuelTurret, () -> {return 0.70;} ));
