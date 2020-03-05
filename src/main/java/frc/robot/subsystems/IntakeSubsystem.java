@@ -22,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL;
   private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL;
   
-  private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(0);
+  private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
 
   //Pneuamtics not yet installed, commenting out untill installed
   /*private final DoubleSolenoid doubleSoleniod = 
@@ -32,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
   //Pneumatics: 2x double
 
   public IntakeSubsystem() {
-    intakeWheelMotor.set(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
+    intakeWheelMotor.set(0.0);
     setName("Intake Subsystem");
     addChild("Intake Motor", intakeWheelMotor);
 
@@ -46,18 +46,19 @@ public class IntakeSubsystem extends SubsystemBase {
 
   //Find implementations for these methods!
 
-  public void setIntakeMotorOn(double speed){
-    /*
-    if(speed <= -MAX|| speed >= MAX)
-      intakeWheelMotor.set(speed);
-    */
+  public void setIntakeMotorOn(){
+    intakeWheelMotor.set(-1.0);
+  }
+
+  public void setIntakeMotorOff(){
+    intakeWheelMotor.set(0.0);
   }
 
   public void deployIntake(){
    // doubleSoleniod.set(Value.kForward);
   }
 
-  public void retrackIntake(){
+  public void retractIntake(){
     //doubleSoleniod.set(Value.kReverse);
   }
 

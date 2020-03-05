@@ -46,7 +46,7 @@ public class RotateTurret extends CommandBase {
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
     this.direction = direction;
-    speed = () -> {return TurretSubsystemConstants.ROTATOR_DEFAULT_SPEED;};
+    speed = () -> {return TurretSubsystemConstants.TURRET_ROTATOR_DEFAULT_SPEED;};
     setName("Rotate " + this.direction.toString().toLowerCase().replace('_', ' '));
   }
 

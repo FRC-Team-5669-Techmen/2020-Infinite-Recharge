@@ -8,45 +8,44 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
-public class IntakeOn extends CommandBase {
+public class HomeTurretHood extends CommandBase {
   /**
-   * Creates a new IntakeOn.
+   * Creates a new HomeTurretHood.
    */
-  private final IntakeSubsystem intake;
 
-  public IntakeOn(IntakeSubsystem intake) {
-    this.intake = intake;
-    addRequirements(intake);
-
+  private final TurretSubsystem turret;
+  
+  public HomeTurretHood(TurretSubsystem turret) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.turret = turret;
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.deployIntake();
-    intake.setIntakeMotorOn(0.30);
+    turret.initHoodHomingMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.loadMagazine();
+    turret.closeHoodAtHomingSpeed();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setIntakeMotorOn(0.0);
-    intake.deployIntake();
-
+    turret.stopHood();
+    turret.closeHoodHomingMode();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return turret.hoodAtLimitSwitch();
   }
 }
