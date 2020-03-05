@@ -11,11 +11,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class Intake extends CommandBase {
+  private final IntakeSubsystem intake;
   /**
    * Creates a new IntakeOn.
    */
-  private final IntakeSubsystem intake;
-
   public Intake(IntakeSubsystem intake) {
     this.intake = intake;
     addRequirements(intake);
@@ -26,7 +25,6 @@ public class Intake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.deployIntake();
     intake.setIntakeMotorOn();
   }
 
@@ -39,8 +37,6 @@ public class Intake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setIntakeMotorOff();
-    intake.retractIntake();
 
   }
 

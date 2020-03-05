@@ -21,8 +21,7 @@ public final class Constants {
     public static final class IntakeSubsystemConstants {
         public static final int INTAKE_MOTOR_CAN_ID = 4;
         public static final double MAX_INTAKE_MOTOR_SPEED = 0.5;
-        public static final int SOLENIOD_FORWARD_CHANNEL = 0;
-        public static final int SOLENIOD_REVERSE_CHANNEL = 1;
+        public static final int SOLENOID_CHANNEL = 4;
     }
 
     public static final class MagazineSubsystemConstants {
