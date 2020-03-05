@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -56,7 +56,7 @@ public class RobotContainer {
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
-  
+  private final Compressor c = new Compressor(0);
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
   private final Joystick m_joystick = new Joystick(ControllerConstants.JOYSTICK_CONTROLLER_PORT);
 
@@ -93,9 +93,19 @@ public class RobotContainer {
     //Show which commands are running
     SmartDashboard.putData(fuelTurret);
 
+     //Compressser Data
+     SmartDashboard.putData(c);
+     SmartDashboard.putBoolean("Compresser On?" , c.enabled());
+     SmartDashboard.putBoolean("Pressure Low (so switch on?)", c.getPressureSwitchValue());
+     SmartDashboard.putNumber("Pressure Switch Current", c.getCompressorCurrent());
+     SmartDashboard.putBoolean("PCM Running Closed Loop Control?", c.getClosedLoopControl());
+
+     
+
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
 
+    /*
     // Asign default commands
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
@@ -103,7 +113,7 @@ public class RobotContainer {
       new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1), 
       () -> m_joystick.getRawAxis(0), 
       () -> m_joystick.getRawAxis(4), mecanumDriveSubsystem));
-    
+    */
   }
  
   /**
