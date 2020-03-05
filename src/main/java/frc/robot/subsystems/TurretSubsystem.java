@@ -121,7 +121,7 @@ public class TurretSubsystem extends SubsystemBase {
    
    
    updateValues();
-   updateHoodPosition();
+   updateHoodPosition(); //wathcdog/position finder for turret
 
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
