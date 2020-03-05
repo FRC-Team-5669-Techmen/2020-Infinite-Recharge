@@ -24,7 +24,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -81,6 +83,15 @@ public class TurretSubsystem extends SubsystemBase {
   private double follower_vel_RotPerSec = 0; /* scale per100ms to perSecond */
   private double follower_vel_RotPerMin = 0;
 
+  private double predictedHoodPostition = 0.0;
+  private final double hoodSpeedRatio = 1.0; //need to get units
+
+  private DigitalInput hoodLowerLimitSwitch = new DigitalInput(0); //TODO install this
+  private boolean hoodMoving = false;
+  private double hoodMovementDuration = 0.0; //in seconds
+  private double lastHoodFPGAStartTime = 0.0;
+  private final double HOOD_MAX_EXTENSION = 30;// TODO find
+
   private boolean shooterAtOperatingRPM = false;
   
   public TurretSubsystem() {
@@ -96,6 +107,8 @@ public class TurretSubsystem extends SubsystemBase {
     setShooterMotorSpeed(0.0);
     setTurretRotatorMotorSpeed(0.0);
     //turretRotatorMotor.softl
+
+    updateHoodPosition();
 
     //add them to live window
     setName("Turret Subsyste");
@@ -134,11 +147,11 @@ public class TurretSubsystem extends SubsystemBase {
 
   public void setShooterMotorSpeed(double speed) {  //ball
     if (speed >= -shooterMaxSpeed && speed <= shooterMaxSpeed)
-      shooterMotor.set(ControlMode.PercentOutput, speed);
+      shooterMotor.set(speed);
     else if (speed < -shooterMaxSpeed)
-      shooterMotor.set(ControlMode.PercentOutput, -shooterMaxSpeed);
+      shooterMotor.set( -shooterMaxSpeed);
     else if (speed > shooterMaxSpeed )
-      shooterMotor.set(ControlMode.PercentOutput, shooterMaxSpeed);
+      shooterMotor.set( shooterMaxSpeed);
   }
 
   public void setTurretRotatorMotorSpeed(double speed) {  //ball
@@ -242,6 +255,36 @@ public class TurretSubsystem extends SubsystemBase {
 
   public void adjustTurretHood(double levelOfExtension){
    // hoodAdjusterFollowerServo.set
+  }
+
+  public void updateHoodPosition(){
+    if (hoodAdjusterServo.get() != 0.5 && !hoodMoving) //hood started
+    {
+      lastHoodFPGAStartTime = Timer.getFPGATimestamp();
+      hoodMoving = true;
+    }
+
+    else if (hoodLowerLimitSwitch.get() && hoodAdjusterServo.get() < 0.5) //at a limit. Stop servo if moving against it
+    {
+      hoodAdjusterServo.set(0.5);
+      predictedHoodPostition = 0.0;
+    }
+
+    else if (predictedHoodPostition >= HOOD_MAX_EXTENSION && hoodAdjusterServo.get() > 0.5) //at max extension (calcualted)
+    {
+      hoodAdjusterServo.set(0.5);
+    }
+
+    else if (hoodAdjusterServo.get() == 0.5 && hoodMoving) //hood stopped
+    {
+      double hoodTimeDifference = Timer.getFPGATimestamp() - lastHoodFPGAStartTime;
+      double changeInDistance = Math.copySign (hoodSpeedRatio, hoodAdjusterServo.get() < 0.5 ? 1.0 : -1.0)*hoodTimeDifference;
+      predictedHoodPostition += changeInDistance;
+      hoodMoving = false;
+    }
+
+
+    
   }
 
   public double getShooterFollowerRPM(){
