@@ -15,11 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.AimTurretAtPowerPort;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedPowerCellToTurret;
 import frc.robot.commands.Intake;
 import frc.robot.commands.ManualMecanumDrive;
+import frc.robot.commands.MecanumDriveBrake;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.StartShooter;
@@ -60,7 +62,9 @@ public class RobotContainer {
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
   private final LimelightSubsystem limelight = new LimelightSubsystem();
 
+
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
+
   
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
   private final Joystick m_joystick = new Joystick(ControllerConstants.JOYSTICK_CONTROLLER_PORT);
@@ -158,6 +162,9 @@ public class RobotContainer {
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
 
+
+    new JoystickButton(m_joystick, 1).whileHeld(new MecanumDriveBrake(mecanumDriveSubsystem));
+
     //new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
     //new JoystickButton(buttonBox, 1).whileActiveOnce(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem)); //shoot while pressed.
 
@@ -171,6 +178,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // An ExampleCommand will run in autonomous
-      return m_chooser.getSelected();
+      return new Autonomous(mecanumDriveSubsystem, fuelTurret, limelight);
   }
 }
