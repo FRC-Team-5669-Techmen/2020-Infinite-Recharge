@@ -40,8 +40,8 @@ public class TurretSubsystem extends SubsystemBase {
   //https://phoenix-documentation.readthedocs.io/en/latest/ch13_MC.html#follower
 
  
-  private static final double SHOOTER_MAX_SPEED = TurretSubsystemConstants.SHOOTER_MAX_SPEED;
-  private static final double ROTATOR_MAX_SPEED = TurretSubsystemConstants.TURRET_ROTATOR_MAX_SPEED;
+  private static double shooterMaxSpeed = TurretSubsystemConstants.SHOOTER_MAX_SPEED;
+  private static double rotatorMaxSpeed = TurretSubsystemConstants.TURRET_ROTATOR_MAX_SPEED;
   
   private static final int SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.SHOOTER_MOTOR_CAN_ID;
   private static final int FOLLOWER_SHOOTER_MOTOR_CAN_ID = TurretSubsystemConstants.FOLLOWER_SHOOTER_MOTOR_CAN_ID;
@@ -133,21 +133,21 @@ public class TurretSubsystem extends SubsystemBase {
   
 
   public void setShooterMotorSpeed(double speed) {  //ball
-    if (speed >= -SHOOTER_MAX_SPEED && speed <= SHOOTER_MAX_SPEED)
+    if (speed >= -shooterMaxSpeed && speed <= shooterMaxSpeed)
       shooterMotor.set(ControlMode.PercentOutput, speed);
-    else if (speed < -SHOOTER_MAX_SPEED)
-      shooterMotor.set(ControlMode.PercentOutput, -SHOOTER_MAX_SPEED);
-    else if (speed > SHOOTER_MAX_SPEED )
-      shooterMotor.set(ControlMode.PercentOutput, SHOOTER_MAX_SPEED);
+    else if (speed < -shooterMaxSpeed)
+      shooterMotor.set(ControlMode.PercentOutput, -shooterMaxSpeed);
+    else if (speed > shooterMaxSpeed )
+      shooterMotor.set(ControlMode.PercentOutput, shooterMaxSpeed);
   }
 
   public void setTurretRotatorMotorSpeed(double speed) {  //ball
-    if (speed >= -ROTATOR_MAX_SPEED && speed <= ROTATOR_MAX_SPEED)
+    if (speed >= -rotatorMaxSpeed && speed <= rotatorMaxSpeed)
       turretRotatorMotor.set(speed);
-    else if (speed < -ROTATOR_MAX_SPEED)
-      turretRotatorMotor.set( -ROTATOR_MAX_SPEED);
-    else if (speed > ROTATOR_MAX_SPEED )
-      turretRotatorMotor.set( ROTATOR_MAX_SPEED);
+    else if (speed < -rotatorMaxSpeed)
+      turretRotatorMotor.set( -rotatorMaxSpeed);
+    else if (speed > rotatorMaxSpeed )
+      turretRotatorMotor.set( rotatorMaxSpeed);
   }
 
   public void turnOnMagazineFeederMotor(){
@@ -158,7 +158,6 @@ public class TurretSubsystem extends SubsystemBase {
     turretFeederMotor.set(0.0);
   }
 
- 
   private void configShooterMotors(){
     shooterMotor.configFactoryDefault();
     followerShooterMotor.configFactoryDefault();
@@ -181,14 +180,8 @@ public class TurretSubsystem extends SubsystemBase {
   public void configRotatorMotor(){
     turretRotatorMotor.configFactoryDefault();
 
-    TalonFXConfiguration encoderConfigs = new TalonFXConfiguration();
-    encoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
-    //encoderConfigs.forwardSoftLimitThreshold = 4;
-    encoderConfigs.reverseSoftLimitThreshold = -86000;
-    encoderConfigs.reverseSoftLimitEnable = true;
-    encoderConfigs.forwardSoftLimitThreshold = -7000;
-    encoderConfigs.forwardSoftLimitEnable = true;
-    turretRotatorMotor.configAllSettings(encoderConfigs);
+    enableTurretRotatorSoftLimits();
+
     turretRotatorMotor.configClearPositionOnLimitF(true, 500);
 
     /*
@@ -200,20 +193,55 @@ public class TurretSubsystem extends SubsystemBase {
 
   }
 
+  private void enableTurretRotatorSoftLimits(){
+
+    TalonFXConfiguration turretRotatorEncoderConfigs = new TalonFXConfiguration();
+    turretRotatorEncoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+    //encoderConfigs.forwardSoftLimitThreshold = 4;
+    turretRotatorEncoderConfigs.reverseSoftLimitThreshold = -86000;
+    turretRotatorEncoderConfigs.reverseSoftLimitEnable = true;
+    turretRotatorEncoderConfigs.forwardSoftLimitThreshold = -7000;
+    turretRotatorEncoderConfigs.forwardSoftLimitEnable = true;
+    turretRotatorMotor.configAllSettings(turretRotatorEncoderConfigs);    
+  } 
+
+  private void disableTurretRotatorSoftLimits(){
+
+    TalonFXConfiguration turretRotatorEncoderConfigs = new TalonFXConfiguration();
+    turretRotatorEncoderConfigs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+    //encoderConfigs.forwardSoftLimitThreshold = 4;
+    turretRotatorEncoderConfigs.reverseSoftLimitEnable = false;
+    turretRotatorEncoderConfigs.forwardSoftLimitEnable = false;
+    turretRotatorMotor.configAllSettings(turretRotatorEncoderConfigs);
+  }
+
+  public void initHomingMode() {
+    disableTurretRotatorSoftLimits();
+    rotatorMaxSpeed = 0.12;
+
+  }
+
+  public void closHomeingMode() {
+    enableTurretRotatorSoftLimits();
+    rotatorMaxSpeed = TurretSubsystemConstants.TURRET_ROTATOR_MAX_SPEED;
+
+  }
+
+  public boolean turretRotatorFwdLimitSwitchHit(){
+    return turretRotatorMotor.getSensorCollection().isFwdLimitSwitchClosed() == 1;
+  }
+
+  public boolean turretRotatorReverseLimitSwitchHit(){
+    return turretRotatorMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
+  }
+  
+
   public void adjustAngle(double angle){
     //this might evolve into its own command. Angle will also depend on speed
   }
 
   public void adjustTurretHood(double levelOfExtension){
    // hoodAdjusterFollowerServo.set
-  }
-
-  public boolean atLeftLimit(){
-    return false; //needs implementation with limite switches
-  }
-
-  public boolean atRightLimit(){
-    return false; //needs implemtaiotn with limit swtiches
   }
 
   public double getShooterFollowerRPM(){
