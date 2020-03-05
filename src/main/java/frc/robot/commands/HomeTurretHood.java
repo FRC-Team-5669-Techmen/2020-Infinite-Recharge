@@ -10,13 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class HomeTurret extends CommandBase {
+public class HomeTurretHood extends CommandBase {
   /**
-   * Creates a new HomeTurret.
+   * Creates a new HomeTurretHood.
    */
 
   private final TurretSubsystem turret;
-  public HomeTurret(TurretSubsystem turret) {
+  
+  public HomeTurretHood(TurretSubsystem turret) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.turret = turret;
     addRequirements(turret);
@@ -25,25 +26,26 @@ public class HomeTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turret.initHomingMode();
+    turret.initHoodHomingMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turret.setTurretRotatorMotorSpeed(0.1);
+    turret.closeHoodAtHomingSpeed();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    turret.setTurretRotatorMotorSpeed(0.0);
-    turret.closHomeingMode();
+    turret.stopHood();
+    turret.closeHoodHomingMode();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return turret.turretRotatorFwdLimitSwitchHit();
+    return turret.hoodAtLimitSwitch();
   }
 }

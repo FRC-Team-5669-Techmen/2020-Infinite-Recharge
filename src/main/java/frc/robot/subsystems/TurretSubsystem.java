@@ -90,7 +90,12 @@ public class TurretSubsystem extends SubsystemBase {
   private boolean hoodMoving = false;
   private double hoodMovementDuration = 0.0; //in seconds
   private double lastHoodFPGAStartTime = 0.0;
-  private final double HOOD_MAX_EXTENSION = 30;// TODO find
+  private boolean checkHoodSoftLimits = true;
+  public boolean hoodUnsycned = false;
+  private double hoodMaxExtension = TurretSubsystemConstants.HOOD_MAX_EXTENSION;// TODO find
+  private double hoodMinExtension = TurretSubsystemConstants.HOOD_MIN_EXTENSION;
+  private double hoodMinSpeed = TurretSubsystemConstants.HOOD_MIN_SPEED;
+  private double hoodMaxSpeed = TurretSubsystemConstants.HOOD_MAX_SPEED;
 
   private boolean shooterAtOperatingRPM = false;
   
@@ -142,32 +147,24 @@ public class TurretSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Follwoer Vel-RPM:%.1f | ", follower_vel_RotPerMin);
 }
 
-  
+//--------------------------------------------Magazine Feeder Code-------------------------------------------------
+  public void turnOnMagazineFeederMotor(){
+  turretFeederMotor.set(-TurretSubsystemConstants.TURRET_FEEDER_MOTOR_DEFAULT_SPEED);
+}
+
+public void turnOffMagazineFeederMotor(){
+  turretFeederMotor.set(0.0);
+}
+
+//------------------------------------------------Shooter Code-------------------------------------------------
 
   public void setShooterMotorSpeed(double speed) {  //ball
-    if (speed >= -shooterMaxSpeed && speed <= shooterMaxSpeed)
+    if (speed >= 0 && speed <= shooterMaxSpeed)
       shooterMotor.set(speed);
-    else if (speed < -shooterMaxSpeed)
-      shooterMotor.set( -shooterMaxSpeed);
+    else if (speed < 0)
+      shooterMotor.set(0);
     else if (speed > shooterMaxSpeed )
       shooterMotor.set( shooterMaxSpeed);
-  }
-
-  public void setTurretRotatorMotorSpeed(double speed) {  //ball
-    if (speed >= -rotatorMaxSpeed && speed <= rotatorMaxSpeed)
-      turretRotatorMotor.set(speed);
-    else if (speed < -rotatorMaxSpeed)
-      turretRotatorMotor.set( -rotatorMaxSpeed);
-    else if (speed > rotatorMaxSpeed )
-      turretRotatorMotor.set( rotatorMaxSpeed);
-  }
-
-  public void turnOnMagazineFeederMotor(){
-    turretFeederMotor.set(-TurretSubsystemConstants.TURRET_FEEDER_MOTOR_DEFAULT_SPEED);
-  }
-
-  public void turnOffMagazineFeederMotor(){
-    turretFeederMotor.set(0.0);
   }
 
   private void configShooterMotors(){
@@ -189,6 +186,26 @@ public class TurretSubsystem extends SubsystemBase {
     turretRotatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
   }
 
+  public double getShooterFollowerRPM(){
+    return vel_RotPerMin;
+  }
+
+  public boolean shooterAtOperatingRPM(){
+    return vel_RotPerMin >= TurretSubsystemConstants.SHOOTER_OPERATING_RPM;
+  }
+
+
+  //---------------------------------------------Turret Rotator Code-----------------------------------------------------
+
+  public void setTurretRotatorMotorSpeed(double speed) {  //ball
+    if (speed >= -rotatorMaxSpeed && speed <= rotatorMaxSpeed)
+      turretRotatorMotor.set(speed);
+    else if (speed < -rotatorMaxSpeed)
+      turretRotatorMotor.set( -rotatorMaxSpeed);
+    else if (speed > rotatorMaxSpeed )
+      turretRotatorMotor.set( rotatorMaxSpeed);
+  }
+
   public void configRotatorMotor(){
     turretRotatorMotor.configFactoryDefault();
 
@@ -201,8 +218,6 @@ public class TurretSubsystem extends SubsystemBase {
     turretRotatorMotor.configPeakOutputForward(-0.20, 500);
     turretRotatorMotor.configPeakOutputReverse(0.20, 500); //the 500 is an arbituary guess
     */
-
-
   }
 
   private void enableTurretRotatorSoftLimits(){
@@ -227,13 +242,12 @@ public class TurretSubsystem extends SubsystemBase {
     turretRotatorMotor.configAllSettings(turretRotatorEncoderConfigs);
   }
 
-  public void initHomingMode() {
+  public void initRotatorHomingMode() {
     disableTurretRotatorSoftLimits();
     rotatorMaxSpeed = 0.12;
-
   }
 
-  public void closHomeingMode() {
+  public void closeRotatorHomeingMode() {
     enableTurretRotatorSoftLimits();
     rotatorMaxSpeed = TurretSubsystemConstants.TURRET_ROTATOR_MAX_SPEED;
 
@@ -246,10 +260,15 @@ public class TurretSubsystem extends SubsystemBase {
   public boolean turretRotatorReverseLimitSwitchHit(){
     return turretRotatorMotor.getSensorCollection().isRevLimitSwitchClosed() == 1;
   }
+
+  //--------------------------------------------Turret Hood Code--------------------------------------------------
   
 
   public void adjustAngle(double angle){
     //this might evolve into its own command. Angle will also depend on speed
+    if(hoodUnsycned)
+      System.out.println("Hood not synced");
+    
   }
 
   public void adjustTurretHood(double levelOfExtension){
@@ -263,15 +282,25 @@ public class TurretSubsystem extends SubsystemBase {
       hoodMoving = true;
     }
 
-    else if (hoodLowerLimitSwitch.get() && hoodAdjusterServo.get() < 0.5) //at a limit. Stop servo if moving against it
+    else if (hoodAtLimitSwitch())
     {
       hoodAdjusterServo.set(0.5);
       predictedHoodPostition = 0.0;
+      hoodUnsycned = true;
     }
 
-    else if (predictedHoodPostition >= HOOD_MAX_EXTENSION && hoodAdjusterServo.get() > 0.5) //at max extension (calcualted)
+    else if (checkHoodSoftLimits)
     {
-      hoodAdjusterServo.set(0.5);
+      if ((predictedHoodPostition <= hoodMinExtension) && hoodAdjusterServo.get() < 0.5) //at a limit. Stop servo if moving against it
+      {
+         hoodAdjusterServo.set(0.5);
+      }
+
+      else if (predictedHoodPostition >= hoodMaxExtension && hoodAdjusterServo.get() > 0.5) //at max extension (calcualted)
+      {
+        hoodAdjusterServo.set(0.5);
+      }
+
     }
 
     else if (hoodAdjusterServo.get() == 0.5 && hoodMoving) //hood stopped
@@ -281,29 +310,69 @@ public class TurretSubsystem extends SubsystemBase {
       predictedHoodPostition += changeInDistance;
       hoodMoving = false;
     }
-
-
     
   }
 
-  public double getShooterFollowerRPM(){
-    return vel_RotPerMin;
+  public void initHoodHomingMode(){
+    hoodMinExtension = -99.00; //some small number
+    checkHoodSoftLimits = false;
   }
 
-  public boolean atOperatingRPM(){
-    return vel_RotPerMin >= TurretSubsystemConstants.SHOOTER_OPERATING_RPM;
-
+  public void closeHoodHomingMode(){
+    hoodMinExtension = TurretSubsystemConstants.HOOD_MIN_EXTENSION; //some small number
+    checkHoodSoftLimits = true;
+    hoodMaxSpeed = TurretSubsystemConstants.HOOD_MAX_SPEED;
   }
 
-  public void setServoSpeed(double speed){
+  public void closeHoodAtHomingSpeed(){
+    setServoSpeed(0.7);
+    hoodUnsycned = true;
+  }
+
+  public boolean hoodAtLimitSwitch(){
+    return hoodLowerLimitSwitch.get();
+  }
+
+
+  private void setServoSpeed(double speed){
     /*
       should be a speed between 0 and 1
     */
-    hoodAdjusterServo.set(speed);
-    hoodAdjusterFollowerServo.set(1.0-speed);
+    if (speed >= hoodMinSpeed && speed <=hoodMaxSpeed)
+    {
+      hoodAdjusterServo.set(speed);
+      hoodAdjusterFollowerServo.set(1.0-speed);
+    }
+
+    else if (speed < hoodMinSpeed)
+      {
+        hoodAdjusterServo.set(hoodMinSpeed);
+        hoodAdjusterFollowerServo.set(1.0-hoodMinSpeed);
+
+      }
+      else if (speed > hoodMaxSpeed)
+      {
+        hoodAdjusterServo.set(hoodMaxSpeed);
+        hoodAdjusterFollowerServo.set(1.0-hoodMaxSpeed);
+
+      }
+  }
+
+  public void moveHoodForward(){
+    setServoSpeed(TurretSubsystemConstants.HOOD_DEFAULT_SPEED);
+  }
+
+  public void moveHoodBack(){
+    setServoSpeed(TurretSubsystemConstants.HOOD_DEFAULT_SPEED - 1.0);
+  }
+
+  public void stopHood(){
+    setServoSpeed(0.5);
   }
 
   //TODO add other getter methods
+
+  //------------------------------Update Methods------------------------------
 
   private void updateValues(){
      // This method will be called once per scheduler run
