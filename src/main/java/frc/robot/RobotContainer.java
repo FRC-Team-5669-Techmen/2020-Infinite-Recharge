@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ManualMecanumDrive;
 import frc.robot.commands.MecanumDriveBrake;
@@ -27,6 +28,7 @@ import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -50,6 +52,7 @@ public class RobotContainer {
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
  // private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+  private final LimelightSubsystem limelight = new LimelightSubsystem();
   
   private final Joystick buttonBox = new Joystick(ControllerConstants.BUTTON_BOX_CONTROLLER_PORT);
   private final Joystick m_joystick = new Joystick(ControllerConstants.JOYSTICK_CONTROLLER_PORT);
@@ -119,6 +122,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // An ExampleCommand will run in autonomous
-      return m_chooser.getSelected();
+      return new Autonomous(mecanumDriveSubsystem, fuelTurret, limelight);
   }
 }

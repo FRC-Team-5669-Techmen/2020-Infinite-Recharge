@@ -24,8 +24,8 @@ public class Autonomous extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super();
     addCommands(
-      new DriveForward(1, 0.2, m_drive),
-      new AimTurretAtPowerPort(m_turret, m_limelight)
+      new DriveForward(1, 0.2, m_drive)//,
+      //new AimTurretAtPowerPort(m_turret, m_limelight)
     );
   }
 }
