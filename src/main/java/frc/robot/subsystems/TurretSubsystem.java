@@ -108,8 +108,6 @@ public class TurretSubsystem extends SubsystemBase {
     setTurretRotatorMotorSpeed(0.0);
     //turretRotatorMotor.softl
 
-    updateHoodPosition();
-
     //add them to live window
     setName("Turret Subsyste");
     addChild("Shooter Motor", shooterMotor);
@@ -123,6 +121,7 @@ public class TurretSubsystem extends SubsystemBase {
    
    
    updateValues();
+   updateHoodPosition();
 
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
