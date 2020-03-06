@@ -7,9 +7,12 @@
 
 package frc.robot.subsystems;
 
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -38,8 +41,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   }
 
-  protected void driveInit() {
-    //TODO Test thid
+
+  private void driveInit() {
+    m_drive.setDeadband(0.05);
+    m_drive.setMaxOutput(1.00);
+      //TODO Test thid
     /*https://phoenix-documentation.readthedocs.io/en/latest/ch15_WPIDrive.html#c-java-drive-train-classes
     m_frontLeftMotor.configFactoryDefault();
     m_frontLeftMotor.setInverted(false);
@@ -50,8 +56,6 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     m_rearRightMotor.configFactoryDefault();
     m_rearLeftMotor.setInverted(true);
     */
-
-  }
 
  /**
    * Drive method for Mecanum platform.
@@ -87,6 +91,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
    */
   public void drivePolar(double magnitude, double angle, double zRotation) {
     m_drive.drivePolar(magnitude, angle, zRotation);
+  }
+
+  public void brake() {
+    m_frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    m_rearLeftMotor.setNeutralMode(NeutralMode.Brake);
+    m_frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    m_rearRightMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
