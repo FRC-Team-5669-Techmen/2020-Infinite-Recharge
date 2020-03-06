@@ -55,7 +55,7 @@ public class IntakeSubsystem extends SubsystemBase {
     deployerSoleniod.set(true);
   }
 
- public void turnOffPistons(){
+ public void retractIntake(){
     deployerSoleniod.set(false);
   } 
 

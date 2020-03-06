@@ -41,7 +41,6 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -65,7 +64,7 @@ public class RobotContainer {
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
 
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
-  private final Compressor c = new Compressor(0);
+  //private final Compressor c = new Compressor(0);
 
   private final LiftSubsystem lift = new LiftSubsystem();
 
@@ -115,23 +114,24 @@ public class RobotContainer {
     SmartDashboard.putData(limelight);
 
      //Compressser Data
+     /*
      SmartDashboard.putData(c);
      SmartDashboard.putBoolean("Compresser On?" , c.enabled());
      SmartDashboard.putBoolean("Pressure Low (so switch on?)", c.getPressureSwitchValue());
      SmartDashboard.putNumber("Pressure Switch Current", c.getCompressorCurrent());
      SmartDashboard.putBoolean("PCM Running Closed Loop Control?", c.getClosedLoopControl());
+     */
 
      
 
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
 
-    /*
     // Asign default commands
 
     double deadband = 0.05;
      
-    /*
+    
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
@@ -139,8 +139,11 @@ public class RobotContainer {
       new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1)*0.65, 
       () -> m_joystick.getRawAxis(0)*0.65, 
       () -> m_joystick.getRawAxis(4)*0.65, mecanumDriveSubsystem));
+      
 
   }
+
+
  
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -191,9 +194,19 @@ public class RobotContainer {
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
 
-   // new JoystickButton(buttonBox, 8).whileActiveOnce(new DeployLift(lift));
-  //  new JoystickButton(buttonBox, 9).whileActiveOnce(new RetrackLift(lift));
-      new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(m_controlPanelSubsystem::deployControlPanelRotator, m_controlPanelSubsystem));
+    new JoystickButton(buttonBox, 3).whenPressed(new InstantCommand(m_intakeSubsystem::deployIntake, m_intakeSubsystem));
+    new JoystickButton(buttonBox, 4).whenPressed(new InstantCommand(m_intakeSubsystem::retractIntake, m_intakeSubsystem));
+
+
+    new JoystickButton(buttonBox, 5).whenPressed(new InstantCommand(m_controlPanelSubsystem::retractControlPanelRotator, m_controlPanelSubsystem));
+    new JoystickButton(buttonBox, 6).whenPressed(new InstantCommand(m_controlPanelSubsystem::deployControlPanelRotator, m_controlPanelSubsystem));
+
+
+    new JoystickButton(buttonBox, 7).whenPressed(new DeployLift(lift));
+    new JoystickButton(buttonBox, 8).whenPressed(new RetrackLift(lift));
+    new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(lift::turnOffPistons));
+    
+   
 
 
    // new JoystickButton(m_joystick, 1).whileHeld(new MecanumDriveBrake(mecanumDriveSubsystem));
