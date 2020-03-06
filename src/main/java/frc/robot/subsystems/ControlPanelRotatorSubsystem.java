@@ -58,7 +58,7 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
       SmartDashboard.putString("Color to Get", "Red");
       SmartDashboard.updateValues();
     }
-
+    setName("Control Panel Subsysyem");
     SmartDashboard.updateValues();
   }
 

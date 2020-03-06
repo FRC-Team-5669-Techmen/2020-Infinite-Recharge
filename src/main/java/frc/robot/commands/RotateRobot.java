@@ -7,42 +7,64 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.MecanumDriveSubsystem;
 
-public class Intake extends CommandBase {
-  private final IntakeSubsystem intake;
+public class RotateRobot extends CommandBase {
   /**
-   * Creates a new IntakeOn.
+   * Creates a new DriveForward.
    */
-  public Intake(IntakeSubsystem intake) {
-    this.intake = intake;
-    addRequirements(intake);
 
+   private final MecanumDriveSubsystem m_drive;
+   private double startTime;
+   private final double duration;
+   private final double speed;
+
+   /**
+   * Rotate Robot.
+   *
+   * <p>Angles are measured clockwise from the positive X axis. The robot's 
+   * speed is independent from its angle or rotation rate.
+   *
+   * @param duration  How long to run the command
+   * @param speed     The robot's speed for rotating
+   * @param mecnumDrive A MecnnumDriveSubsystem
+   */
+
+  public RotateRobot (double duration, double speed, MecanumDriveSubsystem mecanumDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.m_drive = mecanumDrive;
+    this.duration = duration;
+    this.speed = speed;
+    addRequirements(m_drive);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.setIntakeMotorOn();
+    startTime = Timer.getFPGATimestamp();
+
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.loadMagazine();
+    m_drive.driveCartesian(0, 0, speed);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    m_drive.brake();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Timer.getFPGATimestamp() - startTime > duration;
   }
 }

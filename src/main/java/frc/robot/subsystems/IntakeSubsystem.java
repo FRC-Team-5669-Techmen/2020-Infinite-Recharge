@@ -9,8 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeSubsystemConstants;
 
@@ -19,14 +18,12 @@ public class IntakeSubsystem extends SubsystemBase {
    * Creates a new IntakeSubsystem.
    */
 
-  private final int INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL = IntakeSubsystemConstants.SOLENIOD_FORWARD_CHANNEL;
-  private final int INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL = IntakeSubsystemConstants.SOLENIOD_REVERSE_CHANNEL;
-  
+
   private final WPI_VictorSPX intakeWheelMotor = new WPI_VictorSPX(IntakeSubsystemConstants.INTAKE_MOTOR_CAN_ID);
 
   //Pneuamtics not yet installed, commenting out untill installed
-  /*private final DoubleSolenoid doubleSoleniod = 
-  new DoubleSolenoid(INTAKE_DEPLOYER_PISTON_FORWARD_CHANNEL, INTAKE_DEPLOYER_PISTON_REVERSE_CHANNEL);*/
+  private final Solenoid deployerSoleniod = 
+  new Solenoid(IntakeSubsystemConstants.SOLENOID_CHANNEL);
   private final double MAX = IntakeSubsystemConstants.MAX_INTAKE_MOTOR_SPEED;
   
   //Pneumatics: 2x double
@@ -55,15 +52,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void deployIntake(){
-   // doubleSoleniod.set(Value.kForward);
-  }
-
-  public void retractIntake(){
-    //doubleSoleniod.set(Value.kReverse);
+    deployerSoleniod.set(true);
   }
 
  public void turnOffPistons(){
-    //doubleSoleniod.set(Value.kOff);
+    deployerSoleniod.set(false);
   } 
 
   public void loadMagazine(){

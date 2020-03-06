@@ -50,6 +50,6 @@ public class StartShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return fuelTurret.atOperatingRPM();
+    return fuelTurret.shooterAtOperatingRPM();
   }
 }

@@ -15,8 +15,8 @@ import frc.robot.Constants.LimelightSubsystemConstants;
 
 public class LimelightSubsystem extends SubsystemBase {
 
-  private static double limelightX = 0.0;
-  private static double limelightY = 0.0;
+  private static double limelightXTargetAngleOffset = 0.0;
+  private static double limelightYTargetAngleOffset = 0.0;
   private static double limgelightArea = 0.0;
   private static boolean limelightTargetVisible = false;
   private static NetworkTable limelighTable = NetworkTableInstance.getDefault().getTable("limelight");
@@ -32,6 +32,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
     setCameraMode(CameraMode.VISION_PROCESSOR);
     setFieldVisionTarget(FieldTarget.POWER_PORT);
+    setName("Limeelight Subsystem");//default name
 
     //limelighTableInstance.getEntry("pipeline")
 
@@ -70,12 +71,12 @@ public class LimelightSubsystem extends SubsystemBase {
     displayLimelightTelemetry();
   }
 
-  public double getLimeLightX(){ //make command
-    return limelightX;
+  public double getXTargetAngleOffset(){ //make command
+    return limelightXTargetAngleOffset;
   }
 
-  public double getLimeLightY(){
-    return limelightY;
+  public double getYTargetAngleOffset(){
+    return limelightYTargetAngleOffset;
   }
 
   public boolean targetInView(){
@@ -83,7 +84,7 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public boolean targetLocked(){
-    //needs implementation
+    //needs implementation; when X and Y are 0. Should be an X and Y
       return false;
   }
 
@@ -103,8 +104,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
   private void displayLimelightTelemetry(){ //internal; no need to expose this method outside
     //Test code for the Limelight from: http://docs.limelightvision.io/en/latest/getting_started.html#basic-programming 
-    SmartDashboard.putNumber("LimelightX", limelightX);
-    SmartDashboard.putNumber("LimelightY", limelightY);
+    SmartDashboard.putNumber("LimelightX", limelightXTargetAngleOffset);
+    SmartDashboard.putNumber("LimelightY", limelightYTargetAngleOffset);
     SmartDashboard.putNumber("LimelightArea", limgelightArea);
     SmartDashboard.putBoolean("LimelightTargetValid", limelightTargetVisible);
     SmartDashboard.putString("Current Target", fieldTarget.toString().replace('_', ' ').toLowerCase());
@@ -112,8 +113,8 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   private void updateLimelightValues(){
-    limelightX = limelighTable.getEntry("tx").getDouble(0.0);
-    limelightY = limelighTable.getEntry("ty").getDouble(0.0);
+    limelightXTargetAngleOffset = limelighTable.getEntry("tx").getDouble(0.0);
+    limelightYTargetAngleOffset = limelighTable.getEntry("ty").getDouble(0.0);
     limgelightArea = limelighTable.getEntry("ta").getDouble(0.0);//hi
     limelightTargetVisible = limelighTable.getEntry("tv").getDouble(0.0) < 1.00 ? false : true;
   }
