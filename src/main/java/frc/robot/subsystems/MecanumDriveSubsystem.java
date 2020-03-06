@@ -43,9 +43,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
 
   private void driveInit() {
-    m_drive.setDeadband(0.05);
-    m_drive.setMaxOutput(1.00);
-      //TODO Test thid
+       //TODO Test thid
     /*https://phoenix-documentation.readthedocs.io/en/latest/ch15_WPIDrive.html#c-java-drive-train-classes
     m_frontLeftMotor.configFactoryDefault();
     m_frontLeftMotor.setInverted(false);
@@ -56,6 +54,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     m_rearRightMotor.configFactoryDefault();
     m_rearLeftMotor.setInverted(true);
     */
+    m_drive.setDeadband(0.05);
+    m_drive.setMaxOutput(1.00);
+  }
+   
 
  /**
    * Drive method for Mecanum platform.
