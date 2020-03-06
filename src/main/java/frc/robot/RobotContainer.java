@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -61,9 +61,11 @@ public class RobotContainer {
 
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
-  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+
+  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
+  private final Compressor c = new Compressor(0);
 
   private final LiftSubsystem lift = new LiftSubsystem();
 
@@ -112,9 +114,19 @@ public class RobotContainer {
     SmartDashboard.putData(fuelTurret);
     SmartDashboard.putData(limelight);
 
+     //Compressser Data
+     SmartDashboard.putData(c);
+     SmartDashboard.putBoolean("Compresser On?" , c.enabled());
+     SmartDashboard.putBoolean("Pressure Low (so switch on?)", c.getPressureSwitchValue());
+     SmartDashboard.putNumber("Pressure Switch Current", c.getCompressorCurrent());
+     SmartDashboard.putBoolean("PCM Running Closed Loop Control?", c.getClosedLoopControl());
+
+     
+
     //Needed in order to not return a null command.
     m_chooser.setDefaultOption("Test (Does nothing)", new ExampleCommand(new ExampleSubsystem())); //For good measure if no methods added to chooser
 
+    /*
     // Asign default commands
 
     double deadband = 0.05;
@@ -123,13 +135,11 @@ public class RobotContainer {
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
-      
      
       new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1)*0.65, 
       () -> m_joystick.getRawAxis(0)*0.65, 
       () -> m_joystick.getRawAxis(4)*0.65, mecanumDriveSubsystem));
-    
-    */
+
   }
  
   /**
@@ -142,6 +152,17 @@ public class RobotContainer {
 
 
     //new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
+
+    //new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
+    //new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
+    //new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
+    //new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    //new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+   // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
+    //new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
+   
+    //new JoystickButton(buttonBox, 9).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
+
     new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
     new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
     //new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
@@ -162,6 +183,7 @@ public class RobotContainer {
   //  new JoystickButton(buttonBox, 9).whenPressed(new StartEndCommand(onInit, onEnd, requirements))
    
    // new JoystickButton(buttonBox, 8).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));
+
     //SmartDashboard.putData("Turn Turret Clockwise" , new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     //SmartDashboard.putData("Turen Turret CounterClockwise", new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
     //SmartDashboard.putData("Shoot Power Cell", new ShootPowerCell(fuelTurret, () -> {return 0.70;} ));
