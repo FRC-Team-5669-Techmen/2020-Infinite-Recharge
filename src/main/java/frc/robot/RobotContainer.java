@@ -79,6 +79,8 @@ public class RobotContainer {
    private final StartEndCommand rotateMagazineCounterClockwiseAndThenStop = new StartEndCommand(magazine::turnOnRotatorCounterClockwise,
    magazine::turnOffRotator, magazine);
 
+   private final MoveControlPanelBasedOnColor moveControlPanelBasedOnColor = new MoveControlPanelBasedOnColor(m_controlPanelSubsystem);
+
    //private final StartEndComman deployContr
 
 
@@ -188,8 +190,8 @@ public class RobotContainer {
 
   //*new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(m_controlPanelSubsystem::retractControlPanelRotator, m_controlPanelSubsystem)); //sw3
   // *new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(m_controlPanelSubsystem::deployControlPanelRotator, m_controlPanelSubsystem)); //sw4
-  new JoystickButton(buttonBox, 8).whenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem)); //sw3 does not sop 
-  new JoystickButton(buttonBox, 9).cancelWhenPressed(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem));//sw4
+  new JoystickButton(buttonBox, 8).whenPressed(moveControlPanelBasedOnColor); //sw3 does not sop 
+  new JoystickButton(buttonBox, 9).cancelWhenPressed(moveControlPanelBasedOnColor);//sw4
     
   new JoystickButton(buttonBox, 10).whenHeld(new InstantCommand(lift::deployLift, lift)); //sw5
   new JoystickButton(buttonBox, 11).whenHeld(new InstantCommand(lift::retrackLift, lift)); //sw6
