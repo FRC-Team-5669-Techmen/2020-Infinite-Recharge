@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TurretSubsystemConstants;
+import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class StartShooter extends CommandBase {
@@ -18,11 +19,14 @@ public class StartShooter extends CommandBase {
    */
 
   private final TurretSubsystem fuelTurret;
+  private final MagazineSubsystem magazine;
 
-  public StartShooter(TurretSubsystem fuelTurret) {
+  public StartShooter(TurretSubsystem fuelTurret, MagazineSubsystem magazine) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
+    this.magazine = magazine;
     addRequirements(fuelTurret);
+    addRequirements(magazine);
     setName("Rev Up Shooter Wheel");
   }
 
@@ -45,6 +49,7 @@ public class StartShooter extends CommandBase {
       fuelTurret.setShooterMotorSpeed(0.0);
     else
       fuelTurret.turnOnMagazineFeederMotor();
+      magazine.feedTurret();
   }
 
   // Returns true when the command should end.

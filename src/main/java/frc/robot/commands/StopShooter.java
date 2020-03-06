@@ -8,18 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.MagazineSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class StopShooter extends CommandBase {
   /**
-   * Creates a new StopShooterWheel.
+   * Creates a new StopShooterWheel. This is like a start end command
    */
 
   private final TurretSubsystem fuelTurret;
+  private final MagazineSubsystem magazine;
   
-  public StopShooter(TurretSubsystem fuelTurret) {
+  public StopShooter(TurretSubsystem fuelTurret, MagazineSubsystem magazine) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
+    this.magazine = magazine;
     addRequirements(fuelTurret);
     setName("StopShooterWheel");
   }
@@ -27,13 +30,15 @@ public class StopShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    fuelTurret.setShooterMotorSpeed(0.0);
-    fuelTurret.turnOffMagazineFeederMotor();
+   
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    fuelTurret.setShooterMotorSpeed(0.0);
+    fuelTurret.turnOffMagazineFeederMotor();
+    magazine.turnOffRotator();
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +49,6 @@ public class StopShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

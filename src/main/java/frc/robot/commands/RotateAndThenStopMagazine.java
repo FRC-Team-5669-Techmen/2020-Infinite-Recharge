@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.MagazineSubsystem;
 
-public class RotateMagazine extends CommandBase {
+public class RotateAndThenStopMagazine extends CommandBase {
   /**
    * Creates a new RotateMagazine.
    */
@@ -22,7 +22,7 @@ public class RotateMagazine extends CommandBase {
     CLOCKWISE, COUNTERCLOCKWISE;
   }
 
-  public RotateMagazine(MagazineSubsystem magazine, MagazineDirection direction) {
+  public RotateAndThenStopMagazine(MagazineSubsystem magazine, MagazineDirection direction) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.magazine = magazine;
     addRequirements(this.magazine);
@@ -35,15 +35,16 @@ public class RotateMagazine extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(direction == MagazineDirection.CLOCKWISE)
-      magazine.turnOnRotatorClockwise();
-    else
-      magazine.turnOnRotatorCounterClockwise();
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(direction == MagazineDirection.CLOCKWISE)
+      magazine.turnOnRotatorClockwise();
+    else
+      magazine.turnOnRotatorCounterClockwise();
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +56,6 @@ public class RotateMagazine extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

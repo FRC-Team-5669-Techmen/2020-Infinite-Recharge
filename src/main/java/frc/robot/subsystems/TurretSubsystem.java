@@ -183,7 +183,7 @@ public void turnOffMagazineFeederMotor(){
     followerShooterMotor.setInverted(followerShooterMotorInvert);
 
     /////
-    turretRotatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+   
   }
 
   public double getShooterFollowerRPM(){
@@ -206,12 +206,18 @@ public void turnOffMagazineFeederMotor(){
       turretRotatorMotor.set( rotatorMaxSpeed);
   }
 
+  public void stopTurretRotator(){
+    turretRotatorMotor.set(0.0);
+  }
+
   public void configRotatorMotor(){
     turretRotatorMotor.configFactoryDefault();
 
     enableTurretRotatorSoftLimits();
 
-    turretRotatorMotor.configClearPositionOnLimitF(true, 500);
+    turretRotatorMotor.configClearPositionOnLimitF(true, 1000);
+
+    //turretRotatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 
     /*
     Figure this out in OC Not working out RN. ALso should set the orientation clockwise and counterclowise
