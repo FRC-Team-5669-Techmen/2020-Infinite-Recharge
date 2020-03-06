@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.TurretSubsystemConstants;
+import frc.robot.commands.DeployLift;
+
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.AimTurretAtPowerPort;
 import frc.robot.commands.ExampleCommand;
@@ -27,12 +29,15 @@ import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.StartShooter;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.RotateMagazine.MagazineDirection;
+import frc.robot.commands.MoveControlPaneBasedOnColor;
+import frc.robot.commands.RetrackLift;
 import frc.robot.commands.RotateMagazine;
 import frc.robot.commands.RotateTurret.Direction;
 import frc.robot.commands.MoveControlPanelBasedOnColor;
 import frc.robot.subsystems.ControlPanelRotatorSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.MagazineSubsystem;
@@ -60,6 +65,9 @@ public class RobotContainer {
   //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+
+  private final LiftSubsystem lift = new LiftSubsystem();
+
   private final LimelightSubsystem limelight = new LimelightSubsystem();
 
 
@@ -161,6 +169,9 @@ public class RobotContainer {
     
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
+
+    new JoystickButton(buttonBox, 8).whileActiveOnce(new DeployLift(lift));
+    new JoystickButton(buttonBox, 9).whileActiveOnce(new RetrackLift(lift));
 
 
     new JoystickButton(m_joystick, 1).whileHeld(new MecanumDriveBrake(mecanumDriveSubsystem));
