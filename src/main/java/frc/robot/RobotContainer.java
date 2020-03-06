@@ -29,7 +29,6 @@ import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.StartShooter;
 import frc.robot.commands.StopShooter;
 import frc.robot.commands.RotateMagazine.MagazineDirection;
-import frc.robot.commands.MoveControlPaneBasedOnColor;
 import frc.robot.commands.RetrackLift;
 import frc.robot.commands.RotateMagazine;
 import frc.robot.commands.RotateTurret.Direction;
@@ -62,7 +61,7 @@ public class RobotContainer {
 
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
-  //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
+  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem(); //not installed
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
 
@@ -142,15 +141,15 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 
-    new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
+    //new JoystickButton(buttonBox, 1).whileActiveOnce(new Intake(m_intakeSubsystem));
     new JoystickButton(buttonBox, 2).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE));
     new JoystickButton(buttonBox, 3).whileActiveOnce(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));    
     //new JoystickButton(buttonBox, 4).whileActiveOnce(new FeedPowerCellToTurret(fuelTurret));
-    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
-    new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
-   // new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
+   // new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurret(fuelTurret, Direction.CLOCKWISE));
+    //new JoystickButton(buttonBox, 6).whileActiveOnce(new RotateTurret(fuelTurret, Direction.COUNTERCLOCKWISE));
+   //// new JoystickButton(buttonBox, 7).whileActiveOnce(new ShootPowerCell(fuelTurret, () -> {return 1.00;} )); //shoot while pressed.
    // new JoystickButton(buttonBox, 7).whenPressed(new StartShooter(fuelTurret)).whenReleased(new StopShooter(fuelTurret));
-   
+   /*
     new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(() -> fuelTurret.moveHoodForward(), 
     fuelTurret)).whenReleased(new InstantCommand(() -> fuelTurret.stopHood(), fuelTurret));
     new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(() -> fuelTurret.moveHoodBack(), 
@@ -158,7 +157,7 @@ public class RobotContainer {
     
     new JoystickButton(buttonBox, 8).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight));
   
-
+*/
 
   //  new JoystickButton(buttonBox, 9).whenPressed(new StartEndCommand(onInit, onEnd, requirements))
    
@@ -170,11 +169,12 @@ public class RobotContainer {
     //new JoystickButton(buttonBox, 7).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.CLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
     //new JoystickButton(buttonBox, 8).toggleWhenPressed(new RotateMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE).andThen(new WaitCommand(1))); //should make this its own command eventually
 
-    new JoystickButton(buttonBox, 8).whileActiveOnce(new DeployLift(lift));
-    new JoystickButton(buttonBox, 9).whileActiveOnce(new RetrackLift(lift));
+   // new JoystickButton(buttonBox, 8).whileActiveOnce(new DeployLift(lift));
+  //  new JoystickButton(buttonBox, 9).whileActiveOnce(new RetrackLift(lift));
+      new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(m_controlPanelSubsystem::deployControlPanelRotator, m_controlPanelSubsystem));
 
 
-    new JoystickButton(m_joystick, 1).whileHeld(new MecanumDriveBrake(mecanumDriveSubsystem));
+   // new JoystickButton(m_joystick, 1).whileHeld(new MecanumDriveBrake(mecanumDriveSubsystem));
 
     //new JoystickButton(buttonBox, 3).whileActiveOnce(new ShootPowerCell(fuelTurret)); //shoot while pressed.
     //new JoystickButton(buttonBox, 1).whileActiveOnce(new MoveControlPanelBasedOnColor(m_controlPanelSubsystem)); //shoot while pressed.

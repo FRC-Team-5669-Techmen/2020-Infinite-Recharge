@@ -9,7 +9,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.MagazineSubsystemConstants;
 
 public class MagazineSubsystem extends SubsystemBase {
@@ -18,6 +21,7 @@ public class MagazineSubsystem extends SubsystemBase {
    */
 
   private final WPI_VictorSPX magazineRotatorMotor = new WPI_VictorSPX(MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
+  private final PowerDistributionPanel m_PDP = new PowerDistributionPanel();
   
   
   public MagazineSubsystem() {
@@ -33,6 +37,7 @@ public class MagazineSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    preventJams();
   }
 
   public void turnOnRotatorClockwise(){
@@ -46,6 +51,22 @@ public class MagazineSubsystem extends SubsystemBase {
 
   public void turnOffRotator(){
     magazineRotatorMotor.set(0.0);
+  }
+
+  public void preventJams(){
+    
+/*
+    if (m_PDP.getCurrent(3) > normalCurrent)
+    {
+      getCurrentCommand().cancel(); //stop moving the turret
+          //go other way for some time
+     turnOnRotatorClockwise();
+     Timer.delay(1.0);
+     turnOffRotator();
+
+    }
+    */
+ 
   }
 
 
