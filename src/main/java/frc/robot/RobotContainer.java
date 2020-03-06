@@ -178,6 +178,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
       // An ExampleCommand will run in autonomous
-      return new Autonomous(mecanumDriveSubsystem, fuelTurret, limelight);
+      return new Autonomous(mecanumDriveSubsystem, fuelTurret, limelight, m_intakeSubsystem);
   }
 }
