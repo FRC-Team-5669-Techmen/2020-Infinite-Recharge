@@ -178,7 +178,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-     new JoystickButton(buttonBox, 1).whenPressed(new StartShooter(fuelTurret, magazine)).whenReleased(new StopShooter(fuelTurret, magazine));//add interupt to check status of piston //E button
+    new JoystickButton(buttonBox, 1).whenPressed(new StartShooter(fuelTurret, magazine)).whenReleased(new StopShooter(fuelTurret, magazine));//add interupt to check status of piston //E button
     //engage pistons when flywheel is started
     //*new JoystickButton(buttonBox, 2).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight));
    

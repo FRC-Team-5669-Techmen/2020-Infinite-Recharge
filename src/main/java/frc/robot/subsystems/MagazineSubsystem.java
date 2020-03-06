@@ -49,7 +49,7 @@ public class MagazineSubsystem extends SubsystemBase {
   }
 
   public void feedTurret(){
-    //TODO need to find which is right direction
+    turnOnRotatorClockwise();
   }
 
 
