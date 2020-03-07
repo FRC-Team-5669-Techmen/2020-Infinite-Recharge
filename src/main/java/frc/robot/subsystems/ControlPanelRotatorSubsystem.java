@@ -93,6 +93,7 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
     deployControlPanelRotator();
     moveControlPanelRotator();
     System.out.println("button pressed, checking for right color");
+    System.out.println(colorToGet());
   }
 
   /**
