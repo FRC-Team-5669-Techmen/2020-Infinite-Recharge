@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class RotateTurret extends CommandBase {
+public class RotateTurretAndThenStop extends CommandBase {
   /**
-   * Creates a new ShootPowerCell.
+   * Creates a new ShootPowerCell. This is basicaly a Start End Command 
    */
 
   public enum Direction{
@@ -31,7 +31,7 @@ public class RotateTurret extends CommandBase {
   /**
    * If set to true, rotates left. If set to false rotates right
    */
-  public RotateTurret(TurretSubsystem fuelTurret, Direction direction, DoubleSupplier speed) {
+  public RotateTurretAndThenStop(TurretSubsystem fuelTurret, Direction direction, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.fuelTurret = fuelTurret;
     addRequirements(this.fuelTurret);
@@ -40,7 +40,7 @@ public class RotateTurret extends CommandBase {
     setName("Rotate " + this.direction.toString().toLowerCase());
   }
 
-  public RotateTurret(TurretSubsystem fuelTurret, Direction direction) {
+  public RotateTurretAndThenStop(TurretSubsystem fuelTurret, Direction direction) {
     // Use addRequirements() here to declare subsystem dependencies.
        //Use Math.Abs since we want positive values only from dashboard.
     this.fuelTurret = fuelTurret;
@@ -69,7 +69,7 @@ public class RotateTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.setTurretRotatorMotorSpeed(0.0);
+    fuelTurret.stopTurretRotator();
   }
 
   // Returns true when the command should end.

@@ -53,7 +53,7 @@ public final class Constants {
         public static final double TURRET_ROTATOR_MAX_SPEED = 0.20;//0.22;
         public static final double kP = -0.1f; //old
         public static final double min_command = 0.05;
-        public static final double TURRET_FEEDER_MOTOR_DEFAULT_SPEED = 1.0;
+        public static final double TURRET_FEEDER_MOTOR_DEFAULT_SPEED = 0.5;//1.0;
         public static final String SHOOTER_SPEED_KEY_STRING = "Shooter Speed";
         public static final String ROTATOR_SPEED_KEY_STRING = "Turret Rotator Speed";
         public static final double SHOOTER_OPERATING_RPM = 5700;

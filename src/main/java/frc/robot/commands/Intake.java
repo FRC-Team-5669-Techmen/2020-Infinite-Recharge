@@ -13,7 +13,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class Intake extends CommandBase {
   private final IntakeSubsystem intake;
   /**
-   * Creates a new IntakeOn.
+   * Creates a new IntakeOn. Designed to be run when button held. Externally tohhled
    */
   public Intake(IntakeSubsystem intake) {
     this.intake = intake;
@@ -37,6 +37,7 @@ public class Intake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    intake.setIntakeMotorOff();
 
   }
 

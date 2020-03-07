@@ -48,6 +48,10 @@ public class MagazineSubsystem extends SubsystemBase {
     magazineRotatorMotor.set(-0.2);
   }
 
+  public void feedTurret(){
+    turnOnRotatorClockwise();
+  }
+
 
   public void turnOffRotator(){
     magazineRotatorMotor.set(0.0);
