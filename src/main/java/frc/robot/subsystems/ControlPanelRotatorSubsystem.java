@@ -148,7 +148,8 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
   }
 
   /**
-   * Checks what color is wanted from the smartdashboard
+   * Checks what color is wanted from the from the field game data
+   *@return letter for the color wanted: 'R', 'G', 'B', 'Y'
    */
   public String colorToGet() {
 
@@ -178,11 +179,12 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
           break;
         default :
           //This is corrupt data
-          return 'Unknown';
+          return 'Unknown Color - Data Corrupt';
           break;
       }
     } else {
       //Code for no data received yet
+      return 'Unknown Color - No Data Received yet';
     }
   }
 }
