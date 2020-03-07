@@ -83,6 +83,9 @@ public class RobotContainer {
    private final StartEndCommand feedTurretfromMagazineAndThenStop = new StartEndCommand(magazine::feedTurret,
    magazine::turnOffRotator, magazine);
 
+   private final StartEndCommand unjamMagazineWithButton =  new StartEndCommand(magazine::revereseMagazine,
+    magazine::turnOffRotator, magazine); 
+
    private final MoveControlPanelBasedOnColor moveControlPanelBasedOnColor = new MoveControlPanelBasedOnColor(m_controlPanelSubsystem);
 
    //private final StartEndComman deployContr
@@ -206,6 +209,8 @@ public class RobotContainer {
        //new JoystickButton(buttonBox, 1).whileActiveOnce();
    new JoystickButton(buttonBox, 14).whenHeld(startAndThenStopIntake.withInterrupt(m_intakeSubsystem::isIntakeRetracted)
    .alongWith(feedTurretfromMagazineAndThenStop).withInterrupt(m_intakeSubsystem::isIntakeRetracted)); //TGl 2 up
+
+   new JoystickButton(buttonBox, 13).whenHeld(unjamMagazineWithButton.withInterrupt(m_intakeSubsystem::isIntakeRetracted));
  
 
   

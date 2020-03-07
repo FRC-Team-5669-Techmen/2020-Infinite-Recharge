@@ -52,9 +52,14 @@ public class MagazineSubsystem extends SubsystemBase {
     turnOnRotatorClockwise();
   }
 
+  public void revereseMagazine(){
+    turnOnRotatorCounterClockwise();
+  }
+
 
   public void turnOffRotator(){
     magazineRotatorMotor.set(0.0);
+   // magazineRotatorMotor.stopMotor(); //TODO see if this does the same thing
   }
 
   public void preventJams(){
