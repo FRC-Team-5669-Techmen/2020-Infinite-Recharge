@@ -21,6 +21,7 @@ import frc.robot.commands.Autonomous;
 import frc.robot.commands.AimTurretAtPowerPort;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedPowerCellToTurret;
+import frc.robot.commands.HomeTurretRotator;
 import frc.robot.commands.Intake;
 import frc.robot.commands.ManualMecanumDrive;
 import frc.robot.commands.MecanumDriveBrake;
@@ -79,6 +80,9 @@ public class RobotContainer {
    private final StartEndCommand rotateMagazineCounterClockwiseAndThenStop = new StartEndCommand(magazine::turnOnRotatorCounterClockwise,
    magazine::turnOffRotator, magazine);
 
+   private final StartEndCommand feedTurretfromMagazineAndThenStop = new StartEndCommand(magazine::feedTurret,
+   magazine::turnOffRotator, magazine);
+
    private final MoveControlPanelBasedOnColor moveControlPanelBasedOnColor = new MoveControlPanelBasedOnColor(m_controlPanelSubsystem);
 
    //private final StartEndComman deployContr
@@ -117,6 +121,7 @@ public class RobotContainer {
     //SmartDashboard.putData("Roate Turret Right", new RotateTurret(fuelTurret, Direction.CLOCKWISE));
     SmartDashboard.putData("Rotate Magazine Clockwise", new RotateAndThenStopMagazine(magazine, MagazineDirection.CLOCKWISE));
     SmartDashboard.putData("Rotate Magazine CounterClockwise", new RotateAndThenStopMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));
+    SmartDashboard.putData("Hone Turret", new HomeTurretRotator(fuelTurret));
 
     //m_chooser.addOption("Test Turret", testShooter);
     fuelTurret.setName("Fuel Turret");
@@ -190,16 +195,17 @@ public class RobotContainer {
 
   //*new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(m_controlPanelSubsystem::retractControlPanelRotator, m_controlPanelSubsystem)); //sw3
   // *new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(m_controlPanelSubsystem::deployControlPanelRotator, m_controlPanelSubsystem)); //sw4
-  new JoystickButton(buttonBox, 8).whenPressed(moveControlPanelBasedOnColor); //sw3 does not sop 
-  new JoystickButton(buttonBox, 9).cancelWhenPressed(moveControlPanelBasedOnColor);//sw4
+     new JoystickButton(buttonBox, 8).whenPressed(moveControlPanelBasedOnColor); //sw3 does not sop 
+     new JoystickButton(buttonBox, 9).cancelWhenPressed(moveControlPanelBasedOnColor);//sw4
     
   new JoystickButton(buttonBox, 10).whenHeld(new InstantCommand(lift::deployLift, lift)); //sw5
   new JoystickButton(buttonBox, 11).whenHeld(new InstantCommand(lift::retrackLift, lift)); //sw6
    // new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateAndThenStopMagazine(magazine, MagazineDirection.CLOCKWISE));
-   new JoystickButton(buttonBox, 12).whenHeld(rotateMagazineClockwiseAndThenStop); //tgl1 up
-   new JoystickButton(buttonBox, 13).whenHeld(rotateMagazineCounterClockwiseAndThenStop); //tg;1 down
+  // new JoystickButton(buttonBox, 12).whenHeld(rotateMagazineClockwiseAndThenStop); //tgl1 up
+   //new JoystickButton(buttonBox, 13).whenHeld(rotateMagazineCounterClockwiseAndThenStop); //tg;1 down
        //new JoystickButton(buttonBox, 1).whileActiveOnce();
-   new JoystickButton(buttonBox, 14).whenHeld(startAndThenStopIntake.withInterrupt(m_intakeSubsystem::isIntakeRetracted)); //TGl 2 up
+   new JoystickButton(buttonBox, 14).whenHeld(startAndThenStopIntake.withInterrupt(m_intakeSubsystem::isIntakeRetracted)
+   .alongWith(feedTurretfromMagazineAndThenStop).withInterrupt(m_intakeSubsystem::isIntakeRetracted)); //TGl 2 up
  
 
   
