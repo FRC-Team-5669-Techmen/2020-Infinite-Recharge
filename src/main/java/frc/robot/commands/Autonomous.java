@@ -37,6 +37,7 @@ public class Autonomous extends SequentialCommandGroup {
       new WaitCommand(2.0),
       new AimTurretAtPowerPort(m_turret, m_limelight),
       new StartShooter(m_turret),
+      with the new startshooter stuff, it is no longer necesaary to set magazine direction and stop magazine
       new WaitCommand(2.0),
       new InstantCommand(magazine::turnOnRotatorClockwise, magazine),
       new WaitCommand(2.0),

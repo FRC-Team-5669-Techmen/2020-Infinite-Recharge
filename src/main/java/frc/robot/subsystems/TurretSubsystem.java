@@ -108,6 +108,7 @@ public class TurretSubsystem extends SubsystemBase {
     //followerShooterMotor.set(Motion, demand0, demand1Type, demand1);
     configShooterMotors();
     configRotatorMotor();
+    configMagazineFeederMotor();
 
     setShooterMotorSpeed(0.0);
     setTurretRotatorMotorSpeed(0.0);
@@ -156,6 +157,10 @@ public void turnOffMagazineFeederMotor(){
   turretFeederMotor.set(0.0);
 }
 
+public void configMagazineFeederMotor(){
+  turretFeederMotor.configFactoryDefault();
+}
+
 //------------------------------------------------Shooter Code-------------------------------------------------
 
   public void setShooterMotorSpeed(double speed) {  //ball
@@ -165,6 +170,12 @@ public void turnOffMagazineFeederMotor(){
       shooterMotor.set(0);
     else if (speed > shooterMaxSpeed )
       shooterMotor.set( shooterMaxSpeed);
+    else
+      shooterMotor.set(0.0);
+  }
+
+  public void stopShooterMotor(){
+    setShooterMotorSpeed(0.0);
   }
 
   private void configShooterMotors(){

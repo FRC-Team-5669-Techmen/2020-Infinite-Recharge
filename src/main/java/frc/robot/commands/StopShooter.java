@@ -30,20 +30,22 @@ public class StopShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  
    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fuelTurret.setShooterMotorSpeed(0.0);
-    fuelTurret.turnOffMagazineFeederMotor();
-    magazine.turnOffRotator();
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    fuelTurret.setShooterMotorSpeed(0.0);
+    fuelTurret.turnOffMagazineFeederMotor();
+    magazine.turnOffRotator();
   }
 
   // Returns true when the command should end.
