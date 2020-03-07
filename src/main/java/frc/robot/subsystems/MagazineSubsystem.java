@@ -40,26 +40,47 @@ public class MagazineSubsystem extends SubsystemBase {
     preventJams();
   }
 
+  public void turnOnRotatorClockwise(double speed){
+    Math.abs(speed);
+    magazineRotatorMotor.set(speed);
+  }
+
   public void turnOnRotatorClockwise(){
-    magazineRotatorMotor.set(0.2);
+    magazineRotatorMotor.set(0.3);
+  }
+
+  public void turnOnRotatorCounterClockwise(double speed){
+    Math.abs(speed);
+    magazineRotatorMotor.set(-speed);
   }
 
   public void turnOnRotatorCounterClockwise(){
-    magazineRotatorMotor.set(-0.2);
+    magazineRotatorMotor.set(-0.3);
   }
 
   public void feedTurret(){
-    turnOnRotatorClockwise();
+    turnOnRotatorClockwise(0.5);
   }
 
+  public void feedMagazine(){
+    turnOnRotatorClockwise(0.2);
+
+
+  }
+
+
   public void revereseMagazine(){
-    turnOnRotatorCounterClockwise();
+    turnOnRotatorCounterClockwise(0.5);
   }
 
 
   public void turnOffRotator(){
     magazineRotatorMotor.set(0.0);
    // magazineRotatorMotor.stopMotor(); //TODO see if this does the same thing
+  }
+
+  public double getMagazineCurrentDrawFromPDP(){
+    return m_PDP.getCurrent(2); //peter says it is a voltage dti
   }
 
   public void preventJams(){

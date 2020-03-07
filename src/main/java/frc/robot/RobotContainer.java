@@ -75,12 +75,13 @@ public class RobotContainer {
 
   private final StartEndCommand startAndThenStopIntake = new StartEndCommand(m_intakeSubsystem::setIntakeMotorOn, 
   m_intakeSubsystem::setIntakeMotorOff, m_intakeSubsystem);
+
   private final StartEndCommand rotateMagazineClockwiseAndThenStop = new StartEndCommand(magazine::turnOnRotatorClockwise,
    magazine::turnOffRotator, magazine);
    private final StartEndCommand rotateMagazineCounterClockwiseAndThenStop = new StartEndCommand(magazine::turnOnRotatorCounterClockwise,
    magazine::turnOffRotator, magazine);
 
-   private final StartEndCommand feedTurretfromMagazineAndThenStop = new StartEndCommand(magazine::feedTurret,
+   private final StartEndCommand feedMagazinefromIntakeAndThenStop = new StartEndCommand(magazine::feedMagazine,
    magazine::turnOffRotator, magazine);
 
    private final StartEndCommand unjamMagazineWithButton =  new StartEndCommand(magazine::revereseMagazine,
@@ -125,7 +126,8 @@ public class RobotContainer {
     SmartDashboard.putData("Rotate Magazine Clockwise", new RotateAndThenStopMagazine(magazine, MagazineDirection.CLOCKWISE));
     SmartDashboard.putData("Rotate Magazine CounterClockwise", new RotateAndThenStopMagazine(magazine, MagazineDirection.COUNTERCLOCKWISE));
     SmartDashboard.putData("Hone Turret", new HomeTurretRotator(fuelTurret));
-
+    SmartDashboard.putBoolean("Forward turet rotator limit hit", fuelTurret.turretRotatorFwdLimitSwitchHit());
+    SmartDashboard.putBoolean("Reverse turet rotator limit hit", fuelTurret.turretRotatorReverseLimitSwitchHit());
     //m_chooser.addOption("Test Turret", testShooter);
     fuelTurret.setName("Fuel Turret");
     
@@ -156,17 +158,18 @@ public class RobotContainer {
     double deadband = 0.05;
      
 
-    /*
+    
     
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
+      
      
       new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1)*0.65, 
       () -> m_joystick.getRawAxis(0)*0.65, 
       () -> m_joystick.getRawAxis(4)*0.65, mecanumDriveSubsystem));
       
-    */
+    
   }
 
   private void configureTeleOpCommands(){
@@ -208,9 +211,9 @@ public class RobotContainer {
    //new JoystickButton(buttonBox, 13).whenHeld(rotateMagazineCounterClockwiseAndThenStop); //tg;1 down
        //new JoystickButton(buttonBox, 1).whileActiveOnce();
    new JoystickButton(buttonBox, 14).whenHeld(startAndThenStopIntake.withInterrupt(m_intakeSubsystem::isIntakeRetracted)
-   .alongWith(feedTurretfromMagazineAndThenStop).withInterrupt(m_intakeSubsystem::isIntakeRetracted)); //TGl 2 up
+   .alongWith(feedMagazinefromIntakeAndThenStop.withInterrupt(m_intakeSubsystem::isIntakeRetracted))); //TGl 2 up
 
-   new JoystickButton(buttonBox, 13).whenHeld(unjamMagazineWithButton.withInterrupt(m_intakeSubsystem::isIntakeRetracted));
+   new JoystickButton(buttonBox, 15).whenHeld(unjamMagazineWithButton.withInterrupt(m_intakeSubsystem::isIntakeRetracted)); //TODO check that the button is right //TGL2 down
  
 
   

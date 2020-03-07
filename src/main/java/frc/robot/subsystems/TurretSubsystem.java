@@ -261,7 +261,7 @@ public void configMagazineFeederMotor(){
 
   public void initRotatorHomingMode() {
     disableTurretRotatorSoftLimits();
-    rotatorMaxSpeed = 0.12;
+    rotatorMaxSpeed = 0.10;
   }
 
   public void closeRotatorHomeingMode() {

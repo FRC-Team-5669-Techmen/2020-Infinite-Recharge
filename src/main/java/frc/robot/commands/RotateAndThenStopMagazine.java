@@ -42,9 +42,9 @@ public class RotateAndThenStopMagazine extends CommandBase {
   @Override
   public void execute() {
     if(direction == MagazineDirection.CLOCKWISE)
-      magazine.turnOnRotatorClockwise();
+      magazine.turnOnRotatorClockwise(0.4);
     else
-      magazine.turnOnRotatorCounterClockwise();
+      magazine.turnOnRotatorCounterClockwise(0.4);
   }
 
   // Called once the command ends or is interrupted.

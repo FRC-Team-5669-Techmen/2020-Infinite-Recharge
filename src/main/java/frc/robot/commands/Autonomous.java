@@ -31,7 +31,7 @@ public class Autonomous extends SequentialCommandGroup {
     super();
     addCommands(
       
-      new DriveForward(1.5, -0.2, m_drive) /*,
+      new DriveForward(2.0, 0.2, m_drive) /*,
       new WaitCommand(2.0),
       new InstantCommand(intake::deployIntake, intake), //
       new WaitCommand(2.0),
