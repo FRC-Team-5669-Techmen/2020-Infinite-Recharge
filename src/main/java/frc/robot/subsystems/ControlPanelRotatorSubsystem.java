@@ -178,6 +178,7 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
           break;
         default :
           //This is corrupt data
+          return 'Unknown';
           break;
       }
     } else {
