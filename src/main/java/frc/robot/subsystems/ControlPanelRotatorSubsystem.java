@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.ControlPanelRotatorSubsystemConstants;
+import edu.wpi.first.wpilibj.DriverStation;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -80,7 +81,7 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
   public void moveControlPanelRotator() {
     // motor code goes here
     SmartDashboard.putString("Color manipulator rotating?", "True");
-    double manipulatorSpeed = .7;
+    double manipulatorSpeed = .4;
     colorManipulatorMotor.set(manipulatorSpeed);
 
   }
@@ -121,13 +122,13 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
 
     // Match the color detected
     if (match.color == kBlueTarget) {
-      currentColor = "Blue";
+      currentColor = "B";
     } else if (match.color == kRedTarget) {
-      currentColor = "Red";
+      currentColor = "R";
     } else if (match.color == kGreenTarget) {
-      currentColor = "Green";
+      currentColor = "G";
     } else if (match.color == kYellowTarget) {
-      currentColor = "Yellow";
+      currentColor = "Y";
     } else {
       currentColor = "Unknown";
     }
@@ -150,6 +151,36 @@ public class ControlPanelRotatorSubsystem extends SubsystemBase {
    */
   public String colorToGet() {
 
-    return SmartDashboard.getString("Color to Get", "120");
+    //return SmartDashboard.getString("Color to Get", "120");
+        
+    String gameData;
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0)
+    {
+      switch (gameData.charAt(0))
+      {
+        case 'B' :
+          //Blue case code
+          return 'B';
+          break;
+        case 'G' :
+          //Green case code
+          return 'G';
+          break;
+        case 'R' :
+          //Red case code
+          return 'R';
+          break;
+        case 'Y' :
+          //Yellow case code
+          return 'Y';
+          break;
+        default :
+          //This is corrupt data
+          break;
+      }
+    } else {
+      //Code for no data received yet
+    }
   }
 }
