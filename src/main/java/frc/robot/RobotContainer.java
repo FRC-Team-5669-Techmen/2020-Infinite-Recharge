@@ -189,9 +189,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    new JoystickButton(buttonBox, 1).whenPressed(new StartShooter(fuelTurret, magazine)).whenReleased(new StopShooter(fuelTurret, magazine));//add interupt to check status of piston //E button
+    new JoystickButton(buttonBox, 1).whenPressed(new StartShooter(fuelTurret, magazine).withInterrupt(fuelTurret::hoodRetracted)).whenReleased(new StopShooter(fuelTurret, magazine));//add interupt to check status of piston //E button //Interrupt added if hood is retrated
     //engage pistons when flywheel is started
-    //*new JoystickButton(buttonBox, 2).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight));
+    new JoystickButton(buttonBox, 2).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight).withInterrupt(fuelTurret::hoodRetracted));
    
     new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurretAndThenStop(fuelTurret,  Direction.CLOCKWISE)); //knob left button
     new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurretAndThenStop(fuelTurret,  Direction.COUNTERCLOCKWISE)); //knob right nutton
@@ -207,8 +207,8 @@ public class RobotContainer {
   new JoystickButton(buttonBox, 10).whenHeld(new InstantCommand(lift::deployLift, lift)); //sw5
   new JoystickButton(buttonBox, 11).whenHeld(new InstantCommand(lift::retrackLift, lift)); //sw6
    // new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateAndThenStopMagazine(magazine, MagazineDirection.CLOCKWISE));
-  // new JoystickButton(buttonBox, 12).whenHeld(rotateMagazineClockwiseAndThenStop); //tgl1 up
-   //new JoystickButton(buttonBox, 13).whenHeld(rotateMagazineCounterClockwiseAndThenStop); //tg;1 down
+  new JoystickButton(buttonBox, 12).whenHeld(new InstantCommand(fuelTurret::deployHood, fuelTurret)); //tgl1 up
+  new JoystickButton(buttonBox, 13).whenHeld(new InstantCommand(fuelTurret::retractHood, fuelTurret)); //tg;1 down
        //new JoystickButton(buttonBox, 1).whileActiveOnce();
    new JoystickButton(buttonBox, 14).whenHeld(startAndThenStopIntake.withInterrupt(m_intakeSubsystem::isIntakeRetracted)
    .alongWith(feedMagazinefromIntakeAndThenStop.withInterrupt(m_intakeSubsystem::isIntakeRetracted))); //TGl 2 up

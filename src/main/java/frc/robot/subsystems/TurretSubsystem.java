@@ -26,6 +26,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -56,6 +57,8 @@ public class TurretSubsystem extends SubsystemBase {
 
   private final WPI_VictorSPX turretFeederMotor = 
     new WPI_VictorSPX(TurretSubsystemConstants.TURRET_FEEDER_MOTOR_CAN_ID);
+
+ private final Solenoid hoodDeployer = new Solenoid(TurretSubsystemConstants.HOOD_DEPLOYER_SOLENOID);
 
 //servos are running in continous mode.
   private final Servo hoodAdjusterServo = new Servo(0);
@@ -147,6 +150,23 @@ public class TurretSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Follower Vel-RPS:%.1f | ", follower_vel_RotPerSec);
     SmartDashboard.putNumber("Follwoer Vel-RPM:%.1f | ", follower_vel_RotPerMin);
 }
+
+//--------------------------------------------Solenoid Deployer Code-------------------------------------------------
+  public void deployHood(){
+    hoodDeployer.set(true);
+  }
+
+  public void retractHood(){
+    hoodDeployer.set(false);
+  }
+
+  public boolean hoodDeployed(){
+    return hoodDeployer.get();
+  }
+
+  public boolean hoodRetracted(){
+    return !hoodDeployer.get();
+  }
 
 //--------------------------------------------Magazine Feeder Code-------------------------------------------------
   public void turnOnMagazineFeederMotor(){

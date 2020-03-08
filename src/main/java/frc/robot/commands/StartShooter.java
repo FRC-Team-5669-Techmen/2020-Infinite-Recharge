@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TurretSubsystemConstants;
 import frc.robot.subsystems.MagazineSubsystem;
@@ -46,10 +47,18 @@ public class StartShooter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (interrupted)
+    {
       fuelTurret.setShooterMotorSpeed(0.0);
-    else
+      magazine.turnOffRotator();
+    }
+    
+    else{
+      Timer.delay(1); //TODO see if this is a patch dweird physics stuff need to research. Talk to Mr. Aldrich.  So manual delay...
       fuelTurret.turnOnMagazineFeederMotor();
       magazine.feedTurret();
+
+    }
+    
   }
 
   // Returns true when the command should end.

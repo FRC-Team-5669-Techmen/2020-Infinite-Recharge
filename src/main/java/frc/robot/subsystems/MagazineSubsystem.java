@@ -59,7 +59,7 @@ public class MagazineSubsystem extends SubsystemBase {
   }
 
   public void feedTurret(){
-    turnOnRotatorClockwise(0.5);
+    turnOnRotatorClockwise(0.75);
   }
 
   public void feedMagazine(){
