@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.RotateAndThenStopMagazine.MagazineDirection;
@@ -30,20 +31,16 @@ public class Autonomous extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super();
     addCommands(
-      
-      new DriveForward(2.0, 0.2, m_drive) /*,
-      new WaitCommand(2.0),
-      new InstantCommand(intake::deployIntake, intake), //
-      new WaitCommand(2.0),
-      new AimTurretAtPowerPort(m_turret, m_limelight),
-      new StartShooter(m_turret),
-      with the new startshooter stuff, it is no longer necesaary to set magazine direction and stop magazine
-      new WaitCommand(2.0),
-      new InstantCommand(magazine::turnOnRotatorClockwise, magazine),
-      new WaitCommand(2.0),
-      new InstantCommand(magazine::turnOffRotator, magazine),
-      new StopShooter(m_turret)
-      */
+      new InstantCommand(intake::deployIntake, intake),
+      new WaitCommand(1.0),
+      new InstantCommand(m_turret::deployHood, m_turret),
+      new WaitCommand(1.0),
+      new ParallelCommandGroup(new DriveForward(1.75, 0.2, m_drive), new AimTurretAtPowerPort(m_turret, m_limelight)),
+      new WaitCommand(1.0),
+      new StartShooter(m_turret, magazine),
+      new WaitCommand(3.9),
+     // with the new startshooter stuff, it is no longer necesaary to set magazine direction and stop magazine
+      new StopShooter(m_turret, magazine)
     );
   }
 }

@@ -246,7 +246,7 @@ public void configMagazineFeederMotor(){
 
     enableTurretRotatorSoftLimits();
 
-    turretRotatorMotor.configClearPositionOnLimitF(true, 1000);
+    turretRotatorMotor.configClearPositionOnLimitF(true, 0);
 
     //turretRotatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 
@@ -264,7 +264,7 @@ public void configMagazineFeederMotor(){
     //encoderConfigs.forwardSoftLimitThreshold = 4;
     turretRotatorEncoderConfigs.reverseSoftLimitThreshold = -86000;
     turretRotatorEncoderConfigs.reverseSoftLimitEnable = true;
-    turretRotatorEncoderConfigs.forwardSoftLimitThreshold = -7000;
+    turretRotatorEncoderConfigs.forwardSoftLimitThreshold = 19000;
     turretRotatorEncoderConfigs.forwardSoftLimitEnable = true;
     turretRotatorMotor.configAllSettings(turretRotatorEncoderConfigs);    
   } 
