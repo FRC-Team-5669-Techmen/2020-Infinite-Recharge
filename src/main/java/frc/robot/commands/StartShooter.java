@@ -17,6 +17,7 @@ public class StartShooter extends CommandBase {
   /**
    * Creates a new PowerOnShooter.
    * In future, maybe add parameter for target RPM?) Need to see API for PID method or Phoenix API method
+   * maybe pid. For now, do not worry about this; works really well. 
    */
 
   private final TurretSubsystem fuelTurret;
@@ -54,7 +55,7 @@ public class StartShooter extends CommandBase {
     
     else{
       Timer.delay(1); //TODO see if this is a patch dweird physics stuff need to research. Talk to Mr. Aldrich.  So manual delay...
-      fuelTurret.turnOnMagazineFeederMotor();
+      fuelTurret.turnOnTurretFeederMotor();
       magazine.feedTurret();
 
     }

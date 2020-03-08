@@ -27,7 +27,7 @@ public class FeedPowerCellToTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    fuelTurret.turnOnMagazineFeederMotor();
+    fuelTurret.turnOnTurretFeederMotor();
     
   }
 
@@ -39,7 +39,7 @@ public class FeedPowerCellToTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    fuelTurret.turnOffMagazineFeederMotor();
+    fuelTurret.turnOffTurretFeederMotor();
   }
 
   // Returns true when the command should end.

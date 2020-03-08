@@ -44,7 +44,7 @@ public class StopShooter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     fuelTurret.setShooterMotorSpeed(0.0);
-    fuelTurret.turnOffMagazineFeederMotor();
+    fuelTurret.turnOffTurretFeederMotor();
     magazine.turnOffRotator();
   }
 

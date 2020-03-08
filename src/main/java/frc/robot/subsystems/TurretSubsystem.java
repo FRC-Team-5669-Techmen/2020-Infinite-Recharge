@@ -111,7 +111,7 @@ public class TurretSubsystem extends SubsystemBase {
     //followerShooterMotor.set(Motion, demand0, demand1Type, demand1);
     configShooterMotors();
     configRotatorMotor();
-    configMagazineFeederMotor();
+    configTurretFeederMotor();
 
     setShooterMotorSpeed(0.0);
     setTurretRotatorMotorSpeed(0.0);
@@ -168,16 +168,16 @@ public class TurretSubsystem extends SubsystemBase {
     return !hoodDeployer.get();
   }
 
-//--------------------------------------------Magazine Feeder Code-------------------------------------------------
-  public void turnOnMagazineFeederMotor(){
+//--------------------------------------------Turret Feeder Code-------------------------------------------------
+  public void turnOnTurretFeederMotor(){
   turretFeederMotor.set(-TurretSubsystemConstants.TURRET_FEEDER_MOTOR_DEFAULT_SPEED);
 }
 
-public void turnOffMagazineFeederMotor(){
+public void turnOffTurretFeederMotor(){
   turretFeederMotor.set(0.0);
 }
 
-public void configMagazineFeederMotor(){
+public void configTurretFeederMotor(){
   turretFeederMotor.configFactoryDefault();
 }
 
