@@ -21,6 +21,7 @@ public class MagazineSubsystem extends SubsystemBase {
    */
 
   private final WPI_TalonSRX magazineRotatorMotor = new WPI_TalonSRX(MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
+  private final int VERSA_PLANETARY_ENCODER_COUNTS_PER_REV = 1024;
   
   
   public MagazineSubsystem() {
