@@ -88,6 +88,6 @@ public final class Constants {
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double TARGET_ANGLE = 0.0;
-        public static final double TOLERANCE = 4.0; //degrees
+        public static final double TOLERANCE = 2.2; //degrees
     }
 }
