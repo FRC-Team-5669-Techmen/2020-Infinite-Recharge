@@ -78,7 +78,12 @@ public class MagazineSubsystem extends SubsystemBase {
    // magazineRotatorMotor.stopMotor(); //TODO see if this does the same thing
   }
 
+  public int getselSenPos(){
+    return magazineRotatorMotor.getSelectedSensorPosition(pidIdx);
+  }
+
   public void preventJams(){
+    if(magazineRotatorMotor.get() != 0.0 && getselSenPos() )
     
 /*
     if (m_PDP.getCurrent(3) > normalCurrent)
