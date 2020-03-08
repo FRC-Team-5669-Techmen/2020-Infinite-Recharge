@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
@@ -20,8 +20,7 @@ public class MagazineSubsystem extends SubsystemBase {
    * Creates a new Magazine.
    */
 
-  private final WPI_VictorSPX magazineRotatorMotor = new WPI_VictorSPX(MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
-  private final PowerDistributionPanel m_PDP = new PowerDistributionPanel();
+  private final WPI_TalonSRX magazineRotatorMotor = new WPI_TalonSRX(MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
   
   
   public MagazineSubsystem() {
@@ -77,10 +76,6 @@ public class MagazineSubsystem extends SubsystemBase {
   public void turnOffRotator(){
     magazineRotatorMotor.set(0.0);
    // magazineRotatorMotor.stopMotor(); //TODO see if this does the same thing
-  }
-
-  public double getMagazineCurrentDrawFromPDP(){
-    return m_PDP.getCurrent(2); //peter says it is a voltage dti
   }
 
   public void preventJams(){
