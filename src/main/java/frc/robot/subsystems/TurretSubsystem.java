@@ -115,7 +115,9 @@ public class TurretSubsystem extends SubsystemBase {
 
     setShooterMotorSpeed(0.0);
     setTurretRotatorMotorSpeed(0.0);
+    stopHoodServos();
     //turretRotatorMotor.softl
+    
 
     //add them to live window
     setName("Turret Subsyste");
@@ -130,7 +132,7 @@ public class TurretSubsystem extends SubsystemBase {
    
    
    updateValues();
-   updateHoodPosition(); //wathcdog/position finder for turret
+   //updateHoodPosition(); //wathcdog/position finder for turret need to debug
 
     //followerShooterMotor.follow(shooterMotor);
     //followerShooterMotor.
@@ -362,7 +364,7 @@ public void configTurretFeederMotor(){
   }
 
   public void closeHoodAtHomingSpeed(){
-    setServoSpeed(0.7);
+    setHoodServoSpeed(0.7);
     hoodUnsycned = true;
   }
 
@@ -371,11 +373,15 @@ public void configTurretFeederMotor(){
   }
 
 
-  private void setServoSpeed(double speed){
+  private void setHoodServoSpeed(double speed){
     /*
       should be a speed between 0 and 1
     */
-    if (speed >= hoodMinSpeed && speed <=hoodMaxSpeed)
+
+    if (speed == 0.5)
+      stopHoodServos();
+
+    else if (speed >= hoodMinSpeed && speed <= hoodMaxSpeed)
     {
       hoodAdjusterServo.set(speed);
       hoodAdjusterFollowerServo.set(1.0-speed);
@@ -396,15 +402,18 @@ public void configTurretFeederMotor(){
   }
 
   public void moveHoodForward(){
-    setServoSpeed(TurretSubsystemConstants.HOOD_DEFAULT_SPEED);
+    hoodAdjusterServo.set(1.0);
+    hoodAdjusterFollowerServo.set(0.0);
   }
 
   public void moveHoodBack(){
-    setServoSpeed(TurretSubsystemConstants.HOOD_DEFAULT_SPEED - 1.0);
+    hoodAdjusterServo.set(0.0);
+    hoodAdjusterFollowerServo.set(1.0);
   }
 
-  public void stopHood(){
-    setServoSpeed(0.5);
+  public void stopHoodServos(){
+    hoodAdjusterServo.stopMotor();
+    hoodAdjusterFollowerServo.stopMotor();
   }
 
   //TODO add other getter methods

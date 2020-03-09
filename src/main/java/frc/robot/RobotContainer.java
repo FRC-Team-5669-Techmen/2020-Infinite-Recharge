@@ -214,9 +214,16 @@ public class RobotContainer {
    .alongWith(feedMagazinefromIntakeAndThenStop.withInterrupt(m_intakeSubsystem::isIntakeRetracted))); //TGl 2 up
 
    new JoystickButton(buttonBox, 15).whenHeld(unjamMagazineWithButton.withInterrupt(m_intakeSubsystem::isIntakeRetracted)); //TODO check that the button is right //TGL2 down
- 
 
-  
+   //need to put in encoder to safely use these
+   /*
+   new JoystickButton(m_joystick, 11).whenHeld( new InstantCommand(fuelTurret::moveHoodForward, fuelTurret).withInterrupt(fuelTurret::hoodRetracted))
+   .whenReleased(new InstantCommand(fuelTurret::stopHoodServos, fuelTurret));
+ 
+   new JoystickButton(m_joystick, 13).whenHeld( new InstantCommand(fuelTurret::moveHoodBack, fuelTurret).withInterrupt(fuelTurret::hoodRetracted))
+   .whenReleased(new InstantCommand(fuelTurret::stopHoodServos, fuelTurret));
+
+  */
   
 
     
