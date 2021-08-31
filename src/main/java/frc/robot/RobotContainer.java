@@ -62,7 +62,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final TurretSubsystem fuelTurret = new TurretSubsystem();
   private final MagazineSubsystem magazine = new MagazineSubsystem();
-  private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem();
+  private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem(); // ! ouASEHROUAWEHRG
 
   private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   //private final Compressor c = new Compressor(0);
@@ -156,18 +156,19 @@ public class RobotContainer {
     // Asign default commands
 
     double deadband = 0.05;
-     
 
-    
-    
+    double speedMult = 0.25;
+    double rotMult = 0.25;
+
     mecanumDriveSubsystem.setDefaultCommand(
       //y drives robot right
       //x drives is front
+
       
      
-      new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1)*0.65, 
-      () -> m_joystick.getRawAxis(0)*0.65, 
-      () -> m_joystick.getRawAxis(4)*0.65, mecanumDriveSubsystem));
+      new ManualMecanumDrive(() -> -m_joystick.getRawAxis(1)*speedMult, 
+      () -> m_joystick.getRawAxis(0)*speedMult, 
+      () -> m_joystick.getRawAxis(4)*rotMult, mecanumDriveSubsystem));
       
     
   }
