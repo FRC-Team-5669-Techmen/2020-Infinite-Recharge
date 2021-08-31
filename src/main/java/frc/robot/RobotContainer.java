@@ -64,10 +64,10 @@ public class RobotContainer {
   private final MagazineSubsystem magazine = new MagazineSubsystem();
   private final MecanumDriveSubsystem mecanumDriveSubsystem = new MecanumDriveSubsystem(); // ! ouASEHROUAWEHRG
 
-  private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
+  //private final ControlPanelRotatorSubsystem m_controlPanelSubsystem = new ControlPanelRotatorSubsystem();
   //private final Compressor c = new Compressor(0);
 
-  private final LiftSubsystem lift = new LiftSubsystem();
+  //private final LiftSubsystem lift = new LiftSubsystem();
 
   private final LimelightSubsystem limelight = new LimelightSubsystem();
 
@@ -87,7 +87,7 @@ public class RobotContainer {
    private final StartEndCommand unjamMagazineWithButton =  new StartEndCommand(magazine::revereseMagazine,
     magazine::turnOffRotator, magazine); 
 
-   private final MoveControlPanelBasedOnColor moveControlPanelBasedOnColor = new MoveControlPanelBasedOnColor(m_controlPanelSubsystem);
+   //private final MoveControlPanelBasedOnColor moveControlPanelBasedOnColor = new MoveControlPanelBasedOnColor(m_controlPanelSubsystem);
 
    //private final StartEndComman deployContr
 
@@ -136,7 +136,7 @@ public class RobotContainer {
 
     //Show which commands are running
     SmartDashboard.putData(fuelTurret);
-    SmartDashboard.putData(limelight);
+    //SmartDashboard.putData(limelight);
 
      //Compressser Data
      /*
@@ -190,26 +190,26 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    new JoystickButton(buttonBox, 1).whenPressed(new StartShooter(fuelTurret, magazine).withInterrupt(fuelTurret::hoodRetracted)).whenReleased(new StopShooter(fuelTurret, magazine));//add interupt to check status of piston //E button //Interrupt added if hood is retrated
+   // new JoystickButton(buttonBox, 1).whenPressed(new StartShooter(fuelTurret, magazine).withInterrupt(fuelTurret::hoodRetracted)).whenReleased(new StopShooter(fuelTurret, magazine));//add interupt to check status of piston //E button //Interrupt added if hood is retrated
     //engage pistons when flywheel is started
-    new JoystickButton(buttonBox, 2).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight).withInterrupt(fuelTurret::hoodRetracted));
+    //new JoystickButton(buttonBox, 2).whenPressed(new AimTurretAtPowerPort(fuelTurret, limelight).withInterrupt(fuelTurret::hoodRetracted));
    
-    new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurretAndThenStop(fuelTurret,  Direction.CLOCKWISE)); //knob left button
-    new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurretAndThenStop(fuelTurret,  Direction.COUNTERCLOCKWISE)); //knob right nutton
+  //new JoystickButton(buttonBox, 4).whileActiveOnce(new RotateTurretAndThenStop(fuelTurret,  Direction.CLOCKWISE)); //knob left button
+  //new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateTurretAndThenStop(fuelTurret,  Direction.COUNTERCLOCKWISE)); //knob right nutton
 
     new JoystickButton(buttonBox, 6).whenPressed(new InstantCommand(m_intakeSubsystem::deployIntake, m_intakeSubsystem)); //SW 1
     new JoystickButton(buttonBox, 7).whenPressed(new InstantCommand(m_intakeSubsystem::retractIntake, m_intakeSubsystem)); //SW 2
 
   //*new JoystickButton(buttonBox, 8).whenPressed(new InstantCommand(m_controlPanelSubsystem::retractControlPanelRotator, m_controlPanelSubsystem)); //sw3
   // *new JoystickButton(buttonBox, 9).whenPressed(new InstantCommand(m_controlPanelSubsystem::deployControlPanelRotator, m_controlPanelSubsystem)); //sw4
-     new JoystickButton(buttonBox, 8).whenPressed(moveControlPanelBasedOnColor); //sw3 does not sop 
-     new JoystickButton(buttonBox, 9).cancelWhenPressed(moveControlPanelBasedOnColor);//sw4
+     //new JoystickButton(buttonBox, 8).whenPressed(moveControlPanelBasedOnColor); //sw3 does not sop 
+     //new JoystickButton(buttonBox, 9).cancelWhenPressed(moveControlPanelBasedOnColor);//sw4
     
-  new JoystickButton(buttonBox, 10).whenHeld(new InstantCommand(lift::deployLift, lift)); //sw5
-  new JoystickButton(buttonBox, 11).whenHeld(new InstantCommand(lift::retrackLift, lift)); //sw6
+  //new JoystickButton(buttonBox, 10).whenHeld(new InstantCommand(lift::deployLift, lift)); //sw5
+  //new JoystickButton(buttonBox, 11).whenHeld(new InstantCommand(lift::retrackLift, lift)); //sw6
    // new JoystickButton(buttonBox, 5).whileActiveOnce(new RotateAndThenStopMagazine(magazine, MagazineDirection.CLOCKWISE));
-  new JoystickButton(buttonBox, 12).whenHeld(new InstantCommand(fuelTurret::deployHood, fuelTurret)); //tgl1 up
-  new JoystickButton(buttonBox, 13).whenHeld(new InstantCommand(fuelTurret::retractHood, fuelTurret)); //tg;1 down
+ //new JoystickButton(buttonBox, 12).whenHeld(new InstantCommand(fuelTurret::deployHood, fuelTurret)); //tgl1 up
+ //new JoystickButton(buttonBox, 13).whenHeld(new InstantCommand(fuelTurret::retractHood, fuelTurret)); //tg;1 down
        //new JoystickButton(buttonBox, 1).whileActiveOnce();
    new JoystickButton(buttonBox, 14).whenHeld(startAndThenStopIntake.withInterrupt(m_intakeSubsystem::isIntakeRetracted)
    .alongWith(feedMagazinefromIntakeAndThenStop.withInterrupt(m_intakeSubsystem::isIntakeRetracted))); //TGl 2 up
@@ -287,7 +287,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-      // An ExampleCommand will run in autonomous
-      return new Autonomous(mecanumDriveSubsystem, fuelTurret, limelight, m_intakeSubsystem, magazine);
+     //An ExampleCommand will run in autonomous
+    return new Autonomous(mecanumDriveSubsystem, fuelTurret, limelight, m_intakeSubsystem, magazine);
   }
 }

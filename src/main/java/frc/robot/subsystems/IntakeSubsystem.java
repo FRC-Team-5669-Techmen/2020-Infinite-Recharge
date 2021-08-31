@@ -64,13 +64,13 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public boolean isIntakeDeployed(){
-    return deployerSoleniod.get();
+    return true;
 
     
   }
 
   public boolean isIntakeRetracted(){
-    return !deployerSoleniod.get();
+    return false;
 
   }
 
