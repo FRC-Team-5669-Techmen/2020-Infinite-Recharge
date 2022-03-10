@@ -29,7 +29,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   private final TalonFXInvertType leftSideInvert = TalonFXInvertType.CounterClockwise; //might be overkill, but just here for readability
   private final TalonFXInvertType rightSideInvert = TalonFXInvertType.Clockwise;
-
+  
   MecanumDrive m_drive = new MecanumDrive(m_frontLeftMotor, m_rearLeftMotor,
    m_frontRightMotor, m_rearRightMotor);
 

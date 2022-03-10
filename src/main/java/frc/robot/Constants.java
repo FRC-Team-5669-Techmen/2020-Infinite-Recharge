@@ -61,7 +61,7 @@ public final class Constants {
         public static final double HOOD_MIN_EXTENSION = 3;
         public static final double HOOD_MAX_SPEED = 1.0;
         public static final double HOOD_DEFAULT_SPEED = HOOD_MAX_SPEED;
-        public static final double HOOD_MIN_SPEED = 0.6; //must find
+        public static final double HOOD_MIN_SPEED = 0.6; //must fin
         public static final int HOOD_DEPLOYER_SOLENOID = 7;
     }
 

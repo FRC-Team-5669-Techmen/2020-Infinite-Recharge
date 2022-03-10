@@ -20,17 +20,16 @@ public class MagazineSubsystem extends SubsystemBase {
    * Creates a new Magazine.
    */
 
-  private final WPI_VictorSPX magazineRotatorMotor = new WPI_VictorSPX(MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
+  private final WPI_VictorSPX magazineRotatorMotor = new WPI_VictorSPX(
+      MagazineSubsystemConstants.MAGAZINE_ROTATOR_CAN_ID);
   private final PowerDistributionPanel m_PDP = new PowerDistributionPanel();
-  
-  
+
   public MagazineSubsystem() {
     super();
     magazineRotatorMotor.set(0.0);
 
-    setName("Magazine Subsysyem");//default name
+    setName("Magazine Subsysyem");// default name
     addChild("Magazie Rotator Motor", magazineRotatorMotor);
-
 
   }
 
@@ -40,67 +39,56 @@ public class MagazineSubsystem extends SubsystemBase {
     preventJams();
   }
 
-  public void turnOnRotatorClockwise(double speed){
+  public void turnOnRotatorClockwise(double speed) {
     Math.abs(speed);
     magazineRotatorMotor.set(speed);
   }
 
-  public void turnOnRotatorClockwise(){
+  public void turnOnRotatorClockwise() {
     magazineRotatorMotor.set(0.3);
   }
 
-  public void turnOnRotatorCounterClockwise(double speed){
+  public void turnOnRotatorCounterClockwise(double speed) {
     Math.abs(speed);
     magazineRotatorMotor.set(-speed);
   }
 
-  public void turnOnRotatorCounterClockwise(){
+  public void turnOnRotatorCounterClockwise() {
     magazineRotatorMotor.set(-0.3);
   }
 
-  public void feedTurret(){
+  public void feedTurret() {
     turnOnRotatorClockwise(0.75);
   }
 
-  public void feedMagazine(){
+  public void feedMagazine() {
     turnOnRotatorClockwise(0.2);
-
 
   }
 
-
-  public void revereseMagazine(){
+  public void revereseMagazine() {
     turnOnRotatorCounterClockwise(0.5);
   }
 
-
-  public void turnOffRotator(){
+  public void turnOffRotator() {
     magazineRotatorMotor.set(0.0);
-   // magazineRotatorMotor.stopMotor(); //TODO see if this does the same thing
+    // magazineRotatorMotor.stopMotor(); //TODO see if this does the same thing
   }
 
-  public double getMagazineCurrentDrawFromPDP(){
-    return m_PDP.getCurrent(2); //peter says it is a voltage dti
+  public double getMagazineCurrentDrawFromPDP() {
+    return m_PDP.getCurrent(2); // peter says it is a voltage dti
   }
 
-  public void preventJams(){
-    
-/*
-    if (m_PDP.getCurrent(3) > normalCurrent)
-    {
-      getCurrentCommand().cancel(); //stop moving the turret
-          //go other way for some time
-     turnOnRotatorClockwise();
-     Timer.delay(1.0);
-     turnOffRotator();
+  public void preventJams() {
 
-    }
-    */
- 
+    /*
+     * if (m_PDP.getCurrent(3) > normalCurrent) { getCurrentCommand().cancel();
+     * //stop moving the turret //go other way for some time
+     * turnOnRotatorClockwise(); Timer.delay(1.0); turnOffRotator();
+     * 
+     * }
+     */
+
   }
-
-
-
-
 
 }
